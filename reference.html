@@ -337,6 +337,12 @@ body{
   .lab{color:var(--ankh-lift)}
   /* the page header is centred, so its glyph centres with it */
   header .gmark{margin-left:auto;margin-right:auto}
+  /* the original page had no links in its footer, so there was no rule
+     for one and the companion link fell back to browser blue */
+  footer a{color:var(--ankh-lift);text-decoration:none;
+    border-bottom:1px solid rgba(165,118,38,.42)}
+  footer a:hover{border-bottom-color:var(--ankh-lift)}
+  @media print{footer a{color:#7F5C1F}}
   @media print{.lab{color:#7F5C1F}}
 </style>
 </head>
