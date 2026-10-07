@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<link rel="icon" href="./assets/mark-light.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Know Thyself Quick Reference · Christopher Hager</title>
+<style>
+  :root {
+    --page: #15161A; --ink: #E4DED1; --dim: #9A9487; --faint: #6A6558;
+    --rule: #2C2E35; --panel: #1A2333; --card: #1A1C21;
+    --fire: #C2603C; --earth: #8A8456; --air: #7E93A8; --water: #5E7F84;
+    --gold: #C9A961; --rose: #B5736B; --sage: #7E9478;
+  }
+
+/* ==============================================================
+   BRAND LAYER · Christopher Hager
+   Palette swatch-sampled from the Brand Book (Leigh Maneri, Sept
+   2025) via Domains/practice/brand-kit.md. The Book prints the
+   wrong hex under three swatches; these are the sampled values.
+     CROWN  #1B0C20    MIRROR #E7E7E7    ANKH  #A57626
+     TRITON #7C2D50    MYSTIC #3B1A4C    GAIA  #1D3237
+   Every asset is a local file in ./assets/. No CDN, no webfont,
+   no runtime fetch, so this renders identically everywhere.
+   ============================================================== */
+:root{
+  --crown:#1B0C20; --mirror:#E7E7E7; --ankh:#A57626;
+  --triton:#7C2D50; --mystic:#3B1A4C; --gaia:#1D3237;
+  /* ANKH on CROWN measures about 3.9:1. Right for rules, hairlines
+     and section marks; thin for 10px letterspaced caps. This lift
+     carries the small type without leaving the gold family. */
+  --ankh-lift:#C79A45;
+  --brand-serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --brand-sans:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;
+  --page:#1B0C20;
+  --ink:#E7E7E7;
+  --dim:#A9A0B0;
+  --faint:#8A7D93;
+  --rule:#3A2440;
+  --panel:#2A1130;
+  --card:#211026;
+}
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font-family: "Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    font-size: 17px; line-height: 1.62;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 72px 36px 120px; }
+  .lab {
+    font-family: -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    text-transform: uppercase; letter-spacing: .18em; font-size: 10.5px;
+    color: var(--faint); font-weight: 600;
+  }
+  h1 { font-weight: 400; font-size: 46px; line-height: 1.12; margin: 14px 0 10px; letter-spacing: -.01em; }
+  h2 { font-weight: 400; font-size: 32px; margin: 0 0 6px; letter-spacing: -.005em; }
+  h3 { font-weight: 400; font-size: 22px; margin: 0 0 16px; line-height: 1.3; }
+  h4 { font-weight: 400; font-size: 19px; margin: 36px 0 12px; color: var(--ink); }
+  p { margin: 0 0 14px; }
+  b, strong { font-weight: 600; color: #F2EDE3; }
+  i, em { font-style: italic; }
+  .sub { color: var(--dim); font-size: 15px; margin: 0; }
+  hr.hair { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+
+  /* title */
+  header { text-align: center; padding-bottom: 54px; border-bottom: 1px solid var(--rule); margin-bottom: 54px; }
+  header .born { color: var(--dim); font-size: 14.5px; margin-top: 18px; }
+  header .lens { color: var(--faint); font-size: 14px; font-style: italic; max-width: 54ch; margin: 26px auto 0; }
+
+  /* section openers */
+  section { margin: 0 0 96px; scroll-margin-top: 24px; }
+  .sechead { display: flex; align-items: baseline; gap: 18px; border-bottom: 1px solid var(--rule); padding-bottom: 16px; margin-bottom: 34px; }
+  .secnum { font-size: 34px; color: var(--faint); font-weight: 400; min-width: 54px; }
+  .sechead .sub { margin-top: 4px; }
+
+  /* nav */
+  nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 56px; }
+  nav a {
+    font-family: -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    text-transform: uppercase; letter-spacing: .14em; font-size: 10.5px; font-weight: 600;
+    color: var(--dim); text-decoration: none; border: 1px solid var(--rule);
+    padding: 9px 15px; border-radius: 2px;
+  }
+  nav a:hover { color: var(--ink); border-color: var(--faint); }
+
+  /* wheel */
+  .wheelbox { display: grid; grid-template-columns: minmax(0,620px) 1fr; gap: 42px; align-items: start; margin-bottom: 48px; }
+  svg.wheel { width: 100%; height: auto; display: block; }
+  .ring { fill: none; stroke: var(--rule); stroke-width: 1; }
+  .ring-faint { fill: none; stroke: #23252B; stroke-width: 1; }
+  .tick { stroke: var(--rule); stroke-width: 1; }
+  .tick-min { stroke: #262830; stroke-width: 1; }
+  .cusp { stroke: #2A2C33; stroke-width: 1; stroke-dasharray: 3 4; }
+  .cusp-major { stroke: #44464F; stroke-width: 1.4; }
+  .spoke { stroke: #33353D; stroke-width: 1; }
+  .sg { fill: var(--dim); font-size: 17px; text-anchor: middle;
+        font-family: "Segoe UI Symbol","Segoe UI Historic","Apple Symbols",serif; }
+  .zg { font-family: "Segoe UI Symbol","Segoe UI Historic","Apple Symbols",serif; color: var(--dim); }
+  .hn { fill: var(--faint); font-size: 12.5px; text-anchor: middle;
+        font-family: -apple-system,"Segoe UI",Roboto,sans-serif; }
+  .hn-empty { fill: #44464D; }
+  .ang { fill: var(--dim); font-size: 10px; text-anchor: middle; letter-spacing: .1em;
+         font-family: -apple-system,"Segoe UI",Roboto,sans-serif; }
+  .pg { fill: var(--ink); font-size: 21px; text-anchor: middle; }
+  .pg.retro { fill: var(--rose); }
+  .pd { fill: var(--faint); font-size: 9.5px; text-anchor: middle;
+        font-family: -apple-system,"Segoe UI",Roboto,sans-serif; }
+  .asp { stroke-width: 1; fill: none; }
+  .a-hard { stroke: #8C4A3E; }
+  .a-soft { stroke: #46606B; }
+  .a-conj { stroke: var(--gold); }
+  .legend { font-size: 14.5px; color: var(--dim); }
+  .legend div { margin-bottom: 9px; }
+  .legend .sw { display: inline-block; width: 22px; height: 2px; vertical-align: middle; margin-right: 10px; }
+
+  /* house grid */
+  .hgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px,1fr)); gap: 14px; }
+  .hcard { background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 16px 17px 15px; }
+  .hcard-empty { border-style: dashed; border-color: #34363E; background: transparent; }
+  .hcard-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+  .hcard-num { font-size: 30px; color: var(--gold); line-height: 1; }
+  .hcard-empty .hcard-num { color: #4A4C55; }
+  .hcard-cusp { font-size: 13px; color: var(--dim); text-align: right; }
+  .hcard-name { font-size: 14.5px; color: var(--ink); line-height: 1.4; margin-bottom: 3px; }
+  .hcard-ruler { font-size: 12px; color: var(--faint); margin-bottom: 11px;
+                 font-family: -apple-system,"Segoe UI",Roboto,sans-serif; letter-spacing: .04em; }
+  .hcard-occ { display: flex; flex-direction: column; gap: 5px; border-top: 1px solid var(--rule); padding-top: 11px; }
+  .occ { font-size: 14px; color: var(--ink); }
+  .empty-tag { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; text-transform: uppercase;
+               letter-spacing: .16em; font-size: 10px; color: var(--faint); font-weight: 600; }
+  .rx { color: var(--rose); font-style: normal; }
+
+  /* bars */
+  .bars { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 30px; }
+  .bar-row { }
+  .bar-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 7px; }
+  .bar-name { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; text-transform: uppercase;
+              letter-spacing: .16em; font-size: 11px; font-weight: 600; color: var(--ink); }
+  .bar-n { font-size: 27px; line-height: 1; color: var(--ink); }
+  .bar-track { height: 7px; background: #212329; border-radius: 4px; overflow: hidden; margin-bottom: 11px; }
+  .bar-fill { height: 100%; }
+  .el-fire { background: var(--fire); } .el-earth { background: var(--earth); }
+  .el-air { background: var(--air); } .el-water { background: var(--water); }
+  .mo-cardinal { background: var(--gold); } .mo-fixed { background: var(--sage); } .mo-mutable { background: var(--air); }
+  .bar-body, .bar-extra { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .chip { font-size: 13.5px; background: #1E2026; border: 1px solid var(--rule); border-radius: 2px; padding: 3px 8px; }
+  .chip i { color: var(--dim); font-size: 12.5px; }
+  .chip-ghost { background: transparent; border-style: dashed; color: var(--dim); }
+  .bar-ext-n { font-size: 12px; color: var(--faint); align-self: center;
+               font-family: -apple-system,"Segoe UI",Roboto,sans-serif; }
+  .bar-gloss { font-size: 13.5px; color: var(--dim); font-style: italic; }
+  .none { color: var(--faint); font-size: 13px; font-style: italic; }
+
+  /* tables */
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th { text-align: left; font-family: -apple-system,"Segoe UI",Roboto,sans-serif; text-transform: uppercase;
+       letter-spacing: .14em; font-size: 10px; font-weight: 600; color: var(--faint);
+       border-bottom: 1px solid var(--rule); padding: 0 10px 9px 0; }
+  td { padding: 9px 10px 9px 0; border-bottom: 1px solid #1F2127; vertical-align: top; }
+  td.g { font-size: 18px; width: 30px; color: var(--dim); }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.loud td { background: #1C1E24; }
+  td.k { color: var(--dim); white-space: nowrap; width: 150px;
+         font-family: -apple-system,"Segoe UI",Roboto,sans-serif; font-size: 12px;
+         text-transform: uppercase; letter-spacing: .12em; padding-top: 12px; }
+  td.v { color: #F2EDE3; font-weight: 600; width: 250px; }
+  td.n { color: var(--dim); font-size: 14.5px; }
+  td.des { color: var(--rose); } td.per { color: var(--ink); }
+  .gname { display: block; font-size: 12.5px; color: var(--faint); font-style: italic; }
+  .bar-mini { width: 72px; }
+  .bar-mini span { display: block; height: 4px; background: var(--gold); border-radius: 2px; }
+  .tablewrap { overflow-x: auto; }
+
+  /* centres */
+  .cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px,1fr)); gap: 14px; }
+  .ccard { border: 1px solid var(--rule); border-radius: 3px; padding: 16px 17px; background: transparent; }
+  .ccard.defined { background: var(--card); border-color: #3C4A3C; }
+  .ccard.open { border-style: dashed; }
+  .ccard-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 11px; }
+  .ccard-name { font-size: 19px; }
+  .ccard-state { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; text-transform: uppercase;
+                 letter-spacing: .16em; font-size: 9.5px; font-weight: 600; }
+  .defined .ccard-state { color: var(--sage); } .open .ccard-state { color: var(--faint); }
+  .ccard-gates { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 11px; }
+  .gate { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; font-size: 12.5px; font-weight: 600;
+          border: 1px solid var(--rule); border-radius: 2px; padding: 3px 9px; color: var(--dim); }
+  .defined .gate { color: var(--ink); }
+  .gate-ch { border-color: var(--gold); color: var(--gold) !important; }
+  .ccard-note { font-size: 14px; color: var(--dim); line-height: 1.52; }
+
+  /* channels */
+  .chgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px,1fr)); gap: 16px; margin: 20px 0 0; }
+  .chcard { border: 1px solid var(--gold); border-radius: 3px; padding: 19px 21px; background: #1C1D1B; }
+  .chcard .cht { font-size: 21px; margin-bottom: 4px; }
+  .chcard .chs { font-size: 12.5px; color: var(--gold); letter-spacing: .12em; text-transform: uppercase;
+                 font-family: -apple-system,"Segoe UI",Roboto,sans-serif; font-weight: 600; margin-bottom: 11px; }
+  .chcard p { font-size: 14.5px; color: var(--dim); margin: 0; }
+
+  /* gene keys */
+  .gkwrap table { font-size: 14.5px; }
+  td.sh { color: var(--rose); } td.gi { color: var(--gold); } td.si { color: var(--sage); }
+  td.ln { color: var(--faint); font-size: 13px; }
+  td.sq { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; font-size: 10px; text-transform: uppercase;
+          letter-spacing: .14em; color: var(--faint); font-weight: 600; padding-top: 12px; white-space: nowrap; }
+  td.sp b { display: block; } .sp-gloss { font-size: 12.5px; color: var(--faint); font-style: italic; }
+  td.gl { color: var(--ink); font-weight: 600; }
+  td.gatenum { font-size: 17px; color: var(--gold); width: 40px; }
+  td.gname2 { font-size: 13.5px; color: var(--dim); font-style: italic; }
+  td.ctr { font-size: 13px; } .cdef { color: var(--sage); } .copen { color: var(--faint); }
+  .ctr i { font-style: normal; }
+  .role { display: inline-block; font-family: -apple-system,"Segoe UI",Roboto,sans-serif; font-size: 10px;
+          text-transform: uppercase; letter-spacing: .1em; font-weight: 600; border-radius: 2px;
+          padding: 2px 7px; margin: 0 4px 4px 0; }
+  .role-sphere { border: 1px solid var(--gold); color: var(--gold); }
+  .role-ch { border: 1px solid #3C4A3C; color: var(--sage); }
+  .triad-key { display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px; margin: 0 0 22px; }
+  .triad-key span b { font-weight: 600; }
+  .lines { max-width: 440px; margin-top: 8px; }
+  .lb { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .lb-n { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; font-size: 11px; text-transform: uppercase;
+          letter-spacing: .14em; color: var(--dim); width: 64px; font-weight: 600; }
+  .lb-track { flex: 1; height: 6px; background: #212329; border-radius: 3px; overflow: hidden; }
+  .lb-fill { height: 100%; background: var(--gold); }
+  .lb-c { font-size: 14px; color: var(--ink); width: 18px; text-align: right; }
+
+  /* overlap */
+  .overlap { background: var(--panel); border-radius: 4px; padding: 54px 46px 46px; margin-top: 14px; }
+  .ocard { border-top: 1px solid #263245; padding: 30px 0 26px; position: relative; }
+  .ocard:first-of-type { border-top: 0; padding-top: 8px; }
+  .ocard-n { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; font-size: 11px; letter-spacing: .2em;
+             color: #5E718C; font-weight: 600; margin-bottom: 9px; }
+  .ocard h3 { color: #F2EDE3; max-width: 46ch; }
+  .oline { display: grid; grid-template-columns: 136px 1fr; gap: 18px; padding: 9px 0;
+           border-top: 1px solid #1F2A3A; font-size: 15px; }
+  .okey { font-family: -apple-system,"Segoe UI",Roboto,sans-serif; text-transform: uppercase;
+          letter-spacing: .13em; font-size: 10px; font-weight: 600; color: #6E82A0; padding-top: 5px; }
+  .oval { color: #D8D3C8; }
+  .oval b { color: #F7F3EA; }
+  .owhat { border-top: 1px solid #2E3C52; margin-top: 6px; padding-top: 14px; }
+  .owhat .okey { color: var(--gold); }
+  .owhat .oval { color: #EDE7DB; }
+
+  /* notes + footer */
+  .notebox { border: 1px solid var(--rule); border-left: 2px solid var(--gold); border-radius: 2px;
+             padding: 22px 26px; margin-bottom: 44px; font-size: 15px; color: var(--dim); }
+  .notebox b { color: var(--ink); }
+  .notebox ul { margin: 10px 0 0; padding-left: 20px; }
+  .notebox li { margin-bottom: 6px; }
+  footer { border-top: 1px solid var(--rule); padding-top: 30px; color: var(--faint); font-size: 13.5px; }
+  footer p { margin-bottom: 7px; }
+
+  @media (max-width: 880px) {
+    .wheelbox { grid-template-columns: 1fr; }
+    .wrap { padding: 44px 20px 80px; }
+    h1 { font-size: 34px; }
+    .oline { grid-template-columns: 1fr; gap: 3px; }
+    .overlap { padding: 32px 22px; }
+  }
+
+  @media print {
+    :root { --page:#fff; --ink:#15161A; --dim:#4A4A4A; --faint:#6E6E6E; --rule:#C9C6BE; --card:#F7F5F1; --panel:#EDEFF4; }
+    body { background: #fff; color: #15161A; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; }
+    nav { display: none; }
+    section { page-break-before: always; margin-bottom: 30px; }
+    header { page-break-after: avoid; }
+    .hcard, .ccard, .ocard, .chcard, .bar-row { page-break-inside: avoid; }
+    .ring, .tick, .cusp, .cusp-major, .spoke { stroke: #666; }
+    .pg, .sg, .hn, .ang, .pd { fill: #15161A; }
+    .pg.retro { fill: #8C3A2E; }
+    .overlap { background: #EDEFF4; color: #15161A; padding: 24px; }
+    .ocard h3, .oval, .oval b { color: #15161A; }
+    .okey { color: #4A5A72; }
+    a { color: inherit; text-decoration: none; }
+  }
+
+/* ==============================================================
+   BRAND LAYER · bands, marks and the signature gradient
+   ============================================================== */
+body{
+  background-color:var(--crown);
+  background-image:radial-gradient(ellipse 150% 95% at 50% -12%,
+    rgba(124,45,80,.34) 0%, rgba(59,26,76,.19) 42%, rgba(27,12,32,0) 78%);
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+.brandbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.4rem;flex-wrap:wrap;
+  padding:19px clamp(1.5rem,5vw,3rem);
+  background:rgba(27,12,32,.74);
+  border-bottom:1px solid rgba(165,118,38,.34);
+}
+.brandbar a{display:inline-flex;align-items:center;text-decoration:none}
+.brandbar img{display:block;width:184px;height:auto}
+.brandbar img.p{display:none}
+.brandbar .tag{
+  font-family:var(--brand-sans);font-size:.63rem;font-weight:500;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--ankh-lift);
+}
+.gmark{display:block;width:19px;height:auto;margin:0 0 12px;opacity:.92}
+.gmark.lg{width:34px}
+.sechead .gmark{margin:0;width:26px;flex:0 0 auto;align-self:center}
+.brandfoot{
+  margin-top:4.5rem;padding:2.9rem clamp(1.5rem,5vw,3rem) 3.4rem;
+  background:rgba(27,12,32,.74);
+  border-top:1px solid rgba(165,118,38,.34);
+  text-align:center;
+}
+.brandfoot img{display:block;margin:0 auto 1.15rem;width:38px;height:auto;opacity:.9}
+.brandfoot .promise{
+  font-family:var(--brand-serif);font-style:italic;font-size:1.03rem;
+  color:var(--mirror);margin:0 0 .55rem;line-height:1.5;
+}
+.brandfoot .meta{
+  font-family:var(--brand-sans);font-size:.66rem;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(231,231,231,.40);margin:0;line-height:2;
+}
+.brandfoot a{color:var(--ankh-lift);text-decoration:none;
+  border-bottom:1px solid rgba(165,118,38,.42)}
+.brandfoot a:hover{border-bottom-color:var(--ankh-lift)}
+@media print{
+  body{background:#fff !important}
+  .brandbar{background:none;border-bottom-color:#C9C6BE;padding:0 0 14px;margin-bottom:24px}
+  .brandbar img.s{display:none}
+  .brandbar img.p{display:block}
+  .brandbar .tag{color:#7F5C1F}
+  .brandfoot{background:none;border-top-color:#C9C6BE;margin-top:2.4rem}
+  .brandfoot .promise{color:#1a1a1a}
+  .brandfoot .meta{color:#555}
+  .brandfoot a{color:#7F5C1F}
+  .brandfoot img,.gmark{filter:invert(1) brightness(.38)}
+}
+
+  .lab{color:var(--ankh-lift)}
+  @media print{.lab{color:#7F5C1F}}
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <a href="./index.html" aria-label="Know Thyself, index">
+    <img class="s" src="./assets/logo-inline-light.png" alt="Christopher Hager" width="184" height="35">
+    <img class="p" src="./assets/logo-inline-dark.png" alt="Christopher Hager" width="184" height="35">
+  </a>
+  <span class="tag">Know Thyself · Quick Reference</span>
+</div>
+<div class="wrap">
+
+<header>
+  <img class="gmark lg" src="./assets/ankh-light.png" alt="">
+  <div class="lab">Know Thyself · Quick Reference</div>
+  <h1>The Blueprint on One Page</h1>
+  <p class="sub">Christopher Hager</p>
+  <p class="born">Born 31 March 1978, 1:28 AM, Los Angeles, California · Placidus houses · tropical zodiac<br>
+  Birth time read off the birth certificate by Chris on 5 October 2026. Documented, not remembered.</p>
+  <p class="lens">Three systems, one moment. These are lenses, not verdicts. You are the authority on your own life; this page is only a map of the terrain you were handed.</p>
+</header>
+
+<nav>
+  <a href="#astro">I · Astrology</a>
+  <a href="#hd">II · Human Design</a>
+  <a href="#gk">III · Gene Keys</a>
+  <a href="#overlap">IV · Where They Overlap</a>
+  <a href="#provenance">Provenance</a>
+</nav>
+
+<div class="notebox">
+  <b>Cross-check run before this page was written, and it came back clean.</b>
+  <ul>
+    <li>All <b>13 Personality gates</b> recomputed from the tropical degrees against the Human Design wheel. All 13 match the profile exactly, including Sun 21.1 and Moon 58.4.</li>
+    <li><b>Channels and centres recomputed</b> from the 18 activated gates. Exactly two channels complete (5–15 and 18–58), giving defined G, Sacral, Spleen and Root, and Split Definition with two components. Matches the card.</li>
+    <li>All <b>11 Gene Keys spheres</b> trace to an activation in the chart. The 18 named gifts are exactly the union of the 18 activated gates, no gate missing and none added.</li>
+    <li><b>House placements recomputed</b> from the Placidus cusps. The three house errors found on 5 October 2026 (Sun, Moon, Pluto) are already corrected in the profile and the corrected values are what this page uses.</li>
+  </ul>
+</div>
+
+<!-- ============ I. ASTROLOGY ============ -->
+<section id="astro">
+  <div class="sechead">
+    <img class="gmark" src="./assets/sun-light.png" alt="">
+    <div class="secnum">I</div>
+    <div><h2>Astrology</h2><p class="sub">Where the sky was, and what room each thing is standing in.</p></div>
+  </div>
+
+  <div class="wheelbox">
+    <svg class="wheel" viewBox="-26 -26 672 672" role="img" aria-label="Natal chart wheel for Christopher Hager"><circle cx="310" cy="310" r="292" class="ring"/><circle cx="310" cy="310" r="264" class="ring"/><circle cx="310" cy="310" r="238" class="ring"/><circle cx="310" cy="310" r="92" class="ring-faint"/><line x1="243.75" y1="565.55" x2="236.72" y2="592.66" class="tick"/><text x="312.26" y="594.99" class="sg">♈︎</text><line x1="380.40" y1="564.44" x2="387.87" y2="591.43" class="tick"/><text x="450.95" y="556.62" class="sg">♉︎</text><line x1="498.19" y1="495.15" x2="518.15" y2="514.79" class="tick"/><text x="551.88" y="454.04" class="sg">♊︎</text><line x1="565.55" y1="376.25" x2="592.66" y2="383.28" class="tick"/><text x="587.99" y="314.74" class="sg">♋︎</text><line x1="564.44" y1="239.60" x2="591.43" y2="232.13" class="tick"/><text x="549.62" y="176.05" class="sg">♌︎</text><line x1="495.15" y1="121.81" x2="514.79" y2="101.85" class="tick"/><text x="447.04" y="75.12" class="sg">♍︎</text><line x1="376.25" y1="54.45" x2="383.28" y2="27.34" class="tick"/><text x="307.74" y="39.01" class="sg">♎︎</text><line x1="239.60" y1="55.56" x2="232.13" y2="28.57" class="tick"/><text x="169.05" y="77.38" class="sg">♏︎</text><line x1="121.81" y1="124.85" x2="101.85" y2="105.21" class="tick"/><text x="68.12" y="179.96" class="sg">♐︎</text><line x1="54.45" y1="243.75" x2="27.34" y2="236.72" class="tick"/><text x="32.01" y="319.26" class="sg">♑︎</text><line x1="55.56" y1="380.40" x2="28.57" y2="387.87" class="tick"/><text x="70.38" y="457.95" class="sg">♒︎</text><line x1="124.85" y1="498.19" x2="105.21" y2="518.15" class="tick"/><text x="172.96" y="558.88" class="sg">♓︎</text><line x1="245.25" y1="559.74" x2="243.75" y2="565.55" class="tick-min"/><line x1="267.27" y1="564.44" x2="266.27" y2="570.35" class="tick-min"/><line x1="289.61" y1="567.19" x2="289.13" y2="573.17" class="tick-min"/><line x1="312.10" y1="567.99" x2="312.15" y2="573.99" class="tick-min"/><line x1="334.58" y1="566.83" x2="335.15" y2="572.80" class="tick-min"/><line x1="356.87" y1="563.71" x2="357.96" y2="569.61" class="tick-min"/><line x1="378.80" y1="558.66" x2="380.40" y2="564.44" class="tick-min"/><line x1="400.21" y1="551.71" x2="402.31" y2="557.34" class="tick-min"/><line x1="420.93" y1="542.93" x2="423.51" y2="548.35" class="tick-min"/><line x1="440.81" y1="532.38" x2="443.86" y2="537.55" class="tick-min"/><line x1="459.70" y1="520.13" x2="463.18" y2="525.02" class="tick-min"/><line x1="477.44" y1="506.28" x2="481.34" y2="510.85" class="tick-min"/><line x1="493.91" y1="490.94" x2="498.19" y2="495.15" class="tick-min"/><line x1="508.98" y1="474.23" x2="513.61" y2="478.05" class="tick-min"/><line x1="522.54" y1="456.26" x2="527.48" y2="459.66" class="tick-min"/><line x1="534.48" y1="437.18" x2="539.70" y2="440.14" class="tick-min"/><line x1="544.71" y1="417.13" x2="550.16" y2="419.62" class="tick-min"/><line x1="553.15" y1="396.27" x2="558.81" y2="398.27" class="tick-min"/><line x1="559.74" y1="374.75" x2="565.55" y2="376.25" class="tick-min"/><line x1="564.44" y1="352.73" x2="570.35" y2="353.73" class="tick-min"/><line x1="567.19" y1="330.39" x2="573.17" y2="330.87" class="tick-min"/><line x1="567.99" y1="307.90" x2="573.99" y2="307.85" class="tick-min"/><line x1="566.83" y1="285.42" x2="572.80" y2="284.85" class="tick-min"/><line x1="563.71" y1="263.13" x2="569.61" y2="262.04" class="tick-min"/><line x1="558.66" y1="241.20" x2="564.44" y2="239.60" class="tick-min"/><line x1="551.71" y1="219.79" x2="557.34" y2="217.69" class="tick-min"/><line x1="542.93" y1="199.07" x2="548.35" y2="196.49" class="tick-min"/><line x1="532.38" y1="179.19" x2="537.55" y2="176.14" class="tick-min"/><line x1="520.13" y1="160.30" x2="525.02" y2="156.82" class="tick-min"/><line x1="506.28" y1="142.56" x2="510.85" y2="138.66" class="tick-min"/><line x1="490.94" y1="126.09" x2="495.15" y2="121.81" class="tick-min"/><line x1="474.23" y1="111.02" x2="478.05" y2="106.39" class="tick-min"/><line x1="456.26" y1="97.46" x2="459.66" y2="92.52" class="tick-min"/><line x1="437.18" y1="85.52" x2="440.14" y2="80.30" class="tick-min"/><line x1="417.13" y1="75.29" x2="419.62" y2="69.84" class="tick-min"/><line x1="396.27" y1="66.85" x2="398.27" y2="61.19" class="tick-min"/><line x1="374.75" y1="60.26" x2="376.25" y2="54.45" class="tick-min"/><line x1="352.73" y1="55.56" x2="353.73" y2="49.65" class="tick-min"/><line x1="330.39" y1="52.81" x2="330.87" y2="46.83" class="tick-min"/><line x1="307.90" y1="52.01" x2="307.85" y2="46.01" class="tick-min"/><line x1="285.42" y1="53.17" x2="284.85" y2="47.20" class="tick-min"/><line x1="263.13" y1="56.29" x2="262.04" y2="50.39" class="tick-min"/><line x1="241.20" y1="61.34" x2="239.60" y2="55.56" class="tick-min"/><line x1="219.79" y1="68.29" x2="217.69" y2="62.66" class="tick-min"/><line x1="199.07" y1="77.07" x2="196.49" y2="71.65" class="tick-min"/><line x1="179.19" y1="87.62" x2="176.14" y2="82.45" class="tick-min"/><line x1="160.30" y1="99.87" x2="156.82" y2="94.98" class="tick-min"/><line x1="142.56" y1="113.72" x2="138.66" y2="109.15" class="tick-min"/><line x1="126.09" y1="129.06" x2="121.81" y2="124.85" class="tick-min"/><line x1="111.02" y1="145.77" x2="106.39" y2="141.95" class="tick-min"/><line x1="97.46" y1="163.74" x2="92.52" y2="160.34" class="tick-min"/><line x1="85.52" y1="182.82" x2="80.30" y2="179.86" class="tick-min"/><line x1="75.29" y1="202.87" x2="69.84" y2="200.38" class="tick-min"/><line x1="66.85" y1="223.73" x2="61.19" y2="221.73" class="tick-min"/><line x1="60.26" y1="245.25" x2="54.45" y2="243.75" class="tick-min"/><line x1="55.56" y1="267.27" x2="49.65" y2="266.27" class="tick-min"/><line x1="52.81" y1="289.61" x2="46.83" y2="289.13" class="tick-min"/><line x1="52.01" y1="312.10" x2="46.01" y2="312.15" class="tick-min"/><line x1="53.17" y1="334.58" x2="47.20" y2="335.15" class="tick-min"/><line x1="56.29" y1="356.87" x2="50.39" y2="357.96" class="tick-min"/><line x1="61.34" y1="378.80" x2="55.56" y2="380.40" class="tick-min"/><line x1="68.29" y1="400.21" x2="62.66" y2="402.31" class="tick-min"/><line x1="77.07" y1="420.93" x2="71.65" y2="423.51" class="tick-min"/><line x1="87.62" y1="440.81" x2="82.45" y2="443.86" class="tick-min"/><line x1="99.87" y1="459.70" x2="94.98" y2="463.18" class="tick-min"/><line x1="113.72" y1="477.44" x2="109.15" y2="481.34" class="tick-min"/><line x1="129.06" y1="493.91" x2="124.85" y2="498.19" class="tick-min"/><line x1="145.77" y1="508.98" x2="141.95" y2="513.61" class="tick-min"/><line x1="163.74" y1="522.54" x2="160.34" y2="527.48" class="tick-min"/><line x1="182.82" y1="534.48" x2="179.86" y2="539.70" class="tick-min"/><line x1="202.87" y1="544.71" x2="200.38" y2="550.16" class="tick-min"/><line x1="223.73" y1="553.15" x2="221.73" y2="558.81" class="tick-min"/><line x1="218.00" y1="310.00" x2="72.00" y2="310.00" class="cusp-major"/><text x="198.76" y="354.37" class="hn hn-empty">1</text><line x1="238.49" y1="367.88" x2="125.00" y2="459.73" class="cusp"/><text x="248.40" y="415.64" class="hn hn-empty">2</text><line x1="290.99" y1="400.01" x2="260.82" y2="542.86" class="cusp"/><text x="318.19" y="432.72" class="hn">3</text><line x1="341.30" y1="396.51" x2="390.97" y2="533.80" class="cusp-major"/><text x="373.36" y="414.55" class="hn">4</text><line x1="375.12" y1="374.99" x2="478.47" y2="478.12" class="cusp"/><text x="407.94" y="380.81" class="hn hn-empty">5</text><line x1="394.78" y1="345.73" x2="529.32" y2="402.43" class="cusp"/><text x="425.66" y="338.38" class="hn">6</text><line x1="402.00" y1="310.00" x2="548.00" y2="310.00" class="cusp-major"/><text x="421.24" y="275.63" class="hn">7</text><line x1="381.51" y1="252.12" x2="495.00" y2="160.27" class="cusp"/><text x="371.60" y="214.36" class="hn">8</text><line x1="329.01" y1="219.99" x2="359.18" y2="77.14" class="cusp"/><text x="301.81" y="197.28" class="hn">9</text><line x1="278.70" y1="223.49" x2="229.03" y2="86.20" class="cusp-major"/><text x="246.64" y="215.45" class="hn">10</text><line x1="244.88" y1="245.01" x2="141.53" y2="141.88" class="cusp"/><text x="212.06" y="249.19" class="hn">11</text><line x1="225.22" y1="274.27" x2="90.68" y2="217.57" class="cusp"/><text x="194.34" y="291.62" class="hn">12</text><text x="4.00" y="314.00" class="ang">ASC</text><text x="616.00" y="314.00" class="ang">DSC</text><text x="205.90" y="26.25" class="ang">MC</text><text x="414.10" y="601.75" class="ang">IC</text><line x1="274.19" y1="545.29" x2="275.99" y2="533.43" class="spoke"/><text x="278.10" y="527.59" class="pg retro">☋</text><text x="281.11" y="502.81" class="pd">5°℞</text><line x1="292.46" y1="547.35" x2="295.71" y2="503.47" class="spoke"/><text x="296.74" y="497.51" class="pg">☉</text><text x="298.21" y="472.57" class="pd">10°</text><line x1="357.43" y1="543.23" x2="355.04" y2="531.47" class="spoke"/><text x="352.25" y="525.75" class="pg">☿</text><text x="348.26" y="501.15" class="pd">26°</text><line x1="361.08" y1="542.45" x2="351.63" y2="499.48" class="spoke"/><text x="348.63" y="493.81" class="pg">♀</text><text x="344.34" y="469.27" class="pd">26°</text><line x1="392.51" y1="533.24" x2="388.35" y2="521.98" class="spoke"/><text x="383.50" y="516.85" class="pg">⚷</text><text x="376.57" y="493.09" class="pd">4°</text><line x1="538.73" y1="375.78" x2="527.20" y2="372.46" class="spoke"/><text x="513.74" y="376.59" class="pg">♃</text><text x="494.52" y="366.07" class="pd">28°</text><line x1="542.63" y1="259.72" x2="530.90" y2="262.25" class="spoke"/><text x="517.21" y="273.21" class="pg">♂</text><text x="497.67" y="272.44" class="pd">26°</text><line x1="493.20" y1="158.07" x2="483.96" y2="165.73" class="spoke"/><text x="473.18" y="182.67" class="pg retro">♄</text><text x="457.79" y="190.43" class="pd">24°℞</text><line x1="345.81" y1="74.71" x2="344.01" y2="86.57" class="spoke"/><text x="341.90" y="108.41" class="pg retro">☊</text><text x="338.89" y="123.19" class="pd">5°℞</text><line x1="306.12" y1="72.03" x2="306.32" y2="84.03" class="spoke"/><text x="306.55" y="106.03" class="pg retro">♇</text><text x="306.87" y="121.03" class="pd">15°℞</text><line x1="186.70" y1="106.43" x2="192.92" y2="116.69" class="spoke"/><text x="200.17" y="136.67" class="pg retro">♅</text><text x="210.53" y="148.77" class="pd">15°℞</text><line x1="96.54" y1="204.74" x2="107.30" y2="210.05" class="spoke"/><text x="119.86" y="224.24" class="pg retro">♆</text><text x="137.80" y="228.09" class="pd">18°℞</text><line x1="73.97" y1="279.45" x2="85.87" y2="280.99" class="spoke"/><text x="99.75" y="290.78" class="pg">☽</text><text x="119.59" y="288.35" class="pd">7°</text><line x1="329.74" y1="399.86" x2="399.92" y2="290.56" class="asp a-hard"/><line x1="341.90" y1="396.29" x2="278.70" y2="223.49" class="asp a-hard"/><line x1="328.33" y1="400.15" x2="399.92" y2="290.56" class="asp a-hard"/><line x1="328.33" y1="400.15" x2="329.74" y2="399.86" class="asp a-conj"/><line x1="308.50" y1="218.01" x2="218.00" y2="310.00" class="asp a-hard"/><line x1="262.34" y1="231.31" x2="218.00" y2="310.00" class="asp a-soft"/><line x1="218.76" y1="298.19" x2="323.84" y2="219.05" class="asp a-hard"/><line x1="218.76" y1="298.19" x2="296.16" y2="400.95" class="asp a-hard"/></svg>
+    <div class="legend">
+      <h4 style="margin-top:0">Reading the wheel</h4>
+      <p>Ascendant on the left, houses running counterclockwise. Outer ring is the zodiac, inner ring the twelve house cusps. Dim house numbers are the empty ones.</p>
+      <div><span class="sw" style="background:#8C4A3E"></span>Squares and oppositions: the friction</div>
+      <div><span class="sw" style="background:#C9A961"></span>Conjunctions: the fusion</div>
+      <div><span class="sw" style="background:#46606B"></span>Trines and sextiles: the flow</div>
+      <div style="margin-top:14px"><span style="color:var(--rose)">℞</span> marks the five retrograde bodies: Saturn, Uranus, Neptune, Pluto and the Nodes.</div>
+      <p style="margin-top:22px; font-size:13.5px">Only the eight tightest major aspects are drawn, so the hub shows the loud structure rather than every line. The full list of 32 is in the table below.</p>
+    </div>
+  </div>
+
+  <h4>The twelve houses, and who is standing in each</h4>
+  <p class="sub" style="margin-bottom:18px">Eleven bodies plus both Nodes, placed by the computed Placidus cusps. Three houses are empty: <b>1, 2 and 5</b>.</p>
+  <div class="hgrid"><div class="hcard hcard-empty">
+    <div class="hcard-top"><span class="hcard-num">1</span><span class="hcard-cusp"><span class="zg">♑︎</span> Capricorn 14°32'</span></div>
+    <div class="hcard-name">Self, body, the first impression</div>
+    <div class="hcard-ruler">Ruled by Saturn</div>
+    <div class="hcard-occ"><span class="empty-tag">Empty</span></div>
+  </div><div class="hcard hcard-empty">
+    <div class="hcard-top"><span class="hcard-num">2</span><span class="hcard-cusp"><span class="zg">♒︎</span> Aquarius 23°31'</span></div>
+    <div class="hcard-name">Worth, resources, what is mine</div>
+    <div class="hcard-ruler">Ruled by Uranus</div>
+    <div class="hcard-occ"><span class="empty-tag">Empty</span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">3</span><span class="hcard-cusp"><span class="zg">♈︎</span> Aries 2°36'</span></div>
+    <div class="hcard-name">Mind, learning, speech, the near world</div>
+    <div class="hcard-ruler">Ruled by Mars</div>
+    <div class="hcard-occ"><span class="occ">☋ <b>South Node</b> Aries 5°53' <i class="rx">℞</i></span><span class="occ">☉ <b>Sun</b> Aries 10°19'</span><span class="occ">☿ <b>Mercury</b> Aries 26°02'</span><span class="occ">♀ <b>Venus</b> Aries 26°56'</span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">4</span><span class="hcard-cusp"><span class="zg">♉︎</span> Taurus 4°25'</span></div>
+    <div class="hcard-name">Root, home, lineage, the private floor</div>
+    <div class="hcard-ruler">Ruled by Venus</div>
+    <div class="hcard-occ"><span class="occ">⚷ <b>Chiron</b> Taurus 4°49'</span></div>
+  </div><div class="hcard hcard-empty">
+    <div class="hcard-top"><span class="hcard-num">5</span><span class="hcard-cusp"><span class="zg">♉︎</span> Taurus 29°36'</span></div>
+    <div class="hcard-name">Play, creativity, eros, children</div>
+    <div class="hcard-ruler">Ruled by Venus</div>
+    <div class="hcard-occ"><span class="empty-tag">Empty</span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">6</span><span class="hcard-cusp"><span class="zg">♊︎</span> Gemini 21°41'</span></div>
+    <div class="hcard-name">Craft, routine, service, the body at work</div>
+    <div class="hcard-ruler">Ruled by Mercury</div>
+    <div class="hcard-occ"><span class="occ">♃ <b>Jupiter</b> Gemini 28°29'</span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">7</span><span class="hcard-cusp"><span class="zg">♋︎</span> Cancer 14°32'</span></div>
+    <div class="hcard-name">Partnership, the other, open conflict</div>
+    <div class="hcard-ruler">Ruled by Moon</div>
+    <div class="hcard-occ"><span class="occ">♂ <b>Mars</b> Cancer 26°44'</span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">8</span><span class="hcard-cusp"><span class="zg">♌︎</span> Leo 23°31'</span></div>
+    <div class="hcard-name">Shared resources, death, the hidden</div>
+    <div class="hcard-ruler">Ruled by Sun</div>
+    <div class="hcard-occ"><span class="occ">♄ <b>Saturn</b> Leo 24°12' <i class="rx">℞</i></span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">9</span><span class="hcard-cusp"><span class="zg">♎︎</span> Libra 2°36'</span></div>
+    <div class="hcard-name">Meaning, teaching, the long view</div>
+    <div class="hcard-ruler">Ruled by Venus</div>
+    <div class="hcard-occ"><span class="occ">☊ <b>North Node</b> Libra 5°53' <i class="rx">℞</i></span><span class="occ">♇ <b>Pluto</b> Libra 15°28' <i class="rx">℞</i></span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">10</span><span class="hcard-cusp"><span class="zg">♏︎</span> Scorpio 4°25'</span></div>
+    <div class="hcard-name">Vocation, public role, authority</div>
+    <div class="hcard-ruler">Ruled by Pluto</div>
+    <div class="hcard-occ"><span class="occ">♅ <b>Uranus</b> Scorpio 15°44' <i class="rx">℞</i></span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">11</span><span class="hcard-cusp"><span class="zg">♏︎</span> Scorpio 29°36'</span></div>
+    <div class="hcard-name">The collective, the future, the circle</div>
+    <div class="hcard-ruler">Ruled by Pluto</div>
+    <div class="hcard-occ"><span class="occ">♆ <b>Neptune</b> Sagittarius 18°17' <i class="rx">℞</i></span></div>
+  </div><div class="hcard">
+    <div class="hcard-top"><span class="hcard-num">12</span><span class="hcard-cusp"><span class="zg">♐︎</span> Sagittarius 21°41'</span></div>
+    <div class="hcard-name">Solitude, the unseen, dissolution</div>
+    <div class="hcard-ruler">Ruled by Jupiter</div>
+    <div class="hcard-occ"><span class="occ">☽ <b>Moon</b> Capricorn 7°09'</span></div>
+  </div></div>
+
+  <h4>Element balance: how many of each</h4>
+  <p class="sub" style="margin-bottom:22px">Counted the standard way first: the ten planets plus Chiron, eleven bodies. Then the same count again with the Nodes, Ascendant and Midheaven folded in, because the answer shifts depending on what you count and it is worth seeing both.</p>
+  <div class="bars"><div class="bar-row">
+    <div class="bar-head"><span class="bar-name">Fire</span><span class="bar-n">5</span></div>
+    <div class="bar-track"><div class="bar-fill el-fire" style="width:45.5%"></div></div>
+    <div class="bar-body"><span class="chip">☉ Sun <i>Aries</i></span><span class="chip">☿ Mercury <i>Aries</i></span><span class="chip">♀ Venus <i>Aries</i></span><span class="chip">♄ Saturn <i>Leo</i></span><span class="chip">♆ Neptune <i>Sagittarius</i></span></div>
+    <div class="bar-extra">plus the points: <span class="chip chip-ghost">☋ South Node <i>Aries</i></span> <span class="bar-ext-n">→ 6 of 15</span></div>
+    <div class="bar-gloss">Ignition. Starts things, needs to burn, dies of boredom.</div>
+  </div><div class="bar-row">
+    <div class="bar-head"><span class="bar-name">Earth</span><span class="bar-n">2</span></div>
+    <div class="bar-track"><div class="bar-fill el-earth" style="width:18.2%"></div></div>
+    <div class="bar-body"><span class="chip">☽ Moon <i>Capricorn</i></span><span class="chip">⚷ Chiron <i>Taurus</i></span></div>
+    <div class="bar-extra">plus the points: <span class="chip chip-ghost">↑ Ascendant <i>Capricorn</i></span> <span class="bar-ext-n">→ 3 of 15</span></div>
+    <div class="bar-gloss">Form. Holds, builds, makes real, resists being rushed.</div>
+  </div><div class="bar-row">
+    <div class="bar-head"><span class="bar-name">Air</span><span class="bar-n">2</span></div>
+    <div class="bar-track"><div class="bar-fill el-air" style="width:18.2%"></div></div>
+    <div class="bar-body"><span class="chip">♃ Jupiter <i>Gemini</i></span><span class="chip">♇ Pluto <i>Libra</i></span></div>
+    <div class="bar-extra">plus the points: <span class="chip chip-ghost">☊ North Node <i>Libra</i></span> <span class="bar-ext-n">→ 3 of 15</span></div>
+    <div class="bar-gloss">Pattern. Connects, names, explains, floats off.</div>
+  </div><div class="bar-row">
+    <div class="bar-head"><span class="bar-name">Water</span><span class="bar-n">2</span></div>
+    <div class="bar-track"><div class="bar-fill el-water" style="width:18.2%"></div></div>
+    <div class="bar-body"><span class="chip">♂ Mars <i>Cancer</i></span><span class="chip">♅ Uranus <i>Scorpio</i></span></div>
+    <div class="bar-extra">plus the points: <span class="chip chip-ghost">MC Midheaven <i>Scorpio</i></span> <span class="bar-ext-n">→ 3 of 15</span></div>
+    <div class="bar-gloss">Feeling. Senses, bonds, absorbs, drowns if undrained.</div>
+  </div></div>
+
+  <h4>Modality balance</h4>
+  <p class="sub" style="margin-bottom:22px">Same eleven bodies. <b>Cardinal 6</b> is the headline: six of eleven want to start something.</p>
+  <div class="bars"><div class="bar-row">
+    <div class="bar-head"><span class="bar-name">Cardinal</span><span class="bar-n">6</span></div>
+    <div class="bar-track"><div class="bar-fill mo-cardinal" style="width:54.5%"></div></div>
+    <div class="bar-body"><span class="chip">☉ Sun</span><span class="chip">☽ Moon</span><span class="chip">☿ Mercury</span><span class="chip">♀ Venus</span><span class="chip">♂ Mars</span><span class="chip">♇ Pluto</span></div>
+    <div class="bar-gloss">Initiates. Starts the cycle, opens the door.</div>
+  </div><div class="bar-row">
+    <div class="bar-head"><span class="bar-name">Fixed</span><span class="bar-n">3</span></div>
+    <div class="bar-track"><div class="bar-fill mo-fixed" style="width:27.3%"></div></div>
+    <div class="bar-body"><span class="chip">♄ Saturn</span><span class="chip">♅ Uranus</span><span class="chip">⚷ Chiron</span></div>
+    <div class="bar-gloss">Sustains. Holds the line, refuses to move.</div>
+  </div><div class="bar-row">
+    <div class="bar-head"><span class="bar-name">Mutable</span><span class="bar-n">2</span></div>
+    <div class="bar-track"><div class="bar-fill mo-mutable" style="width:18.2%"></div></div>
+    <div class="bar-body"><span class="chip">♃ Jupiter</span><span class="chip">♆ Neptune</span></div>
+    <div class="bar-gloss">Adapts. Changes shape, finishes nothing cleanly.</div>
+  </div></div>
+
+  <h4>Everything, with degrees</h4>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th></th><th>Point</th><th>Sign</th><th>Degree</th><th>House</th><th>Element · Modality</th><th></th></tr></thead>
+    <tbody><tr>
+  <td class="g">☉</td><td><b>Sun</b></td>
+  <td><span class="zg">♈︎</span> Aries</td><td class="num">10°19'</td>
+  <td class="num">3</td><td>Fire · Cardinal</td>
+  <td></td></tr><tr>
+  <td class="g">☽</td><td><b>Moon</b></td>
+  <td><span class="zg">♑︎</span> Capricorn</td><td class="num">7°09'</td>
+  <td class="num">12</td><td>Earth · Cardinal</td>
+  <td></td></tr><tr>
+  <td class="g">☿</td><td><b>Mercury</b></td>
+  <td><span class="zg">♈︎</span> Aries</td><td class="num">26°02'</td>
+  <td class="num">3</td><td>Fire · Cardinal</td>
+  <td></td></tr><tr>
+  <td class="g">♀</td><td><b>Venus</b></td>
+  <td><span class="zg">♈︎</span> Aries</td><td class="num">26°56'</td>
+  <td class="num">3</td><td>Fire · Cardinal</td>
+  <td></td></tr><tr>
+  <td class="g">♂</td><td><b>Mars</b></td>
+  <td><span class="zg">♋︎</span> Cancer</td><td class="num">26°44'</td>
+  <td class="num">7</td><td>Water · Cardinal</td>
+  <td></td></tr><tr>
+  <td class="g">♃</td><td><b>Jupiter</b></td>
+  <td><span class="zg">♊︎</span> Gemini</td><td class="num">28°29'</td>
+  <td class="num">6</td><td>Air · Mutable</td>
+  <td></td></tr><tr>
+  <td class="g">♄</td><td><b>Saturn</b></td>
+  <td><span class="zg">♌︎</span> Leo</td><td class="num">24°12'</td>
+  <td class="num">8</td><td>Fire · Fixed</td>
+  <td><span class="rx">℞ retrograde</span></td></tr><tr>
+  <td class="g">♅</td><td><b>Uranus</b></td>
+  <td><span class="zg">♏︎</span> Scorpio</td><td class="num">15°44'</td>
+  <td class="num">10</td><td>Water · Fixed</td>
+  <td><span class="rx">℞ retrograde</span></td></tr><tr>
+  <td class="g">♆</td><td><b>Neptune</b></td>
+  <td><span class="zg">♐︎</span> Sagittarius</td><td class="num">18°17'</td>
+  <td class="num">11</td><td>Fire · Mutable</td>
+  <td><span class="rx">℞ retrograde</span></td></tr><tr>
+  <td class="g">♇</td><td><b>Pluto</b></td>
+  <td><span class="zg">♎︎</span> Libra</td><td class="num">15°28'</td>
+  <td class="num">9</td><td>Air · Cardinal</td>
+  <td><span class="rx">℞ retrograde</span></td></tr><tr>
+  <td class="g">⚷</td><td><b>Chiron</b></td>
+  <td><span class="zg">♉︎</span> Taurus</td><td class="num">4°49'</td>
+  <td class="num">4</td><td>Earth · Fixed</td>
+  <td></td></tr><tr>
+  <td class="g">☊</td><td><b>North Node</b></td>
+  <td><span class="zg">♎︎</span> Libra</td><td class="num">5°53'</td>
+  <td class="num">9</td><td>Air · Cardinal</td>
+  <td><span class="rx">℞ retrograde</span></td></tr><tr>
+  <td class="g">☋</td><td><b>South Node</b></td>
+  <td><span class="zg">♈︎</span> Aries</td><td class="num">5°53'</td>
+  <td class="num">3</td><td>Fire · Cardinal</td>
+  <td><span class="rx">℞ retrograde</span></td></tr><tr><td class="g">↑</td><td><b>Ascendant</b></td><td><span class="zg">♑︎</span> Capricorn</td><td class="num">14°32'</td><td class="num">n/a</td><td>Earth</td><td></td></tr><tr><td class="g">↓</td><td><b>Descendant</b></td><td><span class="zg">♋︎</span> Cancer</td><td class="num">14°32'</td><td class="num">n/a</td><td>Water</td><td></td></tr><tr><td class="g">MC</td><td><b>Midheaven</b></td><td><span class="zg">♏︎</span> Scorpio</td><td class="num">4°25'</td><td class="num">n/a</td><td>Water</td><td></td></tr><tr><td class="g">IC</td><td><b>Imum Coeli</b></td><td><span class="zg">♉︎</span> Taurus</td><td class="num">4°25'</td><td class="num">n/a</td><td>Earth</td><td></td></tr></tbody>
+  </table>
+  </div>
+
+  <h4>The shape of it</h4>
+  <div class="tablewrap">
+  <table>
+    <tbody>
+      <tr><td class="k">Sun · Moon · Rising</td><td class="v">Aries · Capricorn · Capricorn</td><td class="n">Fire engine, earth chassis, earth doors. The outside is far more contained than the inside.</td></tr>
+      <tr><td class="k">Chart ruler</td><td class="v">Saturn, retrograde, Leo 24°12′, 8th house</td><td class="n">Capricorn rising hands the keys to Saturn, and Saturn is backward in the house of other people’s resources. Authority arrives late, inward first, and through what is shared rather than what is owned.</td></tr>
+      <tr><td class="k">Stellium</td><td class="v">Sun + Mercury + Venus in Aries, 3rd house</td><td class="n">The only stellium, and it is in the house of learning and speech. Three of eleven bodies stacked on study, language and the near world.</td></tr>
+      <tr><td class="k">Empty houses</td><td class="v">1st, 2nd, 5th</td><td class="n">Self-image, worth, and play. Not absent, unfixed. Run through their ruling planets instead: Saturn (1st and 2nd, both Capricorn and Aquarius ruled) and Venus (5th, Taurus).</td></tr>
+      <tr><td class="k">Loudest aspect</td><td class="v">Venus square Mars, 0.20°</td><td class="n">Essentially exact. Desire and assertion at ninety degrees, for life. This is the single most structurally important line in the chart.</td></tr>
+      <tr><td class="k">Second loudest</td><td class="v">Chiron opposite Midheaven, 0.40°</td><td class="n">The wound sits on the axis between the private floor of the house and the public role. Within half a degree.</td></tr>
+      <tr><td class="k">Retrogrades</td><td class="v">Saturn, Uranus, Neptune, Pluto</td><td class="n">Every outer planet plus the chart ruler. The whole structural and transpersonal layer points inward before it points out.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4>All 32 aspects, tightest first</h4>
+  <p class="sub" style="margin-bottom:18px">The shaded top five are where the chart is actually loud. Orb is the distance from exact: smaller means stronger.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Point</th><th></th><th>Point</th><th>Aspect</th><th>Orb</th><th></th><th>Strength</th></tr></thead>
+    <tbody><tr class="loud">
+  <td>Venus</td><td class="g">□</td><td>Mars</td>
+  <td>Square</td><td class="num">0.20°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:97%"></span></td></tr><tr class="loud">
+  <td>Uranus</td><td class="g">⚺</td><td>Pluto</td>
+  <td>Semisextile</td><td class="num">0.27°</td>
+  <td>minor</td>
+  <td class="bar-mini"><span style="width:87%"></span></td></tr><tr class="loud">
+  <td>Chiron</td><td class="g">☍</td><td>MC</td>
+  <td>Opposition</td><td class="num">0.40°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:95%"></span></td></tr><tr class="loud">
+  <td>Mercury</td><td class="g">□</td><td>Mars</td>
+  <td>Square</td><td class="num">0.70°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:90%"></span></td></tr><tr class="loud">
+  <td>Mercury</td><td class="g">☌</td><td>Venus</td>
+  <td>Conjunction</td><td class="num">0.90°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:89%"></span></td></tr><tr class="">
+  <td>Pluto</td><td class="g">□</td><td>ASC</td>
+  <td>Square</td><td class="num">0.93°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:87%"></span></td></tr><tr class="">
+  <td>Chiron</td><td class="g">⊻</td><td>North Node</td>
+  <td>Quincunx</td><td class="num">1.06°</td>
+  <td>minor</td>
+  <td class="bar-mini"><span style="width:65%"></span></td></tr><tr class="">
+  <td>Chiron</td><td class="g">⚺</td><td>South Node</td>
+  <td>Semisextile</td><td class="num">1.06°</td>
+  <td>minor</td>
+  <td class="bar-mini"><span style="width:47%"></span></td></tr><tr class="">
+  <td>Uranus</td><td class="g">⚹</td><td>ASC</td>
+  <td>Sextile</td><td class="num">1.20°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:76%"></span></td></tr><tr class="">
+  <td>Moon</td><td class="g">□</td><td>North Node</td>
+  <td>Square</td><td class="num">1.28°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:82%"></span></td></tr><tr class="">
+  <td>Moon</td><td class="g">□</td><td>South Node</td>
+  <td>Square</td><td class="num">1.28°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:82%"></span></td></tr><tr class="">
+  <td>North Node</td><td class="g">⚺</td><td>MC</td>
+  <td>Semisextile</td><td class="num">1.46°</td>
+  <td>minor</td>
+  <td class="bar-mini"><span style="width:27%"></span></td></tr><tr class="">
+  <td>South Node</td><td class="g">⊻</td><td>MC</td>
+  <td>Quincunx</td><td class="num">1.46°</td>
+  <td>minor</td>
+  <td class="bar-mini"><span style="width:51%"></span></td></tr><tr class="">
+  <td>Venus</td><td class="g">⚹</td><td>Jupiter</td>
+  <td>Sextile</td><td class="num">1.56°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:69%"></span></td></tr><tr class="">
+  <td>Mars</td><td class="g">⚺</td><td>Jupiter</td>
+  <td>Semisextile</td><td class="num">1.76°</td>
+  <td>minor</td>
+  <td class="bar-mini"><span style="width:12%"></span></td></tr><tr class="">
+  <td>Mercury</td><td class="g">△</td><td>Saturn</td>
+  <td>Trine</td><td class="num">1.82°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:74%"></span></td></tr><tr class="">
+  <td>Moon</td><td class="g">△</td><td>Chiron</td>
+  <td>Trine</td><td class="num">2.34°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:67%"></span></td></tr><tr class="">
+  <td>Mercury</td><td class="g">⚹</td><td>Jupiter</td>
+  <td>Sextile</td><td class="num">2.46°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:51%"></span></td></tr><tr class="">
+  <td>Venus</td><td class="g">△</td><td>Saturn</td>
+  <td>Trine</td><td class="num">2.72°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:61%"></span></td></tr><tr class="">
+  <td>Moon</td><td class="g">⚹</td><td>MC</td>
+  <td>Sextile</td><td class="num">2.74°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:45%"></span></td></tr><tr class="">
+  <td>Neptune</td><td class="g">⚹</td><td>Pluto</td>
+  <td>Sextile</td><td class="num">2.82°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:44%"></span></td></tr><tr class="">
+  <td>Sun</td><td class="g">□</td><td>Moon</td>
+  <td>Square</td><td class="num">3.15°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:55%"></span></td></tr><tr class="">
+  <td>Sun</td><td class="g">□</td><td>ASC</td>
+  <td>Square</td><td class="num">4.23°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:40%"></span></td></tr><tr class="">
+  <td>Jupiter</td><td class="g">⚹</td><td>Saturn</td>
+  <td>Sextile</td><td class="num">4.28°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:14%"></span></td></tr><tr class="">
+  <td>Sun</td><td class="g">☍</td><td>North Node</td>
+  <td>Opposition</td><td class="num">4.43°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:45%"></span></td></tr><tr class="">
+  <td>Sun</td><td class="g">☌</td><td>South Node</td>
+  <td>Conjunction</td><td class="num">4.43°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:45%"></span></td></tr><tr class="">
+  <td>Sun</td><td class="g">☍</td><td>Pluto</td>
+  <td>Opposition</td><td class="num">5.16°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:36%"></span></td></tr><tr class="">
+  <td>Saturn</td><td class="g">△</td><td>Neptune</td>
+  <td>Trine</td><td class="num">5.92°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:16%"></span></td></tr><tr class="">
+  <td>Jupiter</td><td class="g">△</td><td>MC</td>
+  <td>Trine</td><td class="num">5.93°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:15%"></span></td></tr><tr class="">
+  <td>Moon</td><td class="g">☌</td><td>ASC</td>
+  <td>Conjunction</td><td class="num">7.38°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:8%"></span></td></tr><tr class="">
+  <td>Venus</td><td class="g">☍</td><td>MC</td>
+  <td>Opposition</td><td class="num">7.50°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:6%"></span></td></tr><tr class="">
+  <td>Venus</td><td class="g">☌</td><td>Chiron</td>
+  <td>Conjunction</td><td class="num">7.89°</td>
+  <td>major</td>
+  <td class="bar-mini"><span style="width:1%"></span></td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ II. HUMAN DESIGN ============ -->
+<section id="hd">
+  <div class="sechead">
+    <img class="gmark" src="./assets/braid-light.png" alt="">
+    <div class="secnum">II</div>
+    <div><h2>Human Design</h2><p class="sub">The mechanics. What is wired, what is open, and how a decision is actually meant to be made.</p></div>
+  </div>
+
+  <h4 style="margin-top:0">The card, plainly</h4>
+  <div class="tablewrap">
+  <table><tbody><tr><td class="k">Type</td><td class="v">Generator</td><td class="n">Energy is available and renewable, but it has to be met by something, not launched at it.</td></tr><tr><td class="k">Strategy</td><td class="v">Wait to Respond</td><td class="n">Not passivity. Response is the aperture. Initiating from the mind is the leak.</td></tr><tr><td class="k">Authority</td><td class="v">Sacral</td><td class="n">The gut, in the moment, before words. Not the heart, not the head, not tomorrow.</td></tr><tr><td class="k">Profile</td><td class="v">1/3 · Investigator / Martyr</td><td class="n">Dig to the foundation, then learn by trial. Both halves are required.</td></tr><tr><td class="k">Definition</td><td class="v">Split, 2 components</td><td class="n">{Sacral + G} and {Spleen + Root}. Other people bridge the gap, which is why company helps.</td></tr><tr><td class="k">Signature</td><td class="v">Satisfaction</td><td class="n">The felt sign it is working. Not excitement, not peace. Satisfaction.</td></tr><tr><td class="k">Not-Self Theme</td><td class="v">Frustration</td><td class="n">The alarm. Frustration means initiated, not responded to.</td></tr><tr><td class="k">Incarnation Cross</td><td class="v">Right Angle Cross of Tension (21/48 | 38/39)</td><td class="n">Here to hold tension until it resolves into something useful. Not to relieve it early.</td></tr><tr><td class="k">Manifestation</td><td class="v">Non-Specific</td><td class="n">The what arrives; the how is not yours to specify in advance.</td></tr><tr><td class="k">Emotions</td><td class="v">Non-Emotional</td><td class="n">Open Solar Plexus. Clarity is available now; no wave to ride out.</td></tr><tr><td class="k">Digestion</td><td class="v">Indirect Light</td><td class="n">Food and information both. Nothing raw, nothing straight from the source, cook it first.</td></tr><tr><td class="k">Strongest Sense</td><td class="v">Touch</td><td class="n">Decisions and knowing come through contact, not through looking.</td></tr><tr><td class="k">Environment</td><td class="v">Natural Shores</td><td class="n">Edges. Where one element meets another. Literal coast, literal threshold.</td></tr></tbody></table>
+  </div>
+
+  <h4>The nine centres</h4>
+  <p class="sub" style="margin-bottom:22px">Four defined, five open. Solid cards are defined, dashed are open. Gold gate numbers are the four gates that actually complete a channel; the rest are hanging gates, which colour a centre without defining it.</p>
+  <div class="cgrid"><div class="ccard open">
+  <div class="ccard-top"><span class="ccard-name">Head</span><span class="ccard-state">Open</span></div>
+  <div class="ccard-gates"><span class="none">no gates</span></div>
+  <div class="ccard-note">No gates at all. Zero fixed inspiration. Mental pressure arriving here is never yours to answer.</div>
+</div><div class="ccard open">
+  <div class="ccard-top"><span class="ccard-name">Ajna</span><span class="ccard-state">Open</span></div>
+  <div class="ccard-gates"><span class="gate">4</span><span class="gate">17</span></div>
+  <div class="ccard-note">Two hanging gates, both opinion-shaped. Certainty here is borrowed, never held.</div>
+</div><div class="ccard open">
+  <div class="ccard-top"><span class="ccard-name">Throat</span><span class="ccard-state">Open</span></div>
+  <div class="ccard-gates"><span class="gate">33</span><span class="gate">56</span></div>
+  <div class="ccard-note">No fixed voice. The transmission is real; the timing is not yours to force.</div>
+</div><div class="ccard defined">
+  <div class="ccard-top"><span class="ccard-name">G / Identity</span><span class="ccard-state">Defined</span></div>
+  <div class="ccard-gates"><span class="gate">1</span><span class="gate gate-ch">15</span></div>
+  <div class="ccard-note">Fixed direction, fixed sense of self. The one place the compass is built in.</div>
+</div><div class="ccard open">
+  <div class="ccard-top"><span class="ccard-name">Heart / Ego</span><span class="ccard-state">Open</span></div>
+  <div class="ccard-gates"><span class="gate">21</span><span class="gate">26</span></div>
+  <div class="ccard-note">Willpower and self-worth are not wired. Gate 21, the headline gift, sits here undefined.</div>
+</div><div class="ccard defined">
+  <div class="ccard-top"><span class="ccard-name">Sacral</span><span class="ccard-state">Defined</span></div>
+  <div class="ccard-gates"><span class="gate">3</span><span class="gate gate-ch">5</span><span class="gate">29</span><span class="gate">42</span></div>
+  <div class="ccard-note">Four gates. The engine and the authority. Loudest centre in the design.</div>
+</div><div class="ccard open">
+  <div class="ccard-top"><span class="ccard-name">Solar Plexus</span><span class="ccard-state">Open</span></div>
+  <div class="ccard-gates"><span class="none">no gates</span></div>
+  <div class="ccard-note">No gates at all. Non-emotional. Emotional weather in a room is never your own.</div>
+</div><div class="ccard defined">
+  <div class="ccard-top"><span class="ccard-name">Spleen</span><span class="ccard-state">Defined</span></div>
+  <div class="ccard-gates"><span class="gate gate-ch">18</span><span class="gate">48</span><span class="gate">57</span></div>
+  <div class="ccard-note">Three gates. Instinct, timing, intuition, and a wired read on what is not working.</div>
+</div><div class="ccard defined">
+  <div class="ccard-top"><span class="ccard-name">Root</span><span class="ccard-state">Defined</span></div>
+  <div class="ccard-gates"><span class="gate">38</span><span class="gate">39</span><span class="gate gate-ch">58</span></div>
+  <div class="ccard-note">Three gates. Fixed pressure to fuel, provoke and improve. Adrenalised by design.</div>
+</div></div>
+
+  <h4>The two channels, and there are only two</h4>
+  <div class="chgrid">
+    <div class="chcard">
+      <div class="cht">5 · 15</div>
+      <div class="chs">The Channel of Rhythm · Sacral to G</div>
+      <p>Gate 5 <i>Marching to Your Own Rhythm</i> into Gate 15 <i>Venturing to the Extremes</i>. A fixed, non-negotiable personal rhythm wired straight into your sense of direction. This is why the 5:30 AM to 10:00 AM window is not a habit you could swap out. It is a circuit. Gate 15 then insists the rhythm has range in it, not sameness.</p>
+    </div>
+    <div class="chcard">
+      <div class="cht">18 · 58</div>
+      <div class="chs">The Channel of Judgement · Spleen to Root</div>
+      <p>Gate 18 <i>Improvement</i> into Gate 58 <i>Self-Created Joy</i>. A wired, correcting intelligence: you see what is not working and you are pressured from the Root to fix it. At the gift end it is Integrity feeding Vitality. At the shadow end it is Judgement feeding Dissatisfaction. Same wire, two settings, and the one you are on is a choice.</p>
+    </div>
+  </div>
+
+  <h4>Both activation columns, with the named gift of each gate</h4>
+  <p class="sub" style="margin-bottom:18px">Design in rose is the unconscious body, set 88 days before birth. Personality in cream is the conscious self, set at the moment of birth. Every Personality gate here was recomputed from the astrology degrees and all thirteen match.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Planet</th><th>Design · unconscious</th><th>Personality · conscious</th></tr></thead>
+    <tbody><tr><td class="v">☉ Sun</td>
+    <td class="des">38.3 <span class="gname">A Warrior of the Light</span></td>
+    <td class="per">21.1 <span class="gname">A Natural Instinct for How to Control Resources</span></td></tr><tr><td class="v">⊕ Earth</td>
+    <td class="des">39.3 <span class="gname">Provoking With Consciousness</span></td>
+    <td class="per">48.1 <span class="gname">Natural Purity</span></td></tr><tr><td class="v">☽ Moon</td>
+    <td class="des">57.5 <span class="gname">Reading The Room</span></td>
+    <td class="per">58.4 <span class="gname">Self-Created Joy</span></td></tr><tr><td class="v">☊ North Node</td>
+    <td class="des">48.1 <span class="gname">Natural Purity</span></td>
+    <td class="per">18.3 <span class="gname">Improvement</span></td></tr><tr><td class="v">☋ South Node</td>
+    <td class="des">21.1 <span class="gname">A Natural Instinct for How to Control Resources</span></td>
+    <td class="per">17.3 <span class="gname">Substantiating Opinions</span></td></tr><tr><td class="v">☿ Mercury</td>
+    <td class="des">26.5 <span class="gname">Tailoring Your Message</span></td>
+    <td class="per">42.6 <span class="gname">Intentionality</span></td></tr><tr><td class="v">♀ Venus</td>
+    <td class="des">58.5 <span class="gname">Self-Created Joy</span></td>
+    <td class="per">3.1 <span class="gname">Innovation</span></td></tr><tr><td class="v">♂ Mars</td>
+    <td class="des">33.1 <span class="gname">Contemplation</span></td>
+    <td class="per">56.1 <span class="gname">Sharing Your Take on the Facts of Life</span></td></tr><tr><td class="v">♃ Jupiter</td>
+    <td class="des">15.2 <span class="gname">Venturing to the Extremes</span></td>
+    <td class="per">15.1 <span class="gname">Venturing to the Extremes</span></td></tr><tr><td class="v">♄ Saturn</td>
+    <td class="des">29.6 <span class="gname">Love of Getting Involved With Others</span></td>
+    <td class="per">4.6 <span class="gname">A Logical Mind</span></td></tr><tr><td class="v">♅ Uranus</td>
+    <td class="des">1.3 <span class="gname">Creating New Things</span></td>
+    <td class="per">1.3 <span class="gname">Creating New Things</span></td></tr><tr><td class="v">♆ Neptune</td>
+    <td class="des">5.6 <span class="gname">Marching to Your Own Rhythm</span></td>
+    <td class="per">26.2 <span class="gname">Tailoring Your Message</span></td></tr><tr><td class="v">♇ Pluto</td>
+    <td class="des">57.2 <span class="gname">Reading The Room</span></td>
+    <td class="per">57.1 <span class="gname">Reading The Room</span></td></tr></tbody>
+  </table>
+  </div>
+
+  <h4>Where the 18 gates actually sit</h4>
+  <div class="tablewrap">
+  <table>
+    <tbody>
+      <tr><td class="k">Sacral</td><td class="v">4 gates: 3, 5, 29, 42</td><td class="n">Loudest centre. Also your authority.</td></tr>
+      <tr><td class="k">Spleen</td><td class="v">3 gates: 18, 48, 57</td><td class="n">Instinct, timing, intuition.</td></tr>
+      <tr><td class="k">Root</td><td class="v">3 gates: 38, 39, 58</td><td class="n">Fixed pressure. Fuel.</td></tr>
+      <tr><td class="k">Ajna</td><td class="v">2 gates: 4, 17 <i>(open)</i></td><td class="n">Both opinion gates. Hanging.</td></tr>
+      <tr><td class="k">Throat</td><td class="v">2 gates: 33, 56 <i>(open)</i></td><td class="n">Storyteller gates, no fixed voice.</td></tr>
+      <tr><td class="k">G / Identity</td><td class="v">2 gates: 1, 15</td><td class="n">Defined. The compass.</td></tr>
+      <tr><td class="k">Heart / Ego</td><td class="v">2 gates: 21, 26 <i>(open)</i></td><td class="n">Your headline gift lives here, undefined.</td></tr>
+      <tr><td class="k">Head</td><td class="v">0 gates <i>(open)</i></td><td class="n">Nothing. No fixity whatsoever.</td></tr>
+      <tr><td class="k">Solar Plexus</td><td class="v">0 gates <i>(open)</i></td><td class="n">Nothing. Non-emotional by design.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub" style="margin-top:16px"><b>Ten of eighteen gates sit in the Sacral, Spleen and Root.</b> The body carries the design. The two centres with literally nothing in them are the two that generate thinking and emotional weather.</p>
+
+  <h4>Decision table for Sacral authority</h4>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>What it feels like</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td class="v">Rising energy, warmth, an audible "uh-huh"</td><td class="n">Sacral <b>yes</b>. Move toward it.</td></tr>
+      <tr><td class="v">Flat, contracted, "unh-unh"</td><td class="n">Sacral <b>no</b>. Trust it. Hesitation counts as no for now.</td></tr>
+      <tr><td class="v">Urgent, pressured, "I should"</td><td class="n">Mind or Root. <b>Not authority.</b></td></tr>
+      <tr><td class="v">Emotional overwhelm</td><td class="n">Open Solar Plexus. <b>Not yours.</b> You picked it up in the room.</td></tr>
+      <tr><td class="v">"I need to prove this is right"</td><td class="n">Open Heart. <b>Not your truth</b>, just the need for recognition talking.</td></tr>
+      <tr><td class="v">Frustration</td><td class="n">The not-self alarm. You initiated instead of responding.</td></tr>
+      <tr><td class="v">Satisfaction</td><td class="n">The signature. You got it right.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ III. GENE KEYS ============ -->
+<section id="gk">
+  <div class="sechead">
+    <img class="gmark" src="./assets/scarab-light.png" alt="">
+    <div class="secnum">III</div>
+    <div><h2>Gene Keys</h2><p class="sub">The same gates again, read as a spectrum. Shadow, Gift, Siddhi.</p></div>
+  </div>
+
+  <div class="triad-key">
+    <span><b style="color:var(--rose)">Shadow</b> is the challenge. The frequency under pressure and fear.</span>
+    <span><b style="color:var(--gold)">Gift</b> is the creativity. The same energy, met rather than avoided.</span>
+    <span><b style="color:var(--sage)">Siddhi</b> is the essence. The far end of the same line.</span>
+  </div>
+  <p style="max-width:62ch; color:var(--dim); font-size:15px">One line of code, three settings. The Shadow is not a defect and the Siddhi is not a destination: they are the low and high ends of a single frequency, and the Gift is the one you actually live in on a good day. Every shadow below is an unripe gift and a signal of drift, nothing more.</p>
+
+  <h4>Your eleven spheres, in sequence order</h4>
+  <p class="sub" style="margin-bottom:18px">Straight off your Hologenetic Profile (Gene Keys Publishing 2024), in the order the Golden Path walks them.</p>
+  <div class="tablewrap gkwrap">
+  <table>
+    <thead><tr><th>Sequence</th><th>Sphere</th><th>Key</th><th>Shadow</th><th>Gift</th><th>Siddhi</th><th>Line theme</th></tr></thead>
+    <tbody><tr class="seq-activation">
+    <td class="sq">Activation</td>
+    <td class="sp"><b>Life’s Work</b><span class="sp-gloss">what I am here to do</span></td>
+    <td class="num gl">21.1</td>
+    <td class="sh">Control</td><td class="gi">Authority</td><td class="si">Valor</td>
+    <td class="ln">Line 1 · Creator</td></tr><tr class="seq-activation">
+    <td class="sq">Activation</td>
+    <td class="sp"><b>Evolution</b><span class="sp-gloss">what I am here to learn</span></td>
+    <td class="num gl">48.1</td>
+    <td class="sh">Inadequacy</td><td class="gi">Resourcefulness</td><td class="si">Wisdom</td>
+    <td class="ln">Line 1 · Self & Empowerment</td></tr><tr class="seq-activation">
+    <td class="sq">Activation</td>
+    <td class="sp"><b>Radiance</b><span class="sp-gloss">what keeps me healthy</span></td>
+    <td class="num gl">38.3</td>
+    <td class="sh">Struggle</td><td class="gi">Perseverance</td><td class="si">Honour</td>
+    <td class="ln">Line 3 · Interaction</td></tr><tr class="seq-activation">
+    <td class="sq">Activation</td>
+    <td class="sp"><b>Purpose</b><span class="sp-gloss">what deeply fulfils me</span></td>
+    <td class="num gl">39.3</td>
+    <td class="sh">Provocation</td><td class="gi">Dynamism</td><td class="si">Liberation</td>
+    <td class="ln">Line 3 · Movement (blood)</td></tr><tr class="seq-venus">
+    <td class="sq">Venus</td>
+    <td class="sp"><b>Attraction</b><span class="sp-gloss">what draws love in</span></td>
+    <td class="num gl">57.5</td>
+    <td class="sh">Unease</td><td class="gi">Intuition</td><td class="si">Clarity</td>
+    <td class="ln">Line 5 · Entrapment / Sensuality</td></tr><tr class="seq-venus">
+    <td class="sq">Venus</td>
+    <td class="sp"><b>IQ</b><span class="sp-gloss">the mind in relationship</span></td>
+    <td class="num gl">3.1</td>
+    <td class="sh">Chaos</td><td class="gi">Innovation</td><td class="si">Innocence</td>
+    <td class="ln">Line 1 · The contemplative mind (hidden)</td></tr><tr class="seq-venus">
+    <td class="sq">Venus</td>
+    <td class="sp"><b>EQ</b><span class="sp-gloss">the heart in relationship</span></td>
+    <td class="num gl">56.1</td>
+    <td class="sh">Distraction</td><td class="gi">Enrichment</td><td class="si">Intoxication</td>
+    <td class="ln">Line 1 · Self-esteem / Self-sabotage</td></tr><tr class="seq-venus">
+    <td class="sq">Venus</td>
+    <td class="sp"><b>SQ</b><span class="sp-gloss">the spirit in relationship</span></td>
+    <td class="num gl">58.5</td>
+    <td class="sh">Dissatisfaction</td><td class="gi">Vitality</td><td class="si">Bliss</td>
+    <td class="ln">Line 5 · Mentoring (role models with integrity)</td></tr><tr class="seq-pearl">
+    <td class="sq">Pearl</td>
+    <td class="sp"><b>Vocation</b><span class="sp-gloss">the work itself</span></td>
+    <td class="num gl">33.1</td>
+    <td class="sh">Forgetting</td><td class="gi">Mindfulness</td><td class="si">Revelation</td>
+    <td class="ln">Line 1 · Production (originality)</td></tr><tr class="seq-pearl">
+    <td class="sq">Pearl</td>
+    <td class="sp"><b>Culture</b><span class="sp-gloss">how prosperity is shared</span></td>
+    <td class="num gl">15.2</td>
+    <td class="sh">Dullness</td><td class="gi">Magnetism</td><td class="si">Florescence</td>
+    <td class="ln">Line 2 · Partnership</td></tr><tr class="seq-pearl">
+    <td class="sq">Pearl</td>
+    <td class="sp"><b>Pearl</b><span class="sp-gloss">where prosperity lands</span></td>
+    <td class="num gl">15.1</td>
+    <td class="sh">Dullness</td><td class="gi">Magnetism</td><td class="si">Florescence</td>
+    <td class="ln">Line 1 · Simplicity</td></tr></tbody>
+  </table>
+  </div>
+
+  <h4>Line weight across the eleven spheres</h4>
+  <div class="lines"><div class="lb"><span class="lb-n">Line 1</span><div class="lb-track"><div class="lb-fill" style="width:54.5%"></div></div><span class="lb-c">6</span></div><div class="lb"><span class="lb-n">Line 2</span><div class="lb-track"><div class="lb-fill" style="width:9.1%"></div></div><span class="lb-c">1</span></div><div class="lb"><span class="lb-n">Line 3</span><div class="lb-track"><div class="lb-fill" style="width:18.2%"></div></div><span class="lb-c">2</span></div><div class="lb"><span class="lb-n">Line 5</span><div class="lb-track"><div class="lb-fill" style="width:18.2%"></div></div><span class="lb-c">2</span></div></div>
+  <p class="sub" style="margin-top:14px"><b>Six Line 1s.</b> Line 1 is the Creator, the one who has to reach the foundation before anything else is possible. Your Human Design Profile is <b>1/3</b>, conscious Line 1 and unconscious Line 3, and your two Line 3 spheres are Radiance and Purpose. Two systems, same answer: dig to the bottom, then learn by walking into things.</p>
+
+  <h4>All eighteen Gene Keys active in your chart</h4>
+  <p class="sub" style="margin-bottom:18px">Numeric order. These eighteen gates are the complete union of both activation columns, verified gate by gate. The <span class="role role-sphere" style="margin:0">gold tag</span> marks the ten that are also Hologenetic spheres; the <span class="role role-ch" style="margin:0">green tag</span> marks the four that complete a defined channel.</p>
+  <div class="tablewrap gkwrap">
+  <table>
+    <thead><tr><th>Key</th><th>Named gift (HD)</th><th>Shadow</th><th>Gift</th><th>Siddhi</th><th>Centre</th><th>Role in your chart</th></tr></thead>
+    <tbody><tr>
+    <td class="num gatenum">1</td>
+    <td class="gname2">Creating New Things</td>
+    <td class="sh">Entropy</td><td class="gi">Freshness</td><td class="si">Beauty</td>
+    <td class="ctr cdef">G</td>
+    <td class="rolecell"></td></tr><tr>
+    <td class="num gatenum">3</td>
+    <td class="gname2">Innovation</td>
+    <td class="sh">Chaos</td><td class="gi">Innovation</td><td class="si">Innocence</td>
+    <td class="ctr cdef">Sacral</td>
+    <td class="rolecell"><span class="role role-sphere">IQ</span></td></tr><tr>
+    <td class="num gatenum">4</td>
+    <td class="gname2">A Logical Mind</td>
+    <td class="sh">Intolerance</td><td class="gi">Understanding</td><td class="si">Forgiveness</td>
+    <td class="ctr copen">Ajna <i>(open)</i></td>
+    <td class="rolecell"></td></tr><tr>
+    <td class="num gatenum">5</td>
+    <td class="gname2">Marching to Your Own Rhythm</td>
+    <td class="sh">Impatience</td><td class="gi">Patience</td><td class="si">Timelessness</td>
+    <td class="ctr cdef">Sacral</td>
+    <td class="rolecell"><span class="role role-ch">5–15 Rhythm</span></td></tr><tr>
+    <td class="num gatenum">15</td>
+    <td class="gname2">Venturing to the Extremes</td>
+    <td class="sh">Dullness</td><td class="gi">Magnetism</td><td class="si">Florescence</td>
+    <td class="ctr cdef">G</td>
+    <td class="rolecell"><span class="role role-sphere">Culture + Pearl</span><span class="role role-ch">5–15 Rhythm</span></td></tr><tr>
+    <td class="num gatenum">17</td>
+    <td class="gname2">Substantiating Opinions</td>
+    <td class="sh">Opinion</td><td class="gi">Far-Sightedness</td><td class="si">Omniscience</td>
+    <td class="ctr copen">Ajna <i>(open)</i></td>
+    <td class="rolecell"></td></tr><tr>
+    <td class="num gatenum">18</td>
+    <td class="gname2">Improvement</td>
+    <td class="sh">Judgement</td><td class="gi">Integrity</td><td class="si">Perfection</td>
+    <td class="ctr cdef">Spleen</td>
+    <td class="rolecell"><span class="role role-ch">18–58 Judgement</span></td></tr><tr>
+    <td class="num gatenum">21</td>
+    <td class="gname2">A Natural Instinct for How to Control Resources</td>
+    <td class="sh">Control</td><td class="gi">Authority</td><td class="si">Valor</td>
+    <td class="ctr copen">Heart <i>(open)</i></td>
+    <td class="rolecell"><span class="role role-sphere">Life’s Work</span></td></tr><tr>
+    <td class="num gatenum">26</td>
+    <td class="gname2">Tailoring Your Message</td>
+    <td class="sh">Pride</td><td class="gi">Artfulness</td><td class="si">Invisibility</td>
+    <td class="ctr copen">Heart <i>(open)</i></td>
+    <td class="rolecell"></td></tr><tr>
+    <td class="num gatenum">29</td>
+    <td class="gname2">Love of Getting Involved With Others</td>
+    <td class="sh">Half-Heartedness</td><td class="gi">Commitment</td><td class="si">Devotion</td>
+    <td class="ctr cdef">Sacral</td>
+    <td class="rolecell"></td></tr><tr>
+    <td class="num gatenum">33</td>
+    <td class="gname2">Contemplation</td>
+    <td class="sh">Forgetting</td><td class="gi">Mindfulness</td><td class="si">Revelation</td>
+    <td class="ctr copen">Throat <i>(open)</i></td>
+    <td class="rolecell"><span class="role role-sphere">Vocation</span></td></tr><tr>
+    <td class="num gatenum">38</td>
+    <td class="gname2">A Warrior of the Light</td>
+    <td class="sh">Struggle</td><td class="gi">Perseverance</td><td class="si">Honour</td>
+    <td class="ctr cdef">Root</td>
+    <td class="rolecell"><span class="role role-sphere">Radiance</span></td></tr><tr>
+    <td class="num gatenum">39</td>
+    <td class="gname2">Provoking With Consciousness</td>
+    <td class="sh">Provocation</td><td class="gi">Dynamism</td><td class="si">Liberation</td>
+    <td class="ctr cdef">Root</td>
+    <td class="rolecell"><span class="role role-sphere">Purpose</span></td></tr><tr>
+    <td class="num gatenum">42</td>
+    <td class="gname2">Intentionality</td>
+    <td class="sh">Expectation</td><td class="gi">Detachment</td><td class="si">Celebration</td>
+    <td class="ctr cdef">Sacral</td>
+    <td class="rolecell"></td></tr><tr>
+    <td class="num gatenum">48</td>
+    <td class="gname2">Natural Purity</td>
+    <td class="sh">Inadequacy</td><td class="gi">Resourcefulness</td><td class="si">Wisdom</td>
+    <td class="ctr cdef">Spleen</td>
+    <td class="rolecell"><span class="role role-sphere">Evolution</span></td></tr><tr>
+    <td class="num gatenum">56</td>
+    <td class="gname2">Sharing Your Take on the Facts of Life</td>
+    <td class="sh">Distraction</td><td class="gi">Enrichment</td><td class="si">Intoxication</td>
+    <td class="ctr copen">Throat <i>(open)</i></td>
+    <td class="rolecell"><span class="role role-sphere">EQ</span></td></tr><tr>
+    <td class="num gatenum">57</td>
+    <td class="gname2">Reading The Room</td>
+    <td class="sh">Unease</td><td class="gi">Intuition</td><td class="si">Clarity</td>
+    <td class="ctr cdef">Spleen</td>
+    <td class="rolecell"><span class="role role-sphere">Attraction</span></td></tr><tr>
+    <td class="num gatenum">58</td>
+    <td class="gname2">Self-Created Joy</td>
+    <td class="sh">Dissatisfaction</td><td class="gi">Vitality</td><td class="si">Bliss</td>
+    <td class="ctr cdef">Root</td>
+    <td class="rolecell"><span class="role role-sphere">SQ</span><span class="role role-ch">18–58 Judgement</span></td></tr></tbody>
+  </table>
+  </div>
+
+  <h4>The three sentences your profile opens with</h4>
+  <div class="tablewrap">
+  <table><tbody>
+    <tr><td class="k">Genius</td><td class="n" colspan="2">"My deepest Purpose in life is to manifest the Gift of <b>Dynamism</b>. To realise my Purpose I need to transform the Shadow of <b>Provocation</b>." <i>(Gene Key 39.3)</i></td></tr>
+    <tr><td class="k">Love</td><td class="n" colspan="2">"In relationships my greatest challenge is to transform the Shadow of <b>Forgetting</b> into the Gift of <b>Mindfulness</b>. The highest expression of my heart is <b>Bliss</b>." <i>(Gene Keys 33.1 and 58.5)</i></td></tr>
+    <tr><td class="k">Prosperity</td><td class="n" colspan="2">"I unlock my prosperity through my Gift of <b>Magnetism</b>. I undermine my prosperity through the Shadow of <b>Dullness</b>. I thrive best in a <b>partnership</b>." <i>(Gene Key 15, Culture 15.2 and Pearl 15.1)</i></td></tr>
+  </tbody></table>
+  </div>
+</section>
+
+<!-- ============ IV. OVERLAP ============ -->
+<section id="overlap">
+  <div class="sechead">
+    <img class="gmark" src="./assets/horus-light.png" alt="">
+    <div class="secnum">IV</div>
+    <div><h2>Where They Overlap</h2><p class="sub">Seven places where all three systems, independently, name the same thing. This is the part that matters.</p></div>
+  </div>
+  <div class="overlap"><div class="ocard">
+  <div class="ocard-n">01</div>
+  <h3>Gate 21 is named by all three, and all three say it is not fixed</h3>
+  <div class="oline"><span class="okey">Astrology</span><span class="oval">Capricorn rising, so <b>Saturn is chart ruler</b>, and Saturn sits retrograde in the <b>8th house</b>, the house of other people’s resources. Authority through structure, learned the long way round. The <b>2nd house of your own worth is empty</b>.</span></div><div class="oline"><span class="okey">Human Design</span><span class="oval"><b>Personality Sun in 21.1</b>, verified by the degree arithmetic. Gate 21 sits in the <b>open Heart centre</b> as a hanging gate, with no channel to hold it.</span></div><div class="oline"><span class="okey">Gene Keys</span><span class="oval"><b>Life’s Work 21.1</b>: Control / Authority / Valor. The app also flags 21 as your single most important gift.</span></div><div class="oline owhat"><span class="okey">So what</span><span class="oval">Three systems point at authority and resources as the headline, and three systems say the wiring for it is open rather than built in. This is not a deficiency. It means authority is something you keep <i>choosing</i>, in each room, rather than something you carry around. The shadow is Control: gripping when you feel the ground move. The practice is Valor: standing in it without squeezing.</span></div>
+</div><div class="ocard">
+  <div class="ocard-n">02</div>
+  <h3>The only two defined channels are both Gene Keys spheres</h3>
+  <div class="oline"><span class="okey">Human Design</span><span class="oval">Exactly two channels: <b>5–15 Rhythm</b> (Sacral to G) and <b>18–58 Judgement</b> (Spleen to Root). Recomputed from the 18 gates; nothing else completes.</span></div><div class="oline"><span class="okey">Gene Keys</span><span class="oval">Gate 15 is <b>both your Culture and your Pearl</b>. Gate 58 is your <b>SQ</b>. So three of your eleven spheres live inside your only two wired circuits.</span></div><div class="oline"><span class="okey">Astrology</span><span class="oval"><b>Capricorn Ascendant with the Moon in the 12th</b>, 7°23′ ahead of it. A private, self-set rhythm that other people do not get to see or set. Environment: Natural Shores.</span></div><div class="oline owhat"><span class="okey">So what</span><span class="oval">Your prosperity line and your spirit line run through the two things your body already does without being asked: <b>keep your own rhythm</b>, and <b>feel what is off and improve it</b>. The 18–58 channel reads Dissatisfaction and Judgement at the shadow end and Vitality and Integrity at the gift end. Same circuit, two settings. The morning ritual is not a habit, it is the 5–15 channel running.</span></div>
+</div><div class="ocard">
+  <div class="ocard-n">03</div>
+  <h3>Six of eleven spheres are Line 1, and your Profile opens with a 1</h3>
+  <div class="oline"><span class="okey">Gene Keys</span><span class="oval">Line 1 on <b>Life’s Work, Evolution, IQ, EQ, Vocation and Pearl</b>. Six. Then two Line 3s (Radiance, Purpose), two Line 5s (Attraction, SQ), one Line 2 (Culture).</span></div><div class="oline"><span class="okey">Human Design</span><span class="oval"><b>Profile 1/3, Investigator / Martyr.</b> Conscious Line 1, unconscious Line 3. The exact two lines that dominate the sphere count.</span></div><div class="oline"><span class="okey">Astrology</span><span class="oval"><b>Sun, Mercury and Venus stacked in Aries in the 3rd house</b>, a stellium in the house of study, language and the near world. Mercury conjunct Venus at 0.90°.</span></div><div class="oline owhat"><span class="okey">So what</span><span class="oval">Line 1 needs the foundation before it can move. Not preference, mechanics. Three independent systems say you are built to go to the bottom of a thing and come back with it. The matching shadow is using research as the place to hide, which the Line 3 half will not let you do for long: it keeps throwing you into trial and error whether or not the foundation is finished.</span></div>
+</div><div class="ocard">
+  <div class="ocard-n">04</div>
+  <h3>The three empty houses map onto three open centres</h3>
+  <div class="oline"><span class="okey">Astrology</span><span class="oval">Empty houses: <b>1st (self and body), 2nd (worth and resources), 5th (play, creativity, eros)</b>.</span></div><div class="oline"><span class="okey">Human Design</span><span class="oval">Open centres include <b>Throat</b> (no fixed voice), <b>Heart / Ego</b> (no fixed worth or willpower) and <b>Head</b> plus <b>Solar Plexus</b> carrying literally zero gates.</span></div><div class="oline"><span class="okey">Gene Keys</span><span class="oval"><b>EQ 56.1</b>, line theme <i>Self-esteem / Self-sabotage</i>. <b>Evolution 48.1</b>, shadow Inadequacy. <b>Pearl 15.1</b>, Simplicity.</span></div><div class="oline owhat"><span class="okey">So what</span><span class="oval">Identity, worth and expression are the three places with the least built-in structure in the whole design. That is where conditioning lands hardest and where other people’s standards sneak in wearing your voice. It also means these are the openings, not the holes. An empty 5th and an open Throat do not mean no play and no voice. They mean the play and the voice come through unfixed, fresh each time, and cannot be run on a formula.</span></div>
+</div><div class="ocard">
+  <div class="ocard-n">05</div>
+  <h3>Tension is the cross, and the chart’s loudest aspect is a square</h3>
+  <div class="oline"><span class="okey">Human Design</span><span class="oval"><b>Right Angle Cross of Tension (21/48 | 38/39)</b>. Gate 38 A Warrior of the Light, Gate 39 Provoking With Consciousness.</span></div><div class="oline"><span class="okey">Astrology</span><span class="oval">The single tightest aspect in the chart is <b>Venus square Mars at 0.20°</b>, with <b>Mercury square Mars at 0.70°</b> right behind it. Mars in Cancer in the 7th: the friction shows up in partnership and in how you speak.</span></div><div class="oline"><span class="okey">Gene Keys</span><span class="oval"><b>Radiance 38.3</b> Struggle / Perseverance / Honour. <b>Purpose 39.3</b> Provocation / Dynamism / Liberation. Both Line 3, the line of trial and error.</span></div><div class="oline owhat"><span class="okey">So what</span><span class="oval">You are not designed to be comfortable, you are designed to hold tension until it turns into something. The Gene Keys say your <i>health</i> depends on physical exertion and something that stretches the spirit (38), and your <i>fulfilment</i> depends on sparking others out of stagnation (39). The 0.20° Venus–Mars square is the same statement in another language: desire and assertion at right angles, which is friction you can either spend on people close to you or spend on the work.</span></div>
+</div><div class="ocard">
+  <div class="ocard-n">06</div>
+  <h3>Ten of eighteen gates sit in the body, none in the head</h3>
+  <div class="oline"><span class="okey">Human Design</span><span class="oval">Sacral 4 gates, Spleen 3, Root 3. That is <b>10 of 18</b> in the three survival and energy centres. <b>Head: zero gates. Solar Plexus: zero gates.</b></span></div><div class="oline"><span class="okey">Astrology</span><span class="oval"><b>Fire 5, Cardinal 6</b>, the most initiating combination available. <b>Strongest sense: Touch.</b> Digestion: Indirect Light.</span></div><div class="oline"><span class="okey">Gene Keys</span><span class="oval"><b>Attraction 57.5</b> Unease / Intuition / Clarity, in the defined Spleen. The intuitive hit is wired, and it arrives once, quietly, in the body.</span></div><div class="oline owhat"><span class="okey">So what</span><span class="oval">Every real decision in this design is made below the neck, which is exactly what Sacral authority means and exactly why the Head having no gates is not an accident. The mind is a passenger with strong opinions (gates 4 and 17 hanging in the open Ajna) and no vote. When you feel yawning, fatigue or desk avoidance, that is the body voting, not a discipline problem.</span></div>
+</div><div class="ocard">
+  <div class="ocard-n">07</div>
+  <h3>Chiron sits 0.40° opposite your public role</h3>
+  <div class="oline"><span class="okey">Astrology</span><span class="oval"><b>Chiron in Taurus in the 4th, opposite the Midheaven at 0.40°</b>, the second tightest aspect in the chart. Also <b>Pluto square the Ascendant at 0.93°</b>, and Uranus retrograde in the 10th.</span></div><div class="oline"><span class="okey">Human Design</span><span class="oval">Open Heart centre, gate 26 hanging: Pride / Artfulness / Invisibility in the Gene Keys reading of the same gate.</span></div><div class="oline"><span class="okey">Gene Keys</span><span class="oval"><b>Vocation 33.1</b> Forgetting / Mindfulness / Revelation, Line 1 Production, theme <i>originality</i>.</span></div><div class="oline owhat"><span class="okey">So what</span><span class="oval">The axis between the private floor of the house and the public role is wired through the wound, within half a degree. Which is to say: what you are known for and what happened at home are not two topics. The 33 shadow is Forgetting: the material going past unmetabolised. The gift is Mindfulness, which here means the deliberate turning back to look. That is the engine of the whole teaching practice, and it is why the work only has teeth when it has been lived first.</span></div>
+</div></div>
+</section>
+
+<!-- ============ PROVENANCE ============ -->
+<section id="provenance">
+  <div class="sechead">
+    <img class="gmark" src="./assets/ibis-light.png" alt="">
+    <div class="secnum">·</div>
+    <div><h2>Provenance</h2><p class="sub">What every number on this page came from.</p></div>
+  </div>
+  <div class="tablewrap">
+  <table><tbody>
+    <tr><td class="k">Birth data</td><td class="v">31 March 1978, 1:28 AM, Los Angeles</td><td class="n">Read off the birth certificate by Chris, 5 October 2026. Documented, not family memory, so the Ascendant, Midheaven and every house placement rest on a verified time.</td></tr>
+    <tr><td class="k">Astrology</td><td class="v"><code>99-Local/family/_charts.json</code></td><td class="n">Placidus houses, astronomy-engine 2.1.19, computed 3 October 2026. Tropical. Every degree, cusp, aspect and orb on this page is read from that file, nothing typed by hand.</td></tr>
+    <tr><td class="k">Human Design</td><td class="v">humandesign.info, plus the 51-page Richard Beaumont report (2024)</td><td class="n">Beaumont is a direct student of Ra Uru Hu. Distilled at <code>99-Local/peter-evans/</code>. The 18 named gifts came from Chris opening the app and sending the full list on 5 October 2026.</td></tr>
+    <tr><td class="k">Gene Keys spheres</td><td class="v">Hologenetic Profile, Gene Keys Publishing 2024</td><td class="n">All eleven spheres, their lines, their Shadow / Gift / Siddhi triads and their line themes are taken directly from the PDF at <code>99-Local/peter-evans/extracted/gene-keys-profile.txt</code>.</td></tr>
+    <tr><td class="k">The other 8 triads</td><td class="v">Standard Gene Keys 64</td><td class="n"><b>Worth knowing:</b> your PDF only names the triads for your eleven spheres, which covers ten gates. The Shadow / Gift / Siddhi for the other eight (1, 4, 5, 17, 18, 26, 29, 42) come from the standard published Gene Keys 64, not from your own document. They cross-check cleanly: all ten triads that appear in both your PDF and the reference match word for word, which is why the other eight are trustworthy here. Flagged so you know which is which.</td></tr>
+    <tr><td class="k">Gate arithmetic</td><td class="v">Recomputed, 5 October 2026</td><td class="n">Personality gates derived independently from the tropical longitudes against the Human Design wheel (Gate 41 at 2° Aquarius, 5°37′30″ per gate). All 13 matched the profile. Channels, centres and Split Definition recomputed from the gate list and all matched.</td></tr>
+    <tr><td class="k">Second opinion on record</td><td class="v">True sidereal, thirteen signs</td><td class="n">Joshua Travin Nesta read Chris on true sidereal on 10 January 2024, giving Sagittarius rising, Sagittarius moon, Pisces sun. Filed at <code>99-Local/travin/</code>. It does not contradict the tropical table above; the two systems answer different questions. This page is tropical throughout.</td></tr>
+  </tbody></table>
+  </div>
+</section>
+
+<footer>
+  <p>Companion to <a href="./reading.html">the full <i>Know Thyself</i> reading</a>.</p>
+  <p>Built by SAGE on 5 October 2026 from verified vault data. Self-contained: no webfonts, no third-party scripts, no network requests. <b>Ctrl+P, then Save as PDF</b> gives a clean printed copy with each section on its own page.</p>
+  <p>Private reference. The source copy stays in <code>99-Local/</code>, which is gitignored. Search engines are told not to index it, by meta tag and by robots.txt. GitHub Pages cannot serve a private repository on this plan, so anyone holding the link can open it.</p>
+</footer>
+
+<div class="brandfoot">
+  <img src="./assets/mark-light.png" alt="" width="38" height="39">
+  <p class="promise">Tap the Wisdom of your Higher Self</p>
+  <p class="meta">
+    Built by SAGE · 5 October 2026 · <a href="https://cahager.com">cahager.com</a><br>
+    Private reference · Not indexed, not listed, not for circulation
+  </p>
+</div>
+
+</div>
+</body>
+</html>

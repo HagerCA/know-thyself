@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="./assets/mark-light.png">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Know Thyself · Christopher Hager</title>
+<style>
+/* ==============================================================
+   BRAND LAYER · Christopher Hager
+   Palette swatch-sampled from the Brand Book (Leigh Maneri, Sept
+   2025) via Domains/practice/brand-kit.md.
+     CROWN  #1B0C20    MIRROR #E7E7E7    ANKH  #A57626
+     TRITON #7C2D50    MYSTIC #3B1A4C    GAIA  #1D3237
+   Every asset is a local file in ./assets/. No CDN, no webfont,
+   no runtime fetch, so this renders identically everywhere.
+   ============================================================== */
+:root{
+  --crown:#1B0C20; --mirror:#E7E7E7; --ankh:#A57626;
+  --triton:#7C2D50; --mystic:#3B1A4C; --gaia:#1D3237;
+  --ankh-lift:#C79A45;
+  --muted:rgba(231,231,231,.56);
+  --faint:rgba(231,231,231,.38);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; min-height:100vh;
+  color:var(--mirror); font-family:var(--serif);
+  font-size:18px; line-height:1.68;
+  background-color:var(--crown);
+  background-image:radial-gradient(ellipse 140% 90% at 50% -10%,
+    rgba(124,45,80,.40) 0%, rgba(59,26,76,.22) 40%, rgba(27,12,32,0) 76%);
+  background-repeat:no-repeat; background-attachment:fixed;
+  display:flex; flex-direction:column;
+}
+
+/* ---- top band ---- */
+.brandbar{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1.4rem; flex-wrap:wrap;
+  padding:19px clamp(1.5rem,5vw,3rem);
+  background:rgba(27,12,32,.74);
+  border-bottom:1px solid rgba(165,118,38,.34);
+}
+.brandbar img{display:block;width:184px;height:auto}
+.brandbar .tag{
+  font-family:var(--sans); font-size:.63rem; font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:var(--ankh-lift);
+}
+
+/* ---- hero ---- */
+main{flex:1; width:100%; max-width:42rem; margin:0 auto;
+  padding:clamp(3rem,9vh,5.5rem) clamp(1.5rem,5vw,2rem) 4rem}
+.stacked{display:block;width:clamp(176px,32vw,232px);height:auto;margin:0 0 2.6rem}
+.eyebrow{
+  font-family:var(--sans); font-size:.64rem; font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase;
+  color:var(--ankh-lift); margin:0 0 1rem;
+}
+h1{font-weight:400; font-size:clamp(2.1rem,6.2vw,3rem); line-height:1.1;
+  letter-spacing:-.01em; margin:0 0 .5rem}
+.byline{font-size:1.1rem; color:var(--muted); margin:0 0 .3rem}
+.born{font-family:var(--sans); font-size:.74rem; letter-spacing:.07em;
+  color:var(--faint); margin:0 0 2rem}
+.lede{color:var(--muted); font-size:1.02rem; margin:0 0 2.8rem; max-width:32rem}
+.lede em{color:var(--mirror); font-style:italic}
+
+/* ---- the two cards ---- */
+.cards{border-top:1px solid rgba(165,118,38,.30)}
+a.card{
+  display:flex; align-items:flex-start; gap:1.15rem;
+  text-decoration:none; color:inherit;
+  border-bottom:1px solid rgba(165,118,38,.30);
+  padding:1.6rem .4rem 1.7rem;
+  transition:background .2s ease, padding-left .2s ease;
+}
+a.card:hover,a.card:focus-visible{
+  background:linear-gradient(90deg, rgba(59,26,76,.55), rgba(42,17,48,.12));
+  padding-left:1.1rem; outline:none;
+}
+a.card img{width:26px;height:auto;flex:0 0 auto;margin-top:.45rem;opacity:.92}
+.card .n{font-family:var(--sans); font-size:.6rem; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--ankh-lift); margin:0 0 .4rem}
+.card .t{font-size:1.3rem; margin:0 0 .32rem; line-height:1.25}
+.card .d{font-family:var(--sans); font-size:.82rem; line-height:1.62;
+  color:var(--muted); margin:0}
+a.card:hover .t{color:var(--ankh-lift)}
+
+/* ---- footer band ---- */
+.brandfoot{
+  padding:2.9rem clamp(1.5rem,5vw,3rem) 3.4rem;
+  background:rgba(27,12,32,.74);
+  border-top:1px solid rgba(165,118,38,.34);
+  text-align:center;
+}
+.brandfoot img{display:block;margin:0 auto 1.15rem;width:38px;height:auto;opacity:.9}
+.brandfoot .promise{font-style:italic; font-size:1.03rem; margin:0 0 .55rem}
+.brandfoot .meta{
+  font-family:var(--sans); font-size:.66rem; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--faint); margin:0; line-height:2;
+}
+.brandfoot a{color:var(--ankh-lift); text-decoration:none;
+  border-bottom:1px solid rgba(165,118,38,.42)}
+.brandfoot a:hover{border-bottom-color:var(--ankh-lift)}
+
+@media (max-width:460px){
+  .brandbar{justify-content:center}
+  .brandbar .tag{display:none}
+}
+@media print{
+  body{background:#fff !important; color:#1a1a1a}
+  .brandbar,.brandfoot{background:none}
+  .stacked,.brandfoot img,a.card img,.brandbar img{filter:invert(1) brightness(.38)}
+  .eyebrow,.card .n,.brandfoot a{color:#7F5C1F}
+}
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <img src="./assets/logo-inline-light.png" alt="Christopher Hager" width="184" height="35">
+  <span class="tag">Know Thyself</span>
+</div>
+
+<main>
+  <img class="stacked" src="./assets/logo-stacked-light.png" alt="Christopher Hager" width="232" height="105">
+
+  <p class="eyebrow">Know Thyself</p>
+  <h1>The Man Who<br>Set the Table</h1>
+  <p class="byline">Christopher Aaron Hager</p>
+  <p class="born">31 March 1978 · 1:28 AM · Los Angeles, California</p>
+  <p class="lede">Astrology, Human Design and the Gene Keys, read as one design rather than three. Two pages: the long read, and the blueprint to check things against. <em>Lenses, not verdicts.</em></p>
+
+  <div class="cards">
+    <a class="card" href="./reading.html">
+      <img src="./assets/horus-light.png" alt="">
+      <div>
+        <p class="n">One</p>
+        <p class="t">The Reading</p>
+        <p class="d">Thirteen chapters across three movements. The Design · The Living of It · The Deep Water, with a field guide and the full appendix.</p>
+      </div>
+    </a>
+    <a class="card" href="./reference.html">
+      <img src="./assets/ankh-light.png" alt="">
+      <div>
+        <p class="n">Two</p>
+        <p class="t">Quick Reference</p>
+        <p class="d">The blueprint on one page. Natal wheel, Human Design mechanics, the Gene Keys spectrum, and the seven places all three systems name the same thing.</p>
+      </div>
+    </a>
+  </div>
+</main>
+
+<div class="brandfoot">
+  <img src="./assets/mark-light.png" alt="" width="38" height="39">
+  <p class="promise">Tap the Wisdom of your Higher Self</p>
+  <p class="meta">
+    Built by SAGE · 5 October 2026 · <a href="https://cahager.com">cahager.com</a><br>
+    Private reference · Not indexed, not listed, not for circulation
+  </p>
+</div>
+
+</body>
+</html>

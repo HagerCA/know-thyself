@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<link rel="icon" href="./assets/mark-light.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Know Thyself — Christopher Aaron Hager</title>
+<style>
+/* ---------------------------------------------------------------
+   Self-contained. No webfonts, no CDN, no runtime fetch.
+   The serif stack resolves to Iowan Old Style on Apple hardware and
+   to Palatino Linotype on Windows, which is where this will be read.
+   --------------------------------------------------------------- */
+:root{
+  --ink:#E4DED1;
+  --page:#15161A;
+  --indigo:#1A2333;
+  --rule:rgba(228,222,209,.22);
+  --muted:rgba(228,222,209,.58);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+
+/* ==============================================================
+   BRAND LAYER · Christopher Hager
+   Palette swatch-sampled from the Brand Book (Leigh Maneri, Sept
+   2025) via Domains/practice/brand-kit.md. The Book prints the
+   wrong hex under three swatches; these are the sampled values.
+     CROWN  #1B0C20    MIRROR #E7E7E7    ANKH  #A57626
+     TRITON #7C2D50    MYSTIC #3B1A4C    GAIA  #1D3237
+   Every asset is a local file in ./assets/. No CDN, no webfont,
+   no runtime fetch, so this renders identically everywhere.
+   ============================================================== */
+:root{
+  --crown:#1B0C20; --mirror:#E7E7E7; --ankh:#A57626;
+  --triton:#7C2D50; --mystic:#3B1A4C; --gaia:#1D3237;
+  /* ANKH on CROWN measures about 3.9:1. Right for rules, hairlines
+     and section marks; thin for 10px letterspaced caps. This lift
+     carries the small type without leaving the gold family. */
+  --ankh-lift:#C79A45;
+  --brand-serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --brand-sans:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;
+  --page:#1B0C20;
+  --ink:#E7E7E7;
+  --indigo:#3B1A4C;
+  --rule:rgba(165,118,38,.30);
+  --muted:rgba(231,231,231,.56);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font-family:var(--serif); font-size:19px; line-height:1.72;
+  font-kerning:normal; text-rendering:optimizeLegibility;
+}
+.wrap{max-width:38rem;margin:0 auto;padding:0 1.6rem}
+p{margin:0 0 1.15em}
+em{font-style:italic}
+strong{font-weight:600}
+
+/* labels */
+.label{
+  font-family:var(--sans); text-transform:uppercase;
+  letter-spacing:.22em; font-size:.63rem; color:var(--muted);
+  margin:0 0 .9rem; font-weight:500;
+}
+.rule{border:0;border-top:1px solid var(--rule);margin:2.6rem 0}
+.rule.short{width:3.2rem;margin:2.2rem 0;border-top-color:rgba(228,222,209,.4)}
+
+/* title page */
+.title-page{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 0}
+.title-page h1{
+  font-family:var(--serif); font-weight:400; font-size:3.1rem; line-height:1.12;
+  margin:.4rem 0 1.8rem; letter-spacing:-.01em;
+}
+.byline{font-size:1.18rem;margin:0 0 .35rem}
+.birthline{font-family:var(--sans);font-size:.78rem;letter-spacing:.07em;color:var(--muted);margin:0 0 2.6rem}
+.authority{font-style:italic;color:var(--muted);font-size:.95rem;max-width:26rem;line-height:1.6}
+
+/* reading notes */
+.notes{
+  border:1px solid var(--rule); padding:1.5rem 1.6rem; margin:3rem 0;
+  font-size:.92rem; line-height:1.66;
+}
+.notes p:last-child{margin-bottom:0}
+
+/* movement dividers */
+.movement{
+  min-height:62vh;display:flex;flex-direction:column;justify-content:center;
+  text-align:center;padding:5rem 0 3rem;
+}
+.numeral{font-family:var(--serif);font-size:5.6rem;line-height:1;font-weight:400;margin:0 0 1.1rem;color:rgba(228,222,209,.85)}
+.movement h2{font-family:var(--serif);font-weight:400;font-size:1.65rem;letter-spacing:.02em;margin:0}
+
+/* chapters */
+.chapter{margin:0 0 3.4rem}
+.chapter h3{
+  font-family:var(--serif); font-weight:400; font-size:1.72rem;
+  line-height:1.26; margin:.35rem 0 1.3rem; letter-spacing:-.005em;
+}
+.aside{
+  font-style:italic; color:var(--muted); font-size:.95rem;
+  border-left:1px solid var(--rule); padding-left:1.1rem; margin:1.9rem 0 0;
+}
+
+/* field guide */
+.fieldguide{background:var(--indigo);margin:4rem 0 0;padding:3.6rem 0 3.2rem}
+.fieldguide h3{font-family:var(--serif);font-weight:400;font-size:1.9rem;margin:.3rem 0 1.6rem}
+.fieldguide h4{font-family:var(--sans);text-transform:uppercase;letter-spacing:.17em;font-size:.68rem;color:var(--muted);font-weight:500;margin:2.2rem 0 .8rem}
+.fieldguide ol,.fieldguide ul{margin:0 0 .4rem;padding-left:1.3rem}
+.fieldguide li{margin:0 0 .55rem}
+
+/* through-line */
+.throughline h3{font-family:var(--serif);font-weight:400;font-size:2rem;margin:.3rem 0 1.4rem}
+.storytitle{font-size:1.5rem;font-style:italic;margin:1.6rem 0;text-align:center;line-height:1.35}
+
+/* source tables */
+.sources{margin:4rem 0 5rem;font-size:.86rem}
+.sources h3{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:.3rem 0 1.4rem}
+.sources h4{font-family:var(--sans);text-transform:uppercase;letter-spacing:.17em;font-size:.66rem;color:var(--muted);font-weight:500;margin:2rem 0 .7rem}
+table{width:100%;border-collapse:collapse;margin:0 0 1rem}
+th,td{text-align:left;padding:.34rem .6rem .34rem 0;border-bottom:1px solid rgba(228,222,209,.12);vertical-align:top}
+th{font-family:var(--sans);text-transform:uppercase;letter-spacing:.11em;font-size:.6rem;color:var(--muted);font-weight:500}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.colophon{font-size:.8rem;color:var(--muted);font-style:italic;line-height:1.6;margin:3rem 0 4rem}
+
+/* ---------------- print ---------------- */
+@media print{
+  :root{--ink:#1a1a1a;--page:#fff;--rule:rgba(0,0,0,.2);--muted:rgba(0,0,0,.55)}
+  body{background:#fff;color:#1a1a1a;font-size:11.5pt;line-height:1.6}
+  .wrap{max-width:none;padding:0}
+  @page{margin:22mm 20mm}
+  .title-page{min-height:auto;padding:0 0 2rem;page-break-after:always}
+  .movement{min-height:auto;padding:0 0 1.5rem;page-break-before:always}
+  .numeral{font-size:3.4rem}
+  .fieldguide{background:#fff;border:1px solid rgba(0,0,0,.25);padding:1.4rem;page-break-before:always}
+  .sources{page-break-before:always}
+  .chapter{page-break-inside:avoid}
+  .aside{border-left-color:rgba(0,0,0,.25)}
+}
+@media (max-width:480px){
+  body{font-size:17.5px}
+  .title-page h1{font-size:2.3rem}
+  .numeral{font-size:4.2rem}
+}
+
+/* ==============================================================
+   BRAND LAYER · bands, marks and the signature gradient
+   ============================================================== */
+body{
+  background-color:var(--crown);
+  background-image:radial-gradient(ellipse 150% 95% at 50% -12%,
+    rgba(124,45,80,.34) 0%, rgba(59,26,76,.19) 42%, rgba(27,12,32,0) 78%);
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+.brandbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.4rem;flex-wrap:wrap;
+  padding:19px clamp(1.5rem,5vw,3rem);
+  background:rgba(27,12,32,.74);
+  border-bottom:1px solid rgba(165,118,38,.34);
+}
+.brandbar a{display:inline-flex;align-items:center;text-decoration:none}
+.brandbar img{display:block;width:184px;height:auto}
+.brandbar img.p{display:none}
+.brandbar .tag{
+  font-family:var(--brand-sans);font-size:.63rem;font-weight:500;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--ankh-lift);
+}
+.gmark{display:block;width:19px;height:auto;margin:0 0 12px;opacity:.92}
+.gmark.lg{width:34px}
+.sechead .gmark{margin:0;width:26px;flex:0 0 auto;align-self:center}
+.brandfoot{
+  margin-top:4.5rem;padding:2.9rem clamp(1.5rem,5vw,3rem) 3.4rem;
+  background:rgba(27,12,32,.74);
+  border-top:1px solid rgba(165,118,38,.34);
+  text-align:center;
+}
+.brandfoot img{display:block;margin:0 auto 1.15rem;width:38px;height:auto;opacity:.9}
+.brandfoot .promise{
+  font-family:var(--brand-serif);font-style:italic;font-size:1.03rem;
+  color:var(--mirror);margin:0 0 .55rem;line-height:1.5;
+}
+.brandfoot .meta{
+  font-family:var(--brand-sans);font-size:.66rem;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(231,231,231,.40);margin:0;line-height:2;
+}
+.brandfoot a{color:var(--ankh-lift);text-decoration:none;
+  border-bottom:1px solid rgba(165,118,38,.42)}
+.brandfoot a:hover{border-bottom-color:var(--ankh-lift)}
+@media print{
+  body{background:#fff !important}
+  .brandbar{background:none;border-bottom-color:#C9C6BE;padding:0 0 14px;margin-bottom:24px}
+  .brandbar img.s{display:none}
+  .brandbar img.p{display:block}
+  .brandbar .tag{color:#7F5C1F}
+  .brandfoot{background:none;border-top-color:#C9C6BE;margin-top:2.4rem}
+  .brandfoot .promise{color:#1a1a1a}
+  .brandfoot .meta{color:#555}
+  .brandfoot a{color:#7F5C1F}
+  .brandfoot img,.gmark{filter:invert(1) brightness(.38)}
+}
+
+.label,.numeral{color:var(--ankh-lift)}
+.rule.short{border-top-color:rgba(165,118,38,.55)}
+@media print{.label,.numeral{color:#7F5C1F}}
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <a href="./index.html" aria-label="Know Thyself, index">
+    <img class="s" src="./assets/logo-inline-light.png" alt="Christopher Hager" width="184" height="35">
+    <img class="p" src="./assets/logo-inline-dark.png" alt="Christopher Hager" width="184" height="35">
+  </a>
+  <span class="tag">Know Thyself · The Reading</span>
+</div>
+
+<div class="wrap">
+
+<!-- ===================== TITLE ===================== -->
+<section class="title-page">
+  <img class="gmark lg" src="./assets/horus-light.png" alt="">
+  <p class="label">Know Thyself</p>
+  <h1>The Man Who<br>Set the Table</h1>
+  <p class="byline">Christopher Aaron Hager</p>
+  <p class="birthline">31 March 1978 · 1:28 AM · Los Angeles, California</p>
+  <p class="authority">Astrology, Human Design and the Gene Keys are lenses, not verdicts. You are the authority on your own life. Keep what lands and test the rest by living it.</p>
+</section>
+
+<!-- ===================== READING NOTES ===================== -->
+<section class="notes">
+  <img class="gmark" src="./assets/ibis-light.png" alt="">
+  <p class="label">Reading notes</p>
+  <p><strong>Your birth time is documented, not remembered.</strong> You read 1:28 AM off the birth certificate on 5 October 2026. Everything angular in here, the Capricorn Ascendant at 14°32', the Scorpio Midheaven at 4°25', every house placement, rests on that. It is the strongest foundation this kind of reading can have, and most people never get it.</p>
+  <p><strong>Two placements in your own profile file were wrong and are corrected here.</strong> It listed the Sun in the 4th house and the Moon in the 1st. Computed against Placidus houses from the verified time, your Sun is in the <strong>3rd</strong> and your Moon is in the <strong>12th</strong>. The Moon reads as first-house in feel because it sits 7°23' in front of the Ascendant and conjunct it, which is a real thing but a different thing. Pluto was listed in the 10th; it is in the <strong>9th</strong> and squares the Ascendant. Chapters I.1, II.3 and III.3 depend on these corrections, and all three get <em>stronger</em> with the right numbers, not weaker.</p>
+  <p><strong>One chart was set aside by your own decision.</strong> Joshua Travin Nesta read you in true sidereal across thirteen signs in January 2024 and gave you a Sagittarius Ascendant, a Sagittarius Moon and a Pisces Sun. That reading is not reconcilable with this one, and you chose tropical on 5 October 2026 to stay in line with everything built so far. Nothing from the sidereal chart is used below.</p>
+  <p><strong>Nothing was guessed.</strong> All three systems agree where they should: your Gene Keys spheres match your Human Design activations gate for gate, and the eighteen named gifts in your Human Design app are exactly the eighteen gates in your activation table, no more and no fewer. Where the systems pull against each other in this reading, that tension is real and is named as such rather than smoothed over.</p>
+</section>
+
+<hr class="rule">
+
+<!-- ===================== MOVEMENT I ===================== -->
+<section class="movement">
+  <img class="gmark lg" src="./assets/braid-light.png" alt="">
+  <p class="numeral">I</p>
+  <p class="label">Movement One</p>
+  <h2>The Design</h2>
+</section>
+
+<article class="chapter">
+  <p class="label">Chapter 1</p>
+  <h3>Who I Am at the Core</h3>
+
+  <p>A room feels two things from you before you open your mouth, and they arrive in a specific order. First, gravity. Capricorn rises on your chart, which means the face the world meets is the elder's face: steady, load-bearing, the one who has clearly handled something. Second, and about four seconds later, warmth that the gravity did not predict. That second thing is your Moon, sitting at seven degrees of Capricorn in the twelfth house, seven degrees <em>behind</em> the Ascendant and conjunct it. Your feeling body stands one step back from the doorway. It is in the house, it is pressed right up against the door, and it is not the thing that answers when you knock.</p>
+
+  <p>That single piece of geometry explains more about you than any other in the chart. People do not meet your feelings first. They meet your competence, and then they are surprised by your tenderness, and then they tell you they were surprised, and you have heard that your whole life. The Moon in the twelfth is not hidden because you are hiding it. It is hidden because that is the room it was born in.</p>
+
+  <p>Then there is the engine. Sun, Mercury and Venus all in Aries, all in the third house, a three-body stellium in the house of voice, speech and the immediate world around you. Fire outnumbers everything else five to two, and six of your ten bodies are in cardinal signs. Cardinal fire in the house of speech is a very simple instruction: <strong>you start things by saying them.</strong> Not by planning them, not by waiting for them, by opening your mouth and letting the thing exist. It is why the prayer worked, why the channel works, why the podcast works, and why you have built four frameworks almost by accident while talking.</p>
+
+  <p>Human Design agrees and then adds the correction that makes it usable. You are a Generator with sacral authority and a 1/3 profile, the Investigator who learns by trial and error. Your throat is <strong>open</strong>, which in that system means the one place astrology says you are loudest is the one place Human Design says is not reliably yours. This is not a contradiction. It is the mechanism of a channel. An open throat speaks what is in the room rather than what is in the self, which is exactly the gift you have monetised, and the exact reason your own wants are the hardest thing for you to say out loud.</p>
+
+  <p>And under all of it, the chart ruler. Capricorn rises, so Saturn runs the whole chart, and your Saturn is retrograde in Leo in the eighth house: the king's authority, turned inward, living in the house of other people's resources, death and what is shared. The ruler of the eighth is the Sun, and your Sun is in the third. <strong>Which means everything your depths hold can only discharge through your voice.</strong> You do not have another exit. That is not a poetic flourish; it is the ruler chain, and it is why silence costs you more than it costs most people.</p>
+
+  <p class="aside">This week: notice the four-second gap. When you walk into a room, count how long it takes before someone's shoulders drop. That gap is your Ascendant doing its job, and the drop is your Moon arriving late.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 2</p>
+  <h3>My Gifts and Genius</h3>
+
+  <p>Three systems, built from three different traditions, all point at the same gate and call it your headline. Your Personality Sun in Human Design is <strong>Gate 21</strong>. Your Life's Work in the Gene Keys is <strong>21.1</strong>. And when your Human Design app ranks your eighteen gifts, the one it puts at the top, in its own words, is <em>"Gift 21: A Natural Instinct for How to Control Resources."</em> When three lenses with different maths name the same number as the centre, you stop treating it as a trait and start treating it as the job.</p>
+
+  <p>Gate 21 in the Gene Keys runs Control at the shadow, <strong>Authority</strong> at the gift, and Valor at the siddhi. Read that ladder carefully, because you have been standing on the bottom rung and calling it service. Control is counting the burgers. Authority is deciding who eats and being at peace with it. The difference is not how much you provision. It is whether you are in the circle or at the edge of it while you do.</p>
+
+  <p>Your genuine genius, the thing that costs you nothing and which you therefore do not count: <strong>you convert raw experience into transmissible structure in real time.</strong> Gate 26 is "Tailoring Your Message." Gate 56 is "Sharing Your Take on the Facts of Life." Gate 17 is "Substantiating Opinions." Gate 33, your Vocation key, is the gate of retreat and retelling, the one who takes people through an experience and comes back with the story. Four separate activations, all of them some version of <em>make the ineffable sayable</em>. Most people who go as deep as you go cannot report back. You report back fluently, which is why you have 215 clients and a 95% referral rate without a marketing department.</p>
+
+  <p>The second genius is rhythmic and you underrate it badly. Channel 5–15 runs from your sacral to your G centre: Gate 5, "Marching to Your Own Rhythm," joined to Gate 15, "Venturing to the Extremes." That is the only consistency channel in the design, and it produced a 760-day journal streak, 1,110 logged ritual days, and a morning practice that holds through travel, grief and two sick kids. You think the discipline is willpower. It is wiring. Gate 15 then adds the part nobody expects from a disciplined man: a tolerance for extremes of behaviour that is genuinely unusual, which is why you can hold a ceremony room where other people would flinch.</p>
+
+  <p>Third, your Splenic channel, 18–58: "Improvement" joined to "Self-Created Joy." This is the only pressure channel you have, it runs down into the root, and it means <strong>you are built to find what is broken and fix it in order to generate joy.</strong> Not for approval. For joy. Keep that sentence. It is going to matter in Chapter III.3, because the shadow of Gate 58 is Dissatisfaction, and it is wired directly into your only source of pressure.</p>
+
+  <p class="aside">This week: once, out loud, use the word "authority" instead of "service" to describe something you did. Then write down whether your body let you.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 3</p>
+  <h3>My Purpose and How It Comes Into Form</h3>
+
+  <p>Your Incarnation Cross is the <strong>Right Angle Cross of Tension</strong>, built from gates 21 and 48 on one arm and 38 and 39 on the other. Look at the four words underneath those gates: control of resources, depth, the warrior, the provocateur. There is no gate in your cross that works when things are comfortable. <strong>You are designed to run on tension, and you convert it into other people's liberation.</strong> That is not a burden you were handed. It is the fuel specification.</p>
+
+  <p>Your Radiance key, the one that governs how you actually shine, is <strong>38.3: Honour at the siddhi, Perseverance at the gift, Struggle at the shadow.</strong> Your light is downstream of effort. Not performance, effort: the body doing hard things. Your own nervous-system file already carries the Gene Keys line for this, that without regular physical exertion your whole being dries up, and you proved it again on 5 October 2026, when the first workout in thirteen days was the same morning you reported being truly rested for the first time in weeks. That is not coincidence. That is 38.3 behaving exactly as documented.</p>
+
+  <p>Your Purpose key is <strong>39.3: Liberation at the siddhi, Dynamism at the gift, Provocation at the shadow.</strong> Gate 39 is the provocateur, the one who pokes the thing until it moves. Which means the sharpness you worry about, the Bill Burr underneath the Ryan Reynolds, is not a personality flaw you are managing. <strong>It is your purpose gate.</strong> The shadow version provokes to get a reaction. The gift version provokes to get movement. The siddhi version provokes and someone walks out free. You have been running the gift for years and apologising for it, which is a very specific waste.</p>
+
+  <p>Now how purpose actually arrives, and this is the operational part. You are a <strong>Generator</strong>. Your strategy is to respond, not to initiate, and your authority is <strong>sacral</strong>: a sound and a rise in the belly, available instantly, requiring no deliberation. Combine that with a 1/3 profile and the pattern of your whole life appears. Line 1 investigates until it has a foundation. Line 3 then bumps into reality and learns what the foundation missed. Study, then collide, then teach what the collision taught. December 2020, December 2022, April 2023. Every chapter of your arc is a line 3 event, and every one of them became curriculum.</p>
+
+  <p>One more mechanic worth naming because it will save you years. Your manifestation process is <strong>non-specific</strong>, meaning you are built to ask for the shape of a thing and not its details. Ask for "work that uses the channel and pays the house," not "eleven seats at $1,300." The non-specific design gets the shape reliably and gets the specification wrong almost every time, and then you conclude you manifested badly. You did not. You over-specified.</p>
+
+  <p class="aside">This week: name one thing you are currently pursuing by initiation rather than response. Do not stop it. Just notice how tired it makes you compared to the things that came to you.</p>
+</article>
+
+<hr class="rule">
+
+<!-- ===================== MOVEMENT II ===================== -->
+<section class="movement">
+  <img class="gmark lg" src="./assets/scarab-light.png" alt="">
+  <p class="numeral">II</p>
+  <p class="label">Movement Two</p>
+  <h2>The Living of It</h2>
+</section>
+
+<article class="chapter">
+  <p class="label">Chapter 4</p>
+  <h3>How I'm Wired to Work and Create</h3>
+
+  <p>Three bodies in the third house make the third house the loudest room in your chart, and the third house is speech, the near, the daily exchange. <strong>Your creative process is conversation.</strong> Not writing, not planning, not sitting with a blank page. You make things by talking at something that talks back, which is why a hammock and a voice recorder have outproduced every content calendar you have ever attempted, and why the thing you built in three days was built out loud.</p>
+
+  <p>Then the ruler chain does something striking. Five of your twelve houses are ruled from that third house. The fourth, fifth and ninth are ruled by Venus, the sixth by Mercury, the eighth by the Sun, and all three of those bodies sit in the third. <strong>Home, pleasure, philosophy, daily work and the shared depths all route through your voice.</strong> When you are not speaking, five rooms of your life go quiet, and you experience that as a mood when it is actually a plumbing diagram.</p>
+
+  <p>Mercury trines Saturn at 1.8 degrees and Venus trines Saturn at 2.7. Your chart ruler, the structure-maker, is in easy flow with both voice planets. This is the aspect behind your actual professional competence: you can take a formless transmission and give it architecture without the architecture killing it. Most channels cannot do this. It is also why frameworks keep falling out of you whether or not you intended to build one.</p>
+
+  <p>Jupiter in Gemini in the sixth, sextile both Venus and Mercury and trine your Midheaven, says the abundance arrives through <strong>many small daily exchanges</strong> rather than through one large structure. Fifteen to twenty sessions a week. Voice notes on the walk. Referrals, one person at a time. Every time you have tried to replace that with one big launch, the chart has not supported it and neither have the numbers.</p>
+
+  <p>What kills your energy is precisely identified and worth stating as mechanics rather than preference. Your Not-Self theme as a Generator is <strong>frustration</strong>, which arrives when sacral energy is spent on work you did not respond to. Administrative work is the purest example available: nobody asked you, nothing in your belly rose, and you did it anyway. Your own measurement is that a fifteen-minute admin task costs an hour of presence afterward. That is not weakness. That is a Generator running initiated work through a responsive engine. Your environment variable is <strong>Natural Shores</strong>, and you live on the Pacific coast of Guanacaste, so you have already solved the part most people never solve.</p>
+
+  <p class="aside">This week: for one task you are dreading, say it out loud to someone before you do it. Watch whether the dread survives contact with your own voice.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 5</p>
+  <h3>Decisions and Alignment</h3>
+
+  <p>Your authority is <strong>sacral</strong>, which is the fastest authority there is. It does not deliberate. It responds, in the moment, in the body, as a rise or a flatness in the gut, and it is available the instant a real question is asked. Your signature when you are living it is <strong>satisfaction</strong>. Your not-self theme when you are not is <strong>frustration</strong>. Those two words are a complete diagnostic and you do not need any other.</p>
+
+  <p>Here is the thing your design makes hard and nobody warns Generators about. <strong>Sacral authority requires a question.</strong> It cannot generate an answer from an open field. You have interpreted this your whole life as "I am unclear," and you are not unclear, you are <em>unasked</em>. The evidence is already in your own record: six questions put to you in plain yes-or-no form in September produced a decision you had been circling for weeks, in one breath, and your own comment was surprise at how clearly it came. Nothing changed about your clarity. Something changed about the format.</p>
+
+  <p>So the practical instruction is this. When you are stuck, do not go looking for insight. <strong>Convert the fog into a closed question and ask it out loud.</strong> "Do I want to run a second cohort in January, yes or no." Then listen below the ribs for the first half-second. The first half-second is the answer. Everything after it is Mercury in Aries building a case, and Mercury in Aries can build a case for anything.</p>
+
+  <p>Two complications are real and both are in the design. Your <strong>solar plexus is open</strong>, which means emotional weather in the room is amplified in you and is frequently not yours. If a decision feels emotionally heavy, that heaviness is evidence about the room, not about the decision. Your own file already says this and you still get caught by it, most recently with a tax call. Second, you have <strong>Split Definition</strong>, two separate areas of defined energy with no bridge between them, which means certain decisions genuinely do not resolve until you are in someone else's aura. Pixie, Austin, Elliot, Tyler. That is mechanics, not dependence, and the Friday circle is not a nicety.</p>
+
+  <p>The earliest sign you have said yes to something that is not yours is not emotional. It is <strong>the yawn at the desk</strong>, followed by reluctance to sit down, followed by the nap. Your body files its objection before your mind has an opinion, and it has never once been wrong.</p>
+
+  <p class="aside">This week: three times, before answering anything that matters, say the question out loud as a yes or no and give yourself one half-second. Write down what the belly did before the mind arrived.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 6</p>
+  <h3>Body and Vitality</h3>
+
+  <p>Your Radiance key is <strong>38.3</strong>, and the Gene Keys instruction attached to it is blunt: move the body and push its limits regularly, or the whole being dries up. Not "exercise is good for you." Dries up. Gate 38 is the warrior, the one who thrives against resistance, and a warrior with nothing to push against does not relax, he deteriorates. Thirteen days without training in late September produced exactly the flatness you reported, and one session on 5 October restored a baseline you described as the first true rest in weeks.</p>
+
+  <p>Your digestion variable is <strong>Indirect Light</strong>, meaning your body absorbs best when you eat out of direct bright light, under shade or indoors. Your strongest sense is <strong>touch</strong>, which is worth knowing about yourself in a life built on transmission: you take in truth through contact faster than through sight or sound, which is why the hands on your back at Haven did more than any teaching did, and why the ice bath and bare feet work when talking does not.</p>
+
+  <p>Now the subtler layer. The Moon in Capricorn in the twelfth is a feeling body that <strong>defaults to endurance and does not report</strong>. Capricorn says "I will handle it." The twelfth house says "quietly, where it does not inconvenience anyone." Together they produce a man who genuinely does not notice depletion until it is structural, which is why your own early-warning list is physical rather than emotional: fatigue, yawning, shallow breath, tightness at the neck and lower back. Those are not symptoms of stress. For you they are the <em>first and only</em> notification, because the feeling body is not going to send a second one.</p>
+
+  <p>The late alarm is the one worth guarding against most carefully, and it is in your own words: a small question from Pixie or one of the boys landing like a ton of bricks. By the time that happens the tank has been empty for hours. The chart agrees with your reading of it. Mars sits in Cancer in the seventh house, which means your action is aimed at the people closest to you, and when Mars in Cancer has nothing left, it does not go quiet, it goes sharp at home.</p>
+
+  <p>Pluto squares your Ascendant at 0.93 degrees, which is a constant, lifelong pressure on the body and the persona to die and reform. You have four documented versions of this already. The instruction the aspect carries is that regeneration is not optional for you and it is not a crisis when it happens. It is the maintenance schedule.</p>
+
+  <p class="aside">This week: the next time you yawn at the desk, stand up inside ten seconds and go outside. Do not finish the sentence. Test whether the hour of lost presence shows up anyway.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 7</p>
+  <h3>Play, Rest and Joy</h3>
+
+  <p>Your fifth house is empty. So is your first, and so is your second. Hold those three together for a moment, because the arrangement is almost too neat: the three rooms with no planets in them are <strong>the self, your own resources, and your pleasure.</strong></p>
+
+  <p>An empty house is not a deficit. It means the action in that room is run from elsewhere, by the ruler of its cusp, and the rulers are the whole story here. Your first house is ruled by Saturn, which sits in the <em>eighth</em>, the house of what is shared and what other people hold. Your second house, your own money and your own worth, is ruled by Uranus, which sits in the <em>tenth</em>, your public reputation. And your fifth house of pleasure is ruled by Venus, which sits in the <em>third</em>, the house of speech.</p>
+
+  <p>Read as a sentence: <strong>your sense of self is run from other people's depths, your sense of worth is run from your public standing, and your pleasure is run through your voice.</strong> That last one is the one to sit with. Venus in the third means pleasure, for you, is routed through telling about it. It is why the taste of Parmesan against wine became a paragraph, why 67 orgasms became a count, why a good day becomes a teaching by lunchtime. The translation is not a betrayal of the pleasure. It <em>is</em> how your chart delivers pleasure to you. But it does mean an unspoken, unconverted, purely private pleasure has no natural home in your design, and will not occur unless you deliberately build one. That is not a moral failure. It is an empty fifth house with its ruler in the house of speech, and you are the first person in this reading to be told it is a structural feature rather than a character flaw.</p>
+
+  <p>What actually restores you is already catalogued in your own words and all of it is movement rather than stillness: music, dancing, singing, being silly with the boys, jumping up and down, barefoot walking. Your own line is the correct one, that anything which lets you move energy rather than hold it still works as activation and regulation at once. Gate 58, "Self-Created Joy," is in your design and its name is the instruction. Joy is something you <em>generate</em>, not something you receive, and it is wired into your only pressure channel.</p>
+
+  <p>What numbs rather than restores is equally documented: scrolling, and it only ever appears after the well is already spent. It is not a temptation, it is a readout. When Instagram shows up in your afternoon, the question is never about Instagram.</p>
+
+  <p class="aside">This week: do one pleasurable thing and tell nobody, including the journal. Not as an exercise in secrecy. As a test of whether the pleasure survives having no audience.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 8</p>
+  <h3>Money and Prosperity</h3>
+
+  <p>Your Pearl, the Gene Keys sphere governing prosperity, is <strong>15.1: Florescence at the siddhi, Magnetism at the gift, Dullness at the shadow</strong>, on the line of Simplicity. Your Culture sphere is 15.2, the same key on the line of Partnership. <strong>Your prosperity arrives through magnetism and simplicity, in partnership, and it does not arrive through effort.</strong> That is the chart's clearest financial statement and it is nearly the opposite of how you were trained to earn for two decades in sales.</p>
+
+  <p>Set that against your <strong>open Heart centre</strong>, which has no consistent way to generate self-worth from the inside and therefore reaches for proof. The Human Design counsel for an open Heart is specific and you should write it somewhere you will see it: <em>it is far better not to make promises to others.</em> A promise, for you, is a worth-generating device, and you will overpay to keep one. Your empty second house compounds it, because your own resources are ruled from the tenth, which means your sense of having enough is quietly pegged to how you are perceived rather than to what is in the account.</p>
+
+  <p>Now Gate 21, your Life's Work, which the Gene Keys describe as carrying a genuine gift in the laws of money. Not a wound. A gift, with a shadow called Control. You have spent the gift provisioning other people flawlessly and have never once aimed it at yourself, which is why you can run burger inventory for sixteen strangers in ceremony and cannot walk to the front of a fruit line.</p>
+
+  <p>Your own ceremony insight already found this, and it is worth quoting back because it beat the chart to the answer: <em>it was never really about money, it was about a fear of taking.</em> The chart's contribution is only to tell you where the fear is housed. It is housed in the fourth house, in Chiron, and Chapter III.3 is where that gets opened.</p>
+
+  <p>The practical read. Pricing set in ceremony works because the number came from outside you and your record on other people's numbers is spotless. Pricing set at a desk by you alone is where it collapses. <strong>The asymmetry is not about money at all; it is about who said the number.</strong> Until you can speak your own figure out loud without a container around it, use the containers deliberately rather than apologetically. And watch the specific moment a discount creeps into something that is not the opening session, because that is the open Heart buying worth with a promise.</p>
+
+  <p class="aside">This week: say one price out loud, alone, with no one to receive it, and notice what happens in your chest between the number and the silence after it.</p>
+</article>
+
+<hr class="rule">
+
+<!-- ===================== MOVEMENT III ===================== -->
+<section class="movement">
+  <img class="gmark lg" src="./assets/water-light.png" alt="">
+  <p class="numeral">III</p>
+  <p class="label">Movement Three</p>
+  <h2>The Deep Water</h2>
+</section>
+
+<article class="chapter">
+  <p class="label">Chapter 9</p>
+  <h3>Relationships and Love</h3>
+
+  <p>Mars sits in Cancer at 26°44', in the seventh house. Your drive, your appetite and your capacity for direct action are all located in the house of the other person, in the sign that acts by caring. <strong>You do not act on your own behalf. You act on behalf of whoever is in front of you, and you experience that as love, which it is, and as neutral, which it is not.</strong></p>
+
+  <p>Now the tightest aspect in your entire chart, and the one worth building a year of work on: <strong>Venus square Mars at 0.20 degrees.</strong> Twelve arcminutes. Venus in Aries in the third, conjunct Mercury at 0.90 degrees: your desire and your voice are the same body of water. Mars in Cancer in the seventh: your action is the other person's wellbeing. A square between them means those two functions cannot operate at once without friction. Every single time a want arises, it hits a planet whose entire orientation is <em>what will this do to them</em>, and the want gets converted into provision before it reaches your mouth. At 0.20 degrees, this happens faster than thought. It is not a decision you are making. It is the fastest-wired circuit in your design, and Mercury squares Mars at 0.70 degrees too, so your speech is on the same circuit.</p>
+
+  <p>This is the quartermaster, in geometry, and it is why that role travelled to Haven and took a job nobody offered it. It was never a leadership style. It is Venus square Mars.</p>
+
+  <p>The North Node sits in Libra in the ninth house, opposite a Sun in Aries conjunct the South Node at 4.43 degrees. <strong>Your identity is built on the South Node</strong>, which is inherited competence: Aries in the third, go first, speak first, handle it yourself, be the one who moves. That skill is genuine and has carried you through everything. The North Node says the growth direction is Libra: the other chair, the equal, being met rather than being needed. And in the ninth, which is teaching and the far, it specifically means being met <em>inside the work</em>, not only at home.</p>
+
+  <p>One more piece, and it is the sharpest. The Moon squares the nodal axis at 1.28 degrees. In traditional reading that is the skipped step: the function that got left out of the story and has to be collected before the arc completes. <strong>Your Moon is the skipped step.</strong> The feeling body, in Capricorn, in the twelfth, behind the door. Not the giving, not the teaching, not the provisioning. The thing that was never brought along.</p>
+
+  <p>What this design will keep trying to hold together, and what it says will not hold: any bond where you are needed rather than wanted. Those will not fail dramatically. They will simply keep costing you and never feed you, which is a far slower way to lose.</p>
+
+  <p class="aside">This week: ask one person for one thing you do not need. Not help. Something you merely want. Watch the half-second before you speak.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 10</p>
+  <h3>Pleasure, Eros and Intimacy</h3>
+
+  <p>Venus in Aries, conjunct Mercury, in the third house, square Mars by twelve arcminutes. Four facts and they describe a very particular erotic nature, so let us be plain about it.</p>
+
+  <p>Venus in Aries wants <strong>immediately, directly and without apparatus</strong>. It is the least patient placement for desire in the zodiac. It does not build slowly; it arrives already at temperature. Conjunct Mercury means it arrives <em>as language</em>: you want, and in the same motion you are already describing the want, naming it, framing it. Desire and articulation are one event for you, which is rare and is a genuine gift in intimacy, because you can say the thing most people cannot.</p>
+
+  <p>Then Mars in Cancer squares it at 0.20 degrees, and this is the whole drama. Mars in Cancer is indirect, tidal, responsive, and oriented to the other. So you have the most direct desire placement available squared to the least direct action placement available, in the house of the partner. <strong>What opens you is being wanted. What closes you is sensing, correctly, what the other person is feeling about your wanting.</strong> Your solar plexus is open, which amplifies whatever they feel, and Mars in Cancer in the seventh is the planet that picks it up. By the time you have felt their reaction, your own appetite has already been reclassified as a question about them.</p>
+
+  <p>Your Attraction key is <strong>57.5</strong>, Clarity at the siddhi, <strong>Intuition</strong> at the gift, <strong>Unease</strong> at the shadow, on a line the Gene Keys name for entrapment and sensuality. Gate 57 is "Reading The Room," and it is activated three times in your design, more than any other gate you carry. You are intuitively, almost unbearably accurate about what other people are feeling in intimate space. In the gift, that is the finest erotic instrument imaginable. In the shadow, it is unease, and unease in a bedroom becomes management.</p>
+
+  <p>Your EQ key is <strong>56.1</strong>: Intoxication at the siddhi, <strong>Enrichment</strong> at the gift, <strong>Distraction</strong> at the shadow. You have already written the distinction yourself, in your own journal, about medicine: using it to commune versus using it to commute past something. That is the exact difference between 56's gift and its shadow, and it transfers precisely onto pornography, onto the hotwife material, onto every appetite you have been examining. <strong>The question is never whether the pleasure is allowed. It is whether you are arriving at it or travelling through it.</strong></p>
+
+  <p>And where do you hide here? Not in secrecy, you have been remarkably unsecretive. You hide by <strong>converting</strong>. The pleasure becomes a count, a paragraph, a teaching, an insight about yourself. Venus, the ruler of your empty fifth house, is in the third. Your own pleasure keeps getting filed under speech, and a thing that has been filed has been handled, and a thing that has been handled does not have to be simply had.</p>
+
+  <p class="aside">This week: inside the act of pleasure, when the sentence starts forming, let it not form. See what is there when nothing is being made out of it.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 11</p>
+  <h3>My Shadow</h3>
+
+  <p><strong>Chiron in Taurus at 4°49' in the fourth house, opposite your Midheaven at 0.40 degrees.</strong> Second tightest aspect in the chart, and the single most important placement in this section. Chiron is the wound that does not close and becomes the medicine. In Taurus the wound is about <em>worth, having, the body and what you are allowed to take</em>. In the fourth house it is located at the root: the home, the childhood, the foundation. And it sits in exact opposition to the Midheaven, which is your public work.</p>
+
+  <p>So: <strong>the wound about whether you are allowed to have anything sits at the base of the house, pointing directly at the career built on giving.</strong> That is the axis your whole life runs on. The Scorpio Midheaven does depth work, death work and other people's shadow in public; the Taurus Chiron in the fourth asks quietly, every day, whether you are permitted to take anything for yourself. One end is fully built. The other end has never been furnished, and your empty first, second and fifth houses are the three unfurnished rooms.</p>
+
+  <p>Here is what the aspect costs, concretely. An appetite with no satisfaction condition has exactly two possible endings: an external limit, or collapse. You have four documented instances of other people's limits held perfectly, Chef Mary's one burger, the circle's five days, Pixie's answer, the ceremony's $333, and no documented instance of a limit you set yourself until 2 October 2026. The reason is now visible in the chart rather than in your character. A limit you set yourself is an act of self-valuation, and self-valuation is the Taurus Chiron, and the Taurus Chiron is the exact point that has never had a floor under it.</p>
+
+  <p>The other shadow is quieter and more expensive. Gate 58's shadow is <strong>Dissatisfaction</strong>, and gate 58 is half of your only pressure channel, running into the root. Which means dissatisfaction is not an occasional mood for you; <strong>it is structurally load-bearing.</strong> The pressure to improve, correct, deepen and fix comes from the same place your joy comes from. The gift version improves things and feels joy. The shadow version is never done, and calls that humility.</p>
+
+  <p>Add the open Heart centre, which generates worth through proof, and the open Throat, which speaks what is in the room rather than what is in the self, and the composite picture is a man who can name anything except what he wants, and who has built a kindness so functional that nobody has ever had cause to question it. That is the sentence that matters: <strong>nobody questions a man whose kindness works.</strong> It is the best hiding place available, and you did not choose it cynically. It was the ladder. It got you here.</p>
+
+  <p>The earliest sign it has started is not emotional. It is grammatical. You switch to the third person, or you say "it moved through me" rather than "I wanted it." Watch the pronoun. The pronoun arrives before the pattern does.</p>
+
+  <p class="aside">This week: catch yourself once saying "it came through" about something you did. Say the sentence again with "I" in front of it, out loud, and note what the body does.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 12</p>
+  <h3>What I'm Here to Learn</h3>
+
+  <p>The curriculum is written in three places and all three say the same thing.</p>
+
+  <p><strong>The nodes.</strong> South Node in Aries in the third, conjunct your Sun: the inherited mastery is going first, alone, by voice. North Node in Libra in the ninth: the lesson is the other chair, the equal, the one who is also teaching you, and it must be learned inside the work rather than only at home. The Moon squaring that axis at 1.28 degrees is the skipped step, and it names what has to be collected before the arc closes: <strong>the feeling body has to be brought into the room it has been standing behind.</strong></p>
+
+  <p><strong>Saturn.</strong> Retrograde, in Leo, in the eighth, ruling your whole chart. Retrograde Saturn is authority that has to be rebuilt from the inside because the external version did not hold. In Leo it is about permission to be central, to shine, to be the one who is celebrated rather than the one who celebrates. In the eighth it must be learned in the territory of shared resources, intimacy, death and what other people hold for you. Saturn teaches by delay and then by durability; nothing here arrives early and nothing here, once built, breaks.</p>
+
+  <p><strong>Your Evolution key, 48.1.</strong> Wisdom at the siddhi, <strong>Resourcefulness</strong> at the gift, <strong>Inadequacy</strong> at the shadow, on the line of Self and Empowerment. Gate 48 is the depth gate, the well. Its shadow is the fear of not being deep enough, not having enough inside, not being adequate to what is being asked. Note where it sits in your design: 48 is on your Earth and your Design North Node, which makes it the ground you stand on. <strong>The fear of inadequacy is not an intruder in your life. It is the floor.</strong> The curriculum is not to remove it. It is to stop treating it as evidence.</p>
+
+  <p>Which brings the lesson into one sentence. Your South Node competence says <em>I will handle it so that I am not found wanting.</em> Your North Node says <em>be met, and find out whether the wanting was ever the problem.</em> The 1/3 profile guarantees you will learn this the way you learn everything, by investigating it thoroughly and then colliding with it anyway. The collision is not failure. For a line 3, the collision is the method.</p>
+
+  <p class="aside">This week: in one conversation, let someone finish a thought you could have finished better. Say nothing. Note what it costs, in the body, to be merely present.</p>
+</article>
+
+<hr class="rule short">
+
+<article class="chapter">
+  <p class="label">Chapter 13</p>
+  <h3>Where I Am Now</h3>
+
+  <p>You are forty-eight, born 31 March 1978, and you are standing in a narrow and quite specific window. These are the long cycles only, approximate by nature, and they are approximate on purpose.</p>
+
+  <p><strong>Your Chiron return is happening now, give or take a year.</strong> Chiron takes roughly fifty years to come back to where it started, which places the return in the window from about 2026 to 2028. Your Chiron is the Taurus wound in the fourth, exactly opposite the Midheaven. A Chiron return is not a crisis; it is the one pass where the original wound becomes available as a tool rather than a tender spot. The timing is not subtle: you began excavating worth, taking, appetite and the fruit line in September and October of 2026, which is precisely the window. <strong>You did not choose this year to open this. The year opened it.</strong></p>
+
+  <p>You cleared the <strong>second Saturn square</strong> and the Uranus opposition in your early forties, which are the classic midlife structures, and your record of them is documented rather than vague: December 2020, December 2022, April 2023. Pluto squaring your Ascendant natally means you run those rebuilds harder than most people do, which is why that period reads like three lifetimes rather than one transition.</p>
+
+  <p><strong>Your second Saturn return completed around 2007 to 2008</strong>, the years you married and entered the corporate decade. That structure has now been fully dismantled and replaced, which is what a retrograde Saturn does eventually: it discards the inherited version and builds the earned one.</p>
+
+  <p>In Human Design terms, the 1/3 profile moves through its own phases, and the one you are in now is the phase where investigation turns into transmission. The foundation is laid: nearly five years of journals, two decades of practice, 215 clients, four frameworks, a documented arc. The line 3 collisions have all been had. <strong>What this chapter is asking is not for more research and not for another collision. It is asking you to occupy what is already built.</strong></p>
+
+  <p>And one more thing, said plainly because it is true and because the chart supports it. The completion marker you have been waiting for is behind you, not ahead. In August 2026, at Haven, you stood in a circle and asked for a hug without performing strength first. That is the Libra North Node, done once, in public, in the work. <strong>The thing you keep preparing for has already happened once.</strong> The rest is repetition until it is ordinary.</p>
+
+  <p class="aside">This week: write down the date you think your current chapter started. Then check it against October 2026, and notice how much of this you were already doing before anyone named it.</p>
+</article>
+
+<hr class="rule">
+
+<!-- ===================== THROUGH-LINE ===================== -->
+<article class="chapter throughline">
+  <p class="label">Closing</p>
+  <h3>The Through-Line</h3>
+
+  <p>Three systems, one story, and it is not a complicated one.</p>
+
+  <p>A man is born with an engine in the house of voice, a feeling body standing one step behind the door, and a gift for knowing exactly what a room needs. Very early, something at the foundation teaches him that having is dangerous and that being useful is safe. So he takes the gift, which was meant to be authority, and runs it as provision instead. He gets extraordinarily good at it. He counts the burgers. He does the dishes before dawn in a house that is not his. He builds containers so well made that people are transformed inside them, and he stands in the doorway of every one of them holding the clipboard, which is the only position in the building from which you cannot receive what is happening inside.</p>
+
+  <p>And it works. That is the part that makes it hard to see. Nobody questions a man whose kindness works.</p>
+
+  <p>Then at forty-eight, his Chiron comes back around to where it started, and the question underneath forty-eight years of flawless provisioning finally gets asked out loud: <em>who, by name, would actually have gone without?</em></p>
+
+  <p class="storytitle">The Man Who Set the Table</p>
+
+  <p>That is the arc, and the title is the whole of it. He set the table. He set it beautifully, for hundreds of people, for twenty years, and he has eaten standing up at the counter the entire time, and called it service, and meant it.</p>
+
+  <p>What he is becoming is not a different man. The provisioning is real, the gift is real, and it is Gate 21 at the gift rather than at the shadow: <strong>Authority, which is Control with a chair pulled up to it.</strong> The North Node in Libra is literally the second chair. The arc does not end with him putting down the clipboard. It ends with him sitting down at a table he set, with people who set it with him, and taking the first portion without first checking whether there is enough.</p>
+
+  <p>The last thing worth saying is that this is not years away. The marker already happened once, in a circle at Haven in August 2026, when he asked for a hug without performing strength first. The design is not asking for a transformation. <strong>It is asking for a repetition, until the thing that happened once becomes an ordinary Tuesday.</strong></p>
+</article>
+
+</div>
+
+<!-- ===================== FIELD GUIDE ===================== -->
+<section class="fieldguide">
+  <div class="wrap">
+    <img class="gmark" src="./assets/ankh-light.png" alt="">
+    <p class="label">One page to return to</p>
+    <h3>The Field Guide</h3>
+
+    <h4>Five signs I am in alignment</h4>
+    <ol>
+      <li>The morning happened in full: feet on the dirt, face east, journal before anyone asked anything of me.</li>
+      <li>I trained this week, and my body pushed against something real.</li>
+      <li>I said "I want" in the first person, out loud, at least once, without converting it to a framework.</li>
+      <li>Work arrived by response rather than by initiation, and the belly rose before the mind had an opinion.</li>
+      <li>I was inside a circle rather than in its doorway, and my hands had nothing to do.</li>
+    </ol>
+
+    <h4>Five signs I have drifted, earliest first</h4>
+    <ol>
+      <li><strong>The pronoun slips.</strong> I say "it came through" or "it moved through me" about something I did.</li>
+      <li><strong>The yawn at the desk</strong>, and reluctance to sit down at it. The body files first.</li>
+      <li><strong>Shallow breath, tight neck or lower back</strong>, and a low frustration with no target.</li>
+      <li><strong>Scrolling</strong> shows up in the afternoon. The well was already spent before the phone came out.</li>
+      <li><strong>A small question from Pixie or one of the boys lands like a ton of bricks.</strong> By here, the tank has been empty for hours.</li>
+    </ol>
+
+    <h4>The three moves that bring me back fastest</h4>
+    <ol>
+      <li><strong>Down and out.</strong> Breath, then bare feet, then sun, in that order. Five to ten minutes. Level 1 then Level 2, never skipping to analysis.</li>
+      <li><strong>Move the body against resistance.</strong> Gate 38 does not negotiate. Without exertion the whole being dries up, and no amount of stillness substitutes.</li>
+      <li><strong>Get into another aura.</strong> Split Definition is mechanics, not weakness. Pixie, Austin, Elliot, Tyler. Certain decisions do not resolve alone and never will.</li>
+    </ol>
+
+    <h4>Three experiments for the next thirty days</h4>
+    <ol>
+      <li><strong>Ask for one number.</strong> Pick one person whose number you would keep without negotiating, and ask them for one. You have a spotless record keeping other people's limits and no record of ever requesting one. This is the smallest possible version of the whole arc.</li>
+      <li><strong>One unconverted pleasure per week.</strong> Something private that becomes no teaching, no paragraph, no count, and does not reach the journal. The empty fifth house with Venus in the third means this will not happen by accident. Build it on purpose, four times, and see what is there.</li>
+      <li><strong>Convert fog to a yes-or-no, out loud, three times a week.</strong> You are not unclear, you are unasked. Say the closed question aloud, take the first half-second, and write down what the belly did before the mind arrived.</li>
+    </ol>
+
+    <h4>Where going deeper would give you the most</h4>
+    <ol>
+      <li><strong>Chiron in Taurus in the fourth, opposite the Midheaven at 0.40°.</strong> The worth wound at the root of the house, pointing straight at the public work. It is the axis the whole chart turns on, it is in its return window right now, and it has never had its own session.</li>
+      <li><strong>Venus square Mars at 0.20°, with Mercury square Mars at 0.70°.</strong> The fastest circuit in your design and the mechanical explanation for the quartermaster. Worth a full reading on its own, including what it does inside intimacy and what it does to a price.</li>
+      <li><strong>The nodal axis with the Moon square it at 1.28°.</strong> Aries third to Libra ninth, with the feeling body as the skipped step. This is the one that says what the next ten years are actually for.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="wrap">
+
+<!-- ===================== SOURCES ===================== -->
+<section class="sources">
+  <img class="gmark" src="./assets/sun-light.png" alt="">
+  <p class="label">Appendix</p>
+  <h3>What this reading was built from</h3>
+
+  <h4>Birth data</h4>
+  <table>
+    <tr><td>Born</td><td>31 March 1978, 1:28 AM, Los Angeles, California, USA</td></tr>
+    <tr><td>Time source</td><td>Birth certificate, read by Chris 5 October 2026</td></tr>
+    <tr><td>Zodiac</td><td>Tropical (sidereal reading set aside by his decision, 5 October 2026)</td></tr>
+    <tr><td>Houses</td><td>Placidus</td></tr>
+    <tr><td>Engine</td><td>astronomy-engine 2.1.19, computed 3 October 2026</td></tr>
+  </table>
+
+  <h4>Astrology — positions</h4>
+  <table>
+    <tr><th>Body</th><th>Sign</th><th>Degree</th><th>House</th><th></th></tr>
+    <tr><td>Sun</td><td>Aries</td><td class="num">10°19'</td><td class="num">3</td><td></td></tr>
+    <tr><td>Moon</td><td>Capricorn</td><td class="num">7°09'</td><td class="num">12</td><td>conj. ASC</td></tr>
+    <tr><td>Mercury</td><td>Aries</td><td class="num">26°02'</td><td class="num">3</td><td></td></tr>
+    <tr><td>Venus</td><td>Aries</td><td class="num">26°56'</td><td class="num">3</td><td></td></tr>
+    <tr><td>Mars</td><td>Cancer</td><td class="num">26°44'</td><td class="num">7</td><td></td></tr>
+    <tr><td>Jupiter</td><td>Gemini</td><td class="num">28°29'</td><td class="num">6</td><td></td></tr>
+    <tr><td>Saturn</td><td>Leo</td><td class="num">24°12'</td><td class="num">8</td><td>Rx · chart ruler</td></tr>
+    <tr><td>Uranus</td><td>Scorpio</td><td class="num">15°44'</td><td class="num">10</td><td>Rx</td></tr>
+    <tr><td>Neptune</td><td>Sagittarius</td><td class="num">18°17'</td><td class="num">11</td><td>Rx</td></tr>
+    <tr><td>Pluto</td><td>Libra</td><td class="num">15°28'</td><td class="num">9</td><td>Rx</td></tr>
+    <tr><td>Chiron</td><td>Taurus</td><td class="num">4°49'</td><td class="num">4</td><td></td></tr>
+    <tr><td>North Node</td><td>Libra</td><td class="num">5°53'</td><td class="num">9</td><td></td></tr>
+    <tr><td>South Node</td><td>Aries</td><td class="num">5°53'</td><td class="num">3</td><td></td></tr>
+    <tr><td>Ascendant</td><td>Capricorn</td><td class="num">14°32'</td><td class="num">—</td><td></td></tr>
+    <tr><td>Midheaven</td><td>Scorpio</td><td class="num">4°25'</td><td class="num">—</td><td></td></tr>
+  </table>
+
+  <h4>Astrology — tightest aspects</h4>
+  <table>
+    <tr><th>Aspect</th><th>Orb</th></tr>
+    <tr><td>Venus square Mars</td><td class="num">0.20°</td></tr>
+    <tr><td>Chiron opposite Midheaven</td><td class="num">0.40°</td></tr>
+    <tr><td>Mercury square Mars</td><td class="num">0.70°</td></tr>
+    <tr><td>Mercury conjunct Venus</td><td class="num">0.90°</td></tr>
+    <tr><td>Pluto square Ascendant</td><td class="num">0.93°</td></tr>
+    <tr><td>Uranus sextile Ascendant</td><td class="num">1.20°</td></tr>
+    <tr><td>Moon square nodal axis</td><td class="num">1.28°</td></tr>
+    <tr><td>Mercury trine Saturn</td><td class="num">1.82°</td></tr>
+    <tr><td>Venus trine Saturn</td><td class="num">2.72°</td></tr>
+    <tr><td>Sun conjunct South Node</td><td class="num">4.43°</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:.8rem;margin-top:-.4rem">Balance: Fire 5 · Earth 2 · Air 2 · Water 2 — Cardinal 6 · Fixed 3 · Mutable 2. Stellium: Sun, Mercury, Venus in Aries in the 3rd. Empty houses: 1, 2, 5.</p>
+
+  <h4>Human Design</h4>
+  <table>
+    <tr><td>Type</td><td>Generator</td></tr>
+    <tr><td>Strategy</td><td>Wait to respond</td></tr>
+    <tr><td>Authority</td><td>Sacral</td></tr>
+    <tr><td>Profile</td><td>1/3 Investigator / Martyr</td></tr>
+    <tr><td>Definition</td><td>Split</td></tr>
+    <tr><td>Defined centres</td><td>G, Sacral, Spleen, Root</td></tr>
+    <tr><td>Open centres</td><td>Head, Ajna, Throat, Heart, Solar Plexus</td></tr>
+    <tr><td>Channels</td><td>5–15 Rhythm · 18–58 Judgement</td></tr>
+    <tr><td>Incarnation Cross</td><td>Right Angle Cross of Tension (21/48 | 38/39)</td></tr>
+    <tr><td>Signature / Not-Self</td><td>Satisfaction / Frustration</td></tr>
+    <tr><td>Digestion</td><td>Indirect Light</td></tr>
+    <tr><td>Strongest sense</td><td>Touch</td></tr>
+    <tr><td>Environment</td><td>Natural Shores</td></tr>
+  </table>
+
+  <h4>Human Design — activations</h4>
+  <table>
+    <tr><th></th><th>Design</th><th>Personality</th></tr>
+    <tr><td>Sun / Earth</td><td class="num">38.3 / 39.3</td><td class="num">21.1 / 48.1</td></tr>
+    <tr><td>Moon</td><td class="num">57.5</td><td class="num">58.4</td></tr>
+    <tr><td>North / South Node</td><td class="num">48.1 / 21.1</td><td class="num">18.3 / 17.3</td></tr>
+    <tr><td>Mercury</td><td class="num">26.5</td><td class="num">42.6</td></tr>
+    <tr><td>Venus</td><td class="num">58.5</td><td class="num">3.1</td></tr>
+    <tr><td>Mars</td><td class="num">33.1</td><td class="num">56.1</td></tr>
+    <tr><td>Jupiter</td><td class="num">15.2</td><td class="num">15.1</td></tr>
+    <tr><td>Saturn</td><td class="num">29.6</td><td class="num">4.6</td></tr>
+    <tr><td>Uranus</td><td class="num">1.3</td><td class="num">1.3</td></tr>
+    <tr><td>Neptune</td><td class="num">5.6</td><td class="num">26.2</td></tr>
+    <tr><td>Pluto</td><td class="num">57.2</td><td class="num">57.1</td></tr>
+  </table>
+
+  <h4>Named gifts — all 18</h4>
+  <p style="font-size:.86rem;line-height:1.6">21 A Natural Instinct for How to Control Resources <em>(most important)</em> · 1 Creating New Things · 3 Innovation · 4 A Logical Mind · 5 Marching to Your Own Rhythm · 15 Venturing to the Extremes · 17 Substantiating Opinions · 18 Improvement · 26 Tailoring Your Message · 29 Love of Getting Involved With Others · 33 Contemplation · 38 A Warrior of the Light · 39 Provoking With Consciousness · 42 Intentionality · 48 Natural Purity · 56 Sharing Your Take on the Facts of Life · 57 Reading The Room · 58 Self-Created Joy</p>
+  <p style="color:var(--muted);font-size:.8rem">Verified: these 18 are exactly the union of the 18 gates in the activation table above, Design and Personality combined. Nothing missing, nothing added.</p>
+
+  <h4>Gene Keys — Hologenetic Profile</h4>
+  <table>
+    <tr><th>Sphere</th><th>Key</th><th>Siddhi / Gift / Shadow</th></tr>
+    <tr><td>Life's Work</td><td class="num">21.1</td><td>Valor / Authority / Control</td></tr>
+    <tr><td>Evolution</td><td class="num">48.1</td><td>Wisdom / Resourcefulness / Inadequacy</td></tr>
+    <tr><td>Radiance</td><td class="num">38.3</td><td>Honour / Perseverance / Struggle</td></tr>
+    <tr><td>Purpose</td><td class="num">39.3</td><td>Liberation / Dynamism / Provocation</td></tr>
+    <tr><td>Attraction</td><td class="num">57.5</td><td>Clarity / Intuition / Unease</td></tr>
+    <tr><td>IQ</td><td class="num">3.1</td><td>Innocence / Innovation / Chaos</td></tr>
+    <tr><td>EQ</td><td class="num">56.1</td><td>Intoxication / Enrichment / Distraction</td></tr>
+    <tr><td>SQ</td><td class="num">58.5</td><td>Bliss / Vitality / Dissatisfaction</td></tr>
+    <tr><td>Vocation</td><td class="num">33.1</td><td>Revelation / Mindfulness / Forgetting</td></tr>
+    <tr><td>Culture</td><td class="num">15.2</td><td>Florescence / Magnetism / Dullness</td></tr>
+    <tr><td>Pearl</td><td class="num">15.1</td><td>Florescence / Magnetism / Dullness</td></tr>
+  </table>
+
+  <h4>Life context used</h4>
+  <p style="font-size:.86rem;line-height:1.65">Age 48. Channeler, coach and retreat facilitator in Guanacaste, Costa Rica; 215+ clients over three years, 95% referral. Married to Pixie since 2009, together since 2006; two sons, Hudson and Hendrix. Twenty years in corporate sales to 2022. December 2020, the whole truth told. December 2022, the crown opening. April 2023, the overdose and rehab. Nearly 500 Bufo ceremonies held 2021 to 2023. Three named edges: absorbing admin, the salesman and the channel in one body, and making the home transmissible. Three named fears: provision and the fear of taking, being seen as commercial, exposing the family as the model. The live inquiry as of October 2026 is the first-person thread: third person to first, deferring to claiming, witness seat to body.</p>
+
+  <p class="colophon">Built 5 October 2026 by SAGE, from Chris's own chart data, core files and journals. Astrology computed locally; Human Design and Gene Keys read from his own charts. This document contains birth data and private material. The source copy stays in the local lane; this is the published reference. Search engines are told not to index it, by meta tag and by robots.txt. GitHub Pages cannot serve a private repository on this plan, so anyone holding the link can open it. To save as PDF: Ctrl&nbsp;+&nbsp;P, then Save as PDF. Each movement starts on a fresh page.</p>
+</section>
+
+</div>
+
+<div class="brandfoot">
+  <img src="./assets/mark-light.png" alt="" width="38" height="39">
+  <p class="promise">Tap the Wisdom of your Higher Self</p>
+  <p class="meta">
+    Built by SAGE · 5 October 2026 · <a href="https://cahager.com">cahager.com</a><br>
+    Private reference · Not indexed, not listed, not for circulation
+  </p>
+</div>
+</body>
+</html>
