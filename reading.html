@@ -43,7 +43,10 @@
   --brand-sans:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;
   --page:#1B0C20;
   --ink:#E7E7E7;
-  --indigo:#3B1A4C;
+  /* The field-guide panel. MYSTIC at full strength is a hard jump off
+     CROWN across a field that size, so this is the midpoint the brand
+     gradient itself uses: #1B0C20 -> #2A1130 -> #7C2D50. */
+  --indigo:#2A1130;
   --rule:rgba(165,118,38,.30);
   --muted:rgba(231,231,231,.56);
 }
@@ -205,6 +208,8 @@ body{
 }
 
 .label,.numeral{color:var(--ankh-lift)}
+/* movement dividers are centred, so their glyphs centre with them */
+.movement .gmark{margin-left:auto;margin-right:auto}
 .rule.short{border-top-color:rgba(165,118,38,.55)}
 @media print{.label,.numeral{color:#7F5C1F}}
 </style>
