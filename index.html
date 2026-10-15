@@ -1,176 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="./assets/mark-light.png">
 <meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Know Thyself · Christopher Hager</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="author" content="Christopher Hager">
+<meta name="theme-color" content="#120A1A">
+<link rel="icon" href="./assets/mark-light.png">
 <style>
-/* ==============================================================
-   BRAND LAYER · Christopher Hager
-   Palette swatch-sampled from the Brand Book (Leigh Maneri, Sept
-   2025) via Domains/practice/brand-kit.md.
-     CROWN  #1B0C20    MIRROR #E7E7E7    ANKH  #A57626
-     TRITON #7C2D50    MYSTIC #3B1A4C    GAIA  #1D3237
-   Every asset is a local file in ./assets/. No CDN, no webfont,
-   no runtime fetch, so this renders identically everywhere.
-   ============================================================== */
+/* ── Self-hosted type. Nothing on this page reaches the internet. ───── */
+@font-face{font-family:'Space Grotesk';src:url('./fonts/SpaceGrotesk-a57c9413.woff2') format('woff2');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Space Grotesk';src:url('./fonts/SpaceGrotesk-e911c2d9.woff2') format('woff2');font-weight:300 700;font-style:normal;font-display:swap;unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'DM Sans';src:url('./fonts/DMSans-f6298972.woff2') format('woff2');font-weight:100 1000;font-style:normal;font-display:swap;}
+@font-face{font-family:'DM Sans';src:url('./fonts/DMSans-151a53ae.woff2') format('woff2');font-weight:100 1000;font-style:normal;font-display:swap;unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Instrument Serif';src:url('./fonts/InstrumentSerif-99cc6edf.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Instrument Serif';src:url('./fonts/InstrumentSerif-fa1a1a83.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap;}
+/* BRAND LAYER · Christopher Hager. CROWN #1B0C20 · MIRROR #E7E7E7 · ANKH #A57626 · TRITON #7C2D50 · MYSTIC #3B1A4C · GAIA #1D3237 */
 :root{
-  --crown:#1B0C20; --mirror:#E7E7E7; --ankh:#A57626;
-  --triton:#7C2D50; --mystic:#3B1A4C; --gaia:#1D3237;
-  --ankh-lift:#C79A45;
-  --muted:rgba(231,231,231,.56);
-  --faint:rgba(231,231,231,.38);
-  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
-  --sans:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;
+  --crown:#1B0C20; --night:#120A1A; --deep:#0E0714; --ankh:#A57626; --ankh-hi:#D9A648; --ember-hi:#F7A35C;
+  --ink:#ECE5D8; --ink-2:rgba(236,229,216,.70); --ink-3:rgba(236,229,216,.48);
+  --astro:#D9A648; --hd:#5FC0AE; --gk:#E58BB0;
+  --display:'Instrument Serif',Georgia,serif; --head:'Space Grotesk',"Helvetica Neue",Arial,sans-serif; --body:'DM Sans',-apple-system,"Segoe UI",Roboto,sans-serif;
 }
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0; min-height:100vh;
-  color:var(--mirror); font-family:var(--serif);
-  font-size:18px; line-height:1.68;
-  background-color:var(--crown);
-  background-image:radial-gradient(ellipse 140% 90% at 50% -10%,
-    rgba(124,45,80,.40) 0%, rgba(59,26,76,.22) 40%, rgba(27,12,32,0) 76%);
-  background-repeat:no-repeat; background-attachment:fixed;
-  display:flex; flex-direction:column;
-}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.7;}
+a{color:inherit;}
+.hero{position:relative;overflow:hidden;text-align:center;padding:56px 24px 40px;
+  background:radial-gradient(ellipse 120% 90% at 50% 0%, #2A1130 0%, #1B0C20 46%, #120A1A 100%);}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(231,231,231,.10) 1px, transparent 1.2px);background-size:7px 7px;}
+.hero > *{position:relative;z-index:1;}
+.logo{width:190px;height:auto;opacity:.95;}
+.kicker{font-family:var(--head);font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--ankh-hi);margin:34px 0 16px;}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(3.4rem,12vw,7.4rem);line-height:.9;letter-spacing:-.025em;margin:0;color:#fff;}
+h1 em{font-style:italic;color:var(--ankh-hi);}
+.sub{font-family:var(--display);font-style:italic;font-size:clamp(1.3rem,3.6vw,1.9rem);color:var(--ember-hi);margin:16px 0 0;}
+.born{font-family:var(--head);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin:10px 0 0;}
+#lensart{width:100%;max-width:520px;height:auto;display:block;margin:30px auto 0;}
+.dek{font-size:1.06rem;line-height:1.62;max-width:34em;margin:10px auto 0;color:var(--ink-2);}
+.dek em{color:#fff;}
+.tw{animation:twinkle 4s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:1;}50%{opacity:.3;}}
+.orbit{transform-box:view-box;transform-origin:260px 170px;animation:orbit 60s linear infinite;}
+.orbit.r{animation-direction:reverse;animation-duration:90s;}
+@keyframes orbit{to{transform:rotate(360deg);}}
+.breathe{transform-box:fill-box;transform-origin:50% 50%;animation:breathe 7s ease-in-out infinite;}
+.breathe.b2{animation-delay:-2.3s;} .breathe.b3{animation-delay:-4.6s;}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+.glowpulse{animation:gp 3.2s ease-in-out infinite;}
+@keyframes gp{0%,100%{opacity:.55;}50%{opacity:1;}}
 
-/* ---- top band ---- */
-.brandbar{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:1.4rem; flex-wrap:wrap;
-  padding:19px clamp(1.5rem,5vw,3rem);
-  background:rgba(27,12,32,.74);
-  border-bottom:1px solid rgba(165,118,38,.34);
-}
-.brandbar img{display:block;width:184px;height:auto}
-.brandbar .tag{
-  font-family:var(--sans); font-size:.63rem; font-weight:500;
-  letter-spacing:.26em; text-transform:uppercase; color:var(--ankh-lift);
-}
-
-/* ---- hero ---- */
-main{flex:1; width:100%; max-width:42rem; margin:0 auto;
-  padding:clamp(3rem,9vh,5.5rem) clamp(1.5rem,5vw,2rem) 4rem}
-.stacked{display:block;width:clamp(176px,32vw,232px);height:auto;margin:0 0 2.6rem}
-.eyebrow{
-  font-family:var(--sans); font-size:.64rem; font-weight:500;
-  letter-spacing:.26em; text-transform:uppercase;
-  color:var(--ankh-lift); margin:0 0 1rem;
-}
-h1{font-weight:400; font-size:clamp(2.1rem,6.2vw,3rem); line-height:1.1;
-  letter-spacing:-.01em; margin:0 0 .5rem}
-.byline{font-size:1.1rem; color:var(--muted); margin:0 0 .3rem}
-.born{font-family:var(--sans); font-size:.74rem; letter-spacing:.07em;
-  color:var(--faint); margin:0 0 2rem}
-.lede{color:var(--muted); font-size:1.02rem; margin:0 0 2.8rem; max-width:32rem}
-.lede em{color:var(--mirror); font-style:italic}
-
-/* ---- the two cards ---- */
-.cards{border-top:1px solid rgba(165,118,38,.30)}
-a.card{
-  display:flex; align-items:flex-start; gap:1.15rem;
-  text-decoration:none; color:inherit;
-  border-bottom:1px solid rgba(165,118,38,.30);
-  padding:1.6rem .4rem 1.7rem;
-  transition:background .2s ease, padding-left .2s ease;
-}
-a.card:hover,a.card:focus-visible{
-  background:linear-gradient(90deg, rgba(59,26,76,.55), rgba(42,17,48,.12));
-  padding-left:1.1rem; outline:none;
-}
-a.card img{width:26px;height:auto;flex:0 0 auto;margin-top:.45rem;opacity:.92}
-.card .n{font-family:var(--sans); font-size:.6rem; letter-spacing:.24em;
-  text-transform:uppercase; color:var(--ankh-lift); margin:0 0 .4rem}
-.card .t{font-size:1.3rem; margin:0 0 .32rem; line-height:1.25}
-.card .d{font-family:var(--sans); font-size:.82rem; line-height:1.62;
-  color:var(--muted); margin:0}
-a.card:hover .t{color:var(--ankh-lift)}
-
-/* ---- footer band ---- */
-.brandfoot{
-  padding:2.9rem clamp(1.5rem,5vw,3rem) 3.4rem;
-  background:rgba(27,12,32,.74);
-  border-top:1px solid rgba(165,118,38,.34);
-  text-align:center;
-}
-.brandfoot img{display:block;margin:0 auto 1.15rem;width:38px;height:auto;opacity:.9}
-.brandfoot .promise{font-style:italic; font-size:1.03rem; margin:0 0 .55rem}
-.brandfoot .meta{
-  font-family:var(--sans); font-size:.66rem; letter-spacing:.15em;
-  text-transform:uppercase; color:var(--faint); margin:0; line-height:2;
-}
-.brandfoot a{color:var(--ankh-lift); text-decoration:none;
-  border-bottom:1px solid rgba(165,118,38,.42)}
-.brandfoot a:hover{border-bottom-color:var(--ankh-lift)}
-
-@media (max-width:460px){
-  .brandbar{justify-content:center}
-  .brandbar .tag{display:none}
-}
-@media print{
-  body{background:#fff !important; color:#1a1a1a}
-  .brandbar,.brandfoot{background:none}
-  .stacked,.brandfoot img,a.card img,.brandbar img{filter:invert(1) brightness(.38)}
-  .eyebrow,.card .n,.brandfoot a{color:#7F5C1F}
-}
+.doors{padding:70px 24px 90px;background:var(--crown);}
+.doors .in{max-width:1120px;margin:0 auto;}
+.eyebrow{font-family:var(--head);font-size:10.5px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--ankh-hi);margin:0 0 12px;display:flex;align-items:center;gap:12px;}
+.eyebrow img{width:20px;height:auto;opacity:.85;}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.05;margin:0 0 10px;color:#fff;}
+h2 em{font-style:italic;color:var(--ankh-hi);}
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
+a.dr{display:flex;flex-direction:column;text-decoration:none;border:1px solid rgba(165,118,38,.32);background:rgba(255,255,255,.02);transition:border-color .25s,transform .25s,background .25s;}
+a.dr:hover,a.dr:focus-visible{border-color:var(--ankh-hi);transform:translateY(-3px);background:rgba(255,255,255,.04);outline:none;}
+.dr .art{height:190px;background:radial-gradient(ellipse 110% 90% at 50% 0%, var(--glow) 0%, transparent 70%), var(--night);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(165,118,38,.22);}
+.dr .art svg{width:170px;height:170px;}
+.dr .txt{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1;}
+.dr small{font-family:var(--head);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ankh-hi);}
+.dr h3{font-family:var(--display);font-weight:400;font-size:2rem;line-height:1.05;margin:8px 0 8px;color:#fff;}
+.dr p{font-size:.95rem;line-height:1.6;color:var(--ink-2);margin:0 0 18px;flex:1;}
+.dr .go{font-family:var(--head);font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#fff;border:1px solid var(--ankh);padding:12px 16px;align-self:flex-start;transition:background .25s,color .25s;}
+a.dr:hover .go{background:var(--ankh);color:var(--crown);}
+.lenses3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:60px;border-top:1px solid rgba(165,118,38,.26);padding-top:34px;}
+.l3 small{font-family:var(--head);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--lc);}
+.l3 h4{font-family:var(--display);font-weight:400;font-size:1.6rem;margin:6px 0 6px;color:#fff;}
+.l3 p{font-size:.93rem;line-height:1.6;color:var(--ink-2);margin:0;}
+footer{background:var(--deep);color:rgba(231,231,231,.6);text-align:center;padding:56px 28px 70px;font-size:.92rem;}
+footer img{width:46px;height:auto;opacity:.85;}
+footer .promise{font-family:var(--display);font-style:italic;font-size:1.3rem;color:var(--ankh-hi);margin:14px 0 6px;}
+footer a{color:#fff;}
+footer .small{max-width:46em;margin:22px auto 0;font-size:.8rem;line-height:1.6;color:rgba(231,231,231,.45);}
+@media (max-width:860px){ .dgrid,.lenses3{grid-template-columns:1fr;} }
+@media (prefers-reduced-motion:reduce){ *,*::before,*::after{animation:none !important;transition:none !important;} }
 </style>
 </head>
 <body>
 
-<div class="brandbar">
-  <img src="./assets/logo-inline-light.png" alt="Christopher Hager" width="184" height="35">
-  <span class="tag">Know Thyself</span>
-</div>
-
-<main>
-  <img class="stacked" src="./assets/logo-stacked-light.png" alt="Christopher Hager" width="232" height="105">
-
-  <p class="eyebrow">Know Thyself</p>
-  <h1>The Man Who<br>Set the Table</h1>
-  <p class="byline">Christopher Aaron Hager</p>
+<header class="hero">
+  <img class="logo" src="./assets/logo-inline-light.png" alt="Christopher Hager">
+  <p class="kicker">Know Thyself</p>
+  <h1>The Man Who<br><em>Set the Table</em></h1>
+  <p class="sub">Christopher Aaron Hager</p>
   <p class="born">31 March 1978 · 1:28 AM · Los Angeles, California</p>
-  <p class="lede">Astrology, Human Design and the Gene Keys, read as one design rather than three. Three pages: the long read, the blueprint to check things against, and the natal chart itself. <em>Lenses, not verdicts.</em></p>
+  <svg id="lensart" viewBox="0 0 520 340" role="img" aria-label="Three lenses circling one point of light: astrology, Human Design and the Gene Keys.">
+    <defs>
+      <radialGradient id="core"><stop offset="0%" stop-color="#FFF4D6"/><stop offset="45%" stop-color="#F7C25C" stop-opacity=".8"/><stop offset="100%" stop-color="#A57626" stop-opacity="0"/></radialGradient>
+    </defs>
+    <g id="stars"></g>
+    <g class="orbit"><circle cx="260" cy="170" r="150" fill="none" stroke="rgba(217,166,72,.25)" stroke-dasharray="2 6"/><circle cx="260" cy="20" r="3" fill="#D9A648"/></g>
+    <g class="orbit r"><circle cx="260" cy="170" r="124" fill="none" stroke="rgba(231,231,231,.10)"/><circle cx="384" cy="170" r="2.4" fill="#E58BB0"/><circle cx="136" cy="170" r="2.4" fill="#5FC0AE"/></g>
+    <circle class="breathe" cx="226" cy="150" r="74" fill="#D9A648" fill-opacity=".08" stroke="#D9A648" stroke-width="1.3"/>
+    <circle class="breathe b2" cx="294" cy="150" r="74" fill="#5FC0AE" fill-opacity=".08" stroke="#5FC0AE" stroke-width="1.3"/>
+    <circle class="breathe b3" cx="260" cy="208" r="74" fill="#E58BB0" fill-opacity=".08" stroke="#E58BB0" stroke-width="1.3"/>
+    <circle cx="260" cy="170" r="34" fill="url(#core)" class="glowpulse"/>
+    <text x="178" y="118" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" letter-spacing="2.5" fill="#D9A648">ASTROLOGY</text>
+    <text x="344" y="118" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" letter-spacing="2.5" fill="#5FC0AE">HUMAN DESIGN</text>
+    <text x="260" y="262" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" letter-spacing="2.5" fill="#E58BB0">GENE KEYS</text>
+  </svg>
+  <p class="dek">Astrology, Human Design and the Gene Keys, read as one design rather than three. Three pages: the long read, the blueprint to check things against, and the natal chart itself. <em>Lenses, not verdicts.</em></p>
+</header>
 
-  <div class="cards">
-    <a class="card" href="./reading.html">
-      <img src="./assets/horus-light.png" alt="">
-      <div>
-        <p class="n">One</p>
-        <p class="t">The Reading</p>
-        <p class="d">Thirteen chapters across three movements. The Design · The Living of It · The Deep Water, with a field guide and the full appendix.</p>
-      </div>
-    </a>
-    <a class="card" href="./reference.html">
-      <img src="./assets/ankh-light.png" alt="">
-      <div>
-        <p class="n">Two</p>
-        <p class="t">Quick Reference</p>
-        <p class="d">The blueprint on one page. Natal wheel, Human Design mechanics, the Gene Keys spectrum, and the seven places all three systems name the same thing.</p>
-      </div>
-    </a>
-    <a class="card" href="./chart.html">
-      <img src="./assets/sun-light.png" alt="">
-      <div>
-        <p class="n">Three</p>
-        <p class="t">Natal Chart</p>
-        <p class="d">The chart on its own. The wheel, every placement by sign and house, and the aspects between them.</p>
-      </div>
-    </a>
+<section class="doors">
+  <div class="in">
+    <p class="eyebrow"><img src="./assets/horus-light.png" alt="">Three doors</p>
+    <h2>Where would you <em>like to begin?</em></h2>
+    <div class="dgrid">
+      <a class="dr" href="./reading.html" style="--glow:rgba(247,163,92,.22)">
+        <div class="art">
+          <svg viewBox="0 0 170 170" aria-hidden="true">
+            <defs><radialGradient id="tg"><stop offset="0%" stop-color="#F7C25C" stop-opacity=".7"/><stop offset="100%" stop-color="#F7A35C" stop-opacity="0"/></radialGradient></defs>
+            <ellipse cx="85" cy="96" rx="80" ry="44" fill="url(#tg)" class="glowpulse"/>
+            <g fill="#D9A648" fill-opacity=".5"><circle cx="40" cy="76" r="5"/><circle cx="68" cy="76" r="5"/><circle cx="96" cy="76" r="5"/></g>
+            <circle cx="124" cy="76" r="5" fill="#FFF4D6"/>
+            <rect x="20" y="96" width="130" height="7" rx="2" fill="#2A1130" stroke="#D9A648"/>
+            <g fill="#F7C25C"><ellipse cx="40" cy="95" rx="6" ry="2"/><ellipse cx="68" cy="95" rx="6" ry="2"/><ellipse cx="96" cy="95" rx="6" ry="2"/><ellipse cx="124" cy="95" rx="6" ry="2" fill="#FFF4D6"/></g>
+            <g stroke="#D9A648"><line x1="28" y1="103" x2="28" y2="134"/><line x1="142" y1="103" x2="142" y2="134"/></g>
+          </svg>
+        </div>
+        <div class="txt">
+          <small>One · the long read</small>
+          <h3>The Reading</h3>
+          <p>Thirteen chapters across three movements, now with a plate for every chapter, an interactive natal wheel, the three lenses explained, and a field guide you can use on any day.</p>
+          <span class="go">Begin the reading</span>
+        </div>
+      </a>
+      <a class="dr" href="./reference.html" style="--glow:rgba(95,192,174,.18)">
+        <div class="art">
+          <svg viewBox="0 0 170 170" aria-hidden="true">
+            <g stroke-width="1.3" fill="none">
+              <polygon points="85,18 101,40 69,40" stroke="rgba(231,231,231,.5)"/>
+              <rect x="73" y="54" width="24" height="22" stroke="rgba(231,231,231,.5)"/>
+              <polygon points="85,86 101,102 85,118 69,102" fill="#D9A648" stroke="#F7C25C"/>
+              <rect x="73" y="124" width="24" height="22" fill="#D9A648" stroke="#F7C25C"/>
+              <polygon points="34,118 34,150 58,134" fill="#D9A648" stroke="#F7C25C"/>
+              <polygon points="136,118 136,150 112,134" stroke="rgba(231,231,231,.5)"/>
+              <line x1="85" y1="118" x2="85" y2="124" stroke="#D9A648" stroke-width="4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="txt">
+          <small>Two · the blueprint</small>
+          <h3>Quick Reference</h3>
+          <p>The blueprint on one page. Natal wheel, Human Design mechanics, the Gene Keys spectrum, and the seven places all three systems name the same thing.</p>
+          <span class="go">Open the blueprint</span>
+        </div>
+      </a>
+      <a class="dr" href="./chart.html" style="--glow:rgba(217,166,72,.2)">
+        <div class="art">
+          <svg viewBox="0 0 170 170" aria-hidden="true">
+            <g class="orbit" style="transform-origin:85px 85px"><circle cx="85" cy="85" r="70" fill="none" stroke="#A57626" stroke-opacity=".7"/><circle cx="85" cy="85" r="56" fill="none" stroke="#A57626" stroke-opacity=".5"/>
+            <g stroke="#A57626" stroke-opacity=".5"><line x1="85" y1="15" x2="85" y2="29"/><line x1="85" y1="141" x2="85" y2="155"/><line x1="15" y1="85" x2="29" y2="85"/><line x1="141" y1="85" x2="155" y2="85"/><line x1="35.5" y1="35.5" x2="45.4" y2="45.4"/><line x1="124.6" y1="124.6" x2="134.5" y2="134.5"/><line x1="134.5" y1="35.5" x2="124.6" y2="45.4"/><line x1="45.4" y1="124.6" x2="35.5" y2="134.5"/></g></g>
+            <line x1="15" y1="85" x2="155" y2="85" stroke="#D9A648" stroke-width="1.3"/>
+            <line x1="70" y1="40" x2="110" y2="112" stroke="#E8732A" stroke-width="1.4"/>
+            <line x1="70" y1="40" x2="40" y2="104" stroke="#5FC0AE" stroke-width="1"/>
+            <circle cx="85" cy="85" r="24" fill="url(#tg)" class="glowpulse"/>
+          </svg>
+        </div>
+        <div class="txt">
+          <small>Three · the sky</small>
+          <h3>Natal Chart</h3>
+          <p>The chart on its own. The wheel, every placement by sign and house, and the aspects between them.</p>
+          <span class="go">See the chart</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="lenses3">
+      <div class="l3" style="--lc:var(--astro)"><small>Lens one · the sky</small><h4>Astrology</h4><p>The sky at the minute you were born, seen from where you were born. Planets are the functions, signs the style, houses the rooms of a life.</p></div>
+      <div class="l3" style="--lc:var(--hd)"><small>Lens two · the mechanics</small><h4>Human Design</h4><p>The same planets read as nine energy centres: what is reliably yours, what you take in from others, and how you are built to decide.</p></div>
+      <div class="l3" style="--lc:var(--gk)"><small>Lens three · the path</small><h4>The Gene Keys</h4><p>The same numbers read as a contemplative path. Every key at three frequencies: shadow, gift and siddhi.</p></div>
+    </div>
   </div>
-</main>
+</section>
 
-<div class="brandfoot">
-  <img src="./assets/mark-light.png" alt="" width="38" height="39">
+<footer>
+  <img src="./assets/mark-light.png" alt="Christopher Hager">
   <p class="promise">Tap the Wisdom of your Higher Self</p>
-  <p class="meta">
-    Built by SAGE · 5 October 2026 · <a href="https://cahager.com">cahager.com</a><br>
-    Private reference · Not indexed, not listed, not for circulation
-  </p>
-</div>
+  <p><a href="https://hagerca.github.io/">The Alchemy Lab</a> · <a href="https://www.cahager.com/">cahager.com</a></p>
+  <p class="small">Built by SAGE · 5 October 2026, given its lenses and plates 15 October 2026. Private reference. Not indexed, not listed, not for circulation.</p>
+</footer>
 
+<script>
+(function(){
+  let s = 3; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  let out = '';
+  for (let i = 0; i < 80; i++) out += `<circle class="tw" cx="${(r()*520).toFixed(1)}" cy="${(r()*340).toFixed(1)}" r="${(r()*1.2+.3).toFixed(2)}" fill="#E7E7E7" fill-opacity="${(r()*.5+.2).toFixed(2)}" style="animation-delay:${(r()*4).toFixed(2)}s"/>`;
+  document.getElementById('stars').innerHTML = out;
+})();
+</script>
 </body>
 </html>
