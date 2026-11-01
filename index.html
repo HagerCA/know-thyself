@@ -57,7 +57,8 @@ h1 em{font-style:italic;color:var(--ankh-hi);}
 .eyebrow img{width:20px;height:auto;opacity:.85;}
 h2{font-family:var(--display);font-weight:400;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1.05;margin:0 0 10px;color:#fff;}
 h2 em{font-style:italic;color:var(--ankh-hi);}
-.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px;}
+@media (max-width:1180px){ .dgrid{grid-template-columns:repeat(2,1fr);} }
 a.dr{display:flex;flex-direction:column;text-decoration:none;border:1px solid rgba(165,118,38,.32);background:rgba(255,255,255,.02);transition:border-color .25s,transform .25s,background .25s;}
 a.dr:hover,a.dr:focus-visible{border-color:var(--ankh-hi);transform:translateY(-3px);background:rgba(255,255,255,.04);outline:none;}
 .dr .art{height:190px;background:radial-gradient(ellipse 110% 90% at 50% 0%, var(--glow) 0%, transparent 70%), var(--night);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(165,118,38,.22);}
@@ -104,12 +105,12 @@ footer .small{max-width:46em;margin:22px auto 0;font-size:.8rem;line-height:1.6;
     <text x="344" y="118" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" letter-spacing="2.5" fill="#5FC0AE">HUMAN DESIGN</text>
     <text x="260" y="262" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="8.5" letter-spacing="2.5" fill="#E58BB0">GENE KEYS</text>
   </svg>
-  <p class="dek">Astrology, Human Design and the Gene Keys, read as one design rather than three. Three pages: the long read, the blueprint to check things against, and the natal chart itself. <em>Lenses, not verdicts.</em></p>
+  <p class="dek">Astrology, Human Design and the Gene Keys, read as one design rather than three. Four pages: the long read, the blueprint to check things against, the natal chart itself, and the map of everywhere I have lived. <em>Lenses, not verdicts.</em></p>
 </header>
 
 <section class="doors">
   <div class="in">
-    <p class="eyebrow"><img src="./assets/horus-light.png" alt="">Three doors</p>
+    <p class="eyebrow"><img src="./assets/horus-light.png" alt="">Four doors</p>
     <h2>Where would you <em>like to begin?</em></h2>
     <div class="dgrid">
       <a class="dr" href="./reading.html" style="--glow:rgba(247,163,92,.22)">
@@ -168,6 +169,28 @@ footer .small{max-width:46em;margin:22px auto 0;font-size:.8rem;line-height:1.6;
           <h3>Natal Chart</h3>
           <p>The chart on its own. The wheel, every placement by sign and house, and the aspects between them.</p>
           <span class="go">See the chart</span>
+        </div>
+      </a>
+      <a class="dr" href="./astrocartography.html" style="--glow:rgba(46,196,160,.18)">
+        <div class="art">
+          <svg viewBox="0 0 170 170" aria-hidden="true">
+            <g stroke="rgba(231,231,231,.12)" stroke-width="1"><line x1="12" y1="55" x2="158" y2="55"/><line x1="12" y1="85" x2="158" y2="85"/><line x1="12" y1="115" x2="158" y2="115"/></g>
+            <rect x="12" y="30" width="146" height="110" rx="3" fill="none" stroke="#A57626" stroke-opacity=".6"/>
+            <line x1="52" y1="30" x2="52" y2="140" stroke="#2EC4A0" stroke-width="1.6" stroke-dasharray="6 4"/>
+            <line x1="104" y1="30" x2="104" y2="140" stroke="#BFA67C" stroke-width="1.4" stroke-dasharray="6 4"/>
+            <path d="M12 128 C 60 120, 90 60, 158 40" fill="none" stroke="#A98BF0" stroke-width="1.5"/>
+            <path d="M12 46 C 70 52, 110 110, 158 126" fill="none" stroke="#5B84F0" stroke-width="1.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+            <circle cx="104" cy="70" r="20" fill="url(#tg)" class="glowpulse"/>
+            <circle cx="46" cy="74" r="4.5" fill="#D9A648" stroke="#FFF4D6"/>
+            <circle cx="104" cy="70" r="3" fill="#D9A648"/>
+            <circle cx="70" cy="112" r="4.5" fill="#FFF4D6" stroke="#D9A648"/>
+          </svg>
+        </div>
+        <div class="txt">
+          <small>Four · the map</small>
+          <h3>Where I Have Lived</h3>
+          <p>Astrocartography. Every home from Woodland Hills to Tamarindo and the 1997 Europe trip, laid over the planetary lines, with all 182 crossings and seven chapters read against the sky.</p>
+          <span class="go">Open the map</span>
         </div>
       </a>
     </div>
