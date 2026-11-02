@@ -147,11 +147,17 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
   function turn(r, now) {
     if (r.name === 'Sun' || r.name === 'Moon') return '<span class="sky-faint">never retrograde</span>';
     if (r.name === 'North Node') return '<span class="sky-faint">backward is its usual motion</span>';
-    if (!r.next) return '<span class="sky-faint">—</span>';
+    if (!r.next) return '<span class="sky-faint">none in sight</span>';
     return 'Turns ' + r.next.to + ' ' + fmtDate(r.next.date, yearDiffers(r.next.date, now));
   }
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  /* hover card hooks, read by the sky guide */
+  function tipAttrs(r) {
+    var x = norm(r.lon), si = Math.floor(x / 30), deg = x - si * 30;
+    return ' data-tip="place" data-ctx="sky" data-b="' + r.name + '" data-s="' + si + '" data-d="' + deg.toFixed(2) + '" data-dm="' +
+      r.pos.replace(/^\S+ /, '') + '" data-h="' + r.house + '" data-rx="' + (r.retrograde ? 1 : 0) + '" tabindex="0"';
+  }
 
   function render(el) {
     var now = new Date(), sky;
@@ -170,7 +176,7 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
     } else {
       h += '<div class="sky-rxgrid">';
       rx.forEach(function (r) {
-        h += '<div class="sky-rxcard"><div class="sky-rxtop"><span class="sky-g">' + r.glyph + '</span><div><strong>' + r.name +
+        h += '<div class="sky-rxcard"' + tipAttrs(r) + '><div class="sky-rxtop"><span class="sky-g">' + r.glyph + '</span><div><strong>' + r.name +
              ' <span class="sky-rxw">℞</span></strong><span class="sky-pos">' + r.pos + '</span></div></div>' +
              '<p class="sky-house">Moving backward through your <b>' + r.houseOrd + ' house</b>, ' + r.houseName + '.</p>' +
              '<p class="sky-when">' + (r.since ? 'Retrograde since ' + fmtDate(r.since.date, yearDiffers(r.since.date, now)) : '') +
@@ -182,44 +188,44 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
     h += '<h4 class="sky-h">Every planet, this moment</h4><div class="sky-scroll"><table class="sky-table"><thead><tr>' +
          '<th></th><th>Body</th><th>Sign &amp; degree</th><th>Motion</th><th>Your house</th><th>Next turn</th></tr></thead><tbody>';
     sky.bodies.forEach(function (r) {
-      h += '<tr' + (r.retrograde && STATIONS[r.name] ? ' class="is-rx"' : '') + '><td class="sky-g">' + r.glyph + '</td><td><strong>' + r.name + '</strong></td>' +
+      h += '<tr' + (r.retrograde && STATIONS[r.name] ? ' class="is-rx"' : '') + tipAttrs(r) + '><td class="sky-g">' + r.glyph + '</td><td><strong>' + r.name + '</strong></td>' +
            '<td>' + r.pos + '</td><td>' + motion(r, now) + '</td>' +
            '<td><span class="sky-hn">' + r.houseOrd + '</span> <span class="sky-faint">' + r.houseName + '</span></td>' +
            '<td>' + turn(r, now) + '</td></tr>';
     });
     h += '</tbody></table></div>';
-    h += '<p class="sky-note">Positions are geocentric and tropical, on the same engine and the same Placidus house cusps as the natal chart, so a planet listed in your 2nd house is crossing the room the natal chart calls your 2nd. Reload the page and everything here is recomputed for that moment. Dates are Costa Rica time; a station is the day a planet appears to stand still and reverse.</p>';
+    h += '<p class="sky-note">Positions are geocentric and tropical, on the same engine and the same Placidus house cusps as the natal chart, so a planet listed in your 2nd house is crossing the room the natal chart calls your 2nd. Reload the page and everything here is recomputed for that moment. Dates are Costa Rica time; a station is the day a planet appears to stand still and reverse. Hover or tap any planet for what it means.</p>';
     el.innerHTML = h;
     el.querySelector('.sky-again').addEventListener('click', function () { render(el); });
   }
 
   var CSS =
-    '.skynow{--sk-card:rgba(42,17,48,.62);--sk-rule:#3A2440;--sk-gold:#C79A45;--sk-rx:#E0907A;--sk-dim:#A9A0B0;--sk-faint:#8A7D93}' +
+    '.skynow{--sk-card:rgba(42,17,48,.62);--sk-rule:#3A2440;--sk-gold:#C79A45;--sk-rx:#E0907A;--sk-dim:#CFC5D4;--sk-faint:#B5A8BE}' +
     '.sky-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:0 0 26px}' +
-    '.sky-asof{margin:0;font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;font-size:12.5px;letter-spacing:.06em;color:var(--sk-dim)}' +
+    '.sky-asof{margin:0;font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:.05em;color:var(--sk-dim)}' +
     '.sky-again{background:none;border:1px solid rgba(165,118,38,.5);color:var(--sk-gold);border-radius:2px;padding:7px 14px;cursor:pointer;' +
       'font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}' +
     '.sky-again:hover{border-color:var(--sk-gold);background:rgba(165,118,38,.1)}' +
-    '.sky-h{font-weight:400;font-size:19px;margin:30px 0 14px;display:flex;align-items:center;gap:10px}' +
+    '.sky-h{font-weight:400;font-size:21px;margin:30px 0 14px;display:flex;align-items:center;gap:10px}' +
     '.sky-count{font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",sans-serif;font-size:11px;color:var(--sk-rx);border:1px solid rgba(224,144,122,.5);border-radius:999px;padding:1px 9px}' +
     '.sky-none{color:var(--sk-dim);font-style:italic}' +
     '.sky-rxgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}' +
     '.sky-rxcard{background:var(--sk-card);border:1px solid var(--sk-rule);border-left:3px solid var(--sk-rx);padding:16px 18px;border-radius:2px}' +
     '.sky-rxtop{display:flex;gap:12px;align-items:center;margin-bottom:10px}' +
-    '.sky-rxtop strong{display:block;font-weight:600;font-size:17px}' +
-    '.sky-pos{display:block;font-size:14px;color:var(--sk-dim)}' +
+    '.sky-rxtop strong{display:block;font-weight:600;font-size:18.5px}' +
+    '.sky-pos{display:block;font-size:15.5px;color:var(--sk-dim)}' +
     '.sky-g{font-family:"Segoe UI Symbol","Segoe UI Historic","Apple Symbols",serif;font-size:22px;color:var(--sk-gold);line-height:1}' +
-    '.sky-house{margin:0 0 6px;font-size:15px}' +
-    '.sky-when{margin:0;font-size:13.5px;color:var(--sk-faint)}' +
+    '.sky-house{margin:0 0 6px;font-size:16.5px}' +
+    '.sky-when{margin:0;font-size:15px;color:var(--sk-faint)}' +
     '.sky-rxw{color:var(--sk-rx)}.sky-dir{color:var(--sk-dim)}.sky-stat{color:var(--sk-gold);font-weight:600}.sky-faint{color:var(--sk-faint)}' +
     '.sky-hn{color:var(--sk-gold)}' +
     '.sky-scroll{overflow-x:auto}' +
-    '.sky-table{width:100%;border-collapse:collapse;font-size:15px}' +
-    '.sky-table th{text-align:left;font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",sans-serif;font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sk-faint);padding:8px 10px;border-bottom:1px solid var(--sk-rule)}' +
+    '.sky-table{width:100%;border-collapse:collapse;font-size:16.5px}' +
+    '.sky-table th{text-align:left;font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",sans-serif;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sk-dim);padding:8px 10px;border-bottom:1px solid var(--sk-rule)}' +
     '.sky-table td{padding:9px 10px;border-bottom:1px solid var(--sk-rule);vertical-align:top}' +
-    '.sky-table tr.is-rx td{background:rgba(224,144,122,.06)}' +
+    '.sky-table tr.is-rx td{background:rgba(224,144,122,.06)}.sky-table tbody tr:hover td,.sky-rxcard:hover{background:rgba(199,154,69,.1)}.sky-rxcard,.sky-table tbody tr{transition:background .15s}' +
     '.sky-table td.sky-g{width:1.8em;font-size:19px}' +
-    '.sky-note{margin:18px 0 0;font-size:13.5px;color:var(--sk-faint);max-width:72ch}' +
+    '.sky-note{margin:18px 0 0;font-size:15px;color:var(--sk-faint);max-width:72ch}' +
     '.sky-err{color:var(--sk-rx)}' +
     '@media print{.sky-again{display:none}.skynow{--sk-card:#F7F5F1;--sk-rule:#C9C6BE;--sk-gold:#7F5C1F;--sk-rx:#8C3A2E;--sk-dim:#4A4A4A;--sk-faint:#6E6E6E}}';
 
@@ -238,4 +244,247 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
   if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   }
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* ==============================================================
+   SKY GUIDE · the quick hitter on hover
+   Hover (or tap) a planet, a sign, a house number or a row and a
+   short card says what it means: the planet, retrograde if it is,
+   the sign, the degree, and the house. Built from the same few
+   pieces every time, so reading your own sky teaches the grammar.
+   Works on any element carrying data-tip; on the natal chart page
+   it also annotates the wheel and the placements table itself.
+   ============================================================== */
+(function (root) {
+  'use strict';
+  if (typeof document === 'undefined') return;
+
+  var SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+  var SGLYPH = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+  var ORD = ['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
+  var DECAN = ['first','second','third'];
+
+  var BODY = {
+    'Sun': 'Your core identity and life force: what you are becoming, and where you need to shine.',
+    'Moon': 'Your emotional body: what you need to feel safe, how you self-soothe, your instinctive reactions.',
+    'Mercury': 'The mind and the messenger: how you think, speak, write, learn and make connections.',
+    'Venus': 'What you love and value: attraction, beauty, pleasure, relationships, and money as a value.',
+    'Mars': 'Drive and desire: how you act, assert, compete, get angry and go after what you want.',
+    'Jupiter': 'Growth and faith: where life expands, where luck and generosity flow, and where you can overdo it.',
+    'Saturn': 'Structure and mastery: discipline, limits, time and responsibility. The teacher whose lessons become your own authority.',
+    'Uranus': 'Awakening and disruption: sudden change, freedom, originality, the break from what was expected.',
+    'Neptune': 'Dissolution and the sacred: dreams, intuition, compassion and spirit, and also fog, illusion and escape.',
+    'Pluto': 'Death and rebirth: power, depth, what is buried, and the transformation that does not ask permission.',
+    'Chiron': 'The wounded healer: the hurt that never fully closes, and the place your medicine for others comes from.',
+    'North Node': 'The direction of growth: the unfamiliar territory your soul is reaching toward in this life.',
+    'South Node': 'The familiar groove: gifts already mastered, and the comfort zone it is easy to slide back into.',
+    'Ascendant': 'Your rising sign: how you arrive, your body and first impression, the lens you meet life through. It opens the 1st house.',
+    'Descendant': 'The setting point: what you look for and meet in partners and close others. It opens the 7th house.',
+    'Midheaven': 'The highest point of the chart: vocation, public role, reputation, what you are known for. It opens the 10th house.',
+    'Imum Coeli': 'The lowest point of the chart: roots, home, family line, the private foundation under everything. It opens the 4th house.'
+  };
+
+  /* retrograde in today's sky */
+  var RX_SKY = {
+    'Mercury': 'Seen from Earth, Mercury appears to move backward for about three weeks, three or four times a year. Time to review, revise, re-read and reconnect rather than launch. Messages, tech, travel and contracts misfire more easily, and old threads and old people resurface.',
+    'Venus': 'Every 18 months, for about six weeks. Love, values and money come up for review. Old flames and old desires return, and it is a weak window for new relationships, big purchases or changing how you look.',
+    'Mars': 'Every two years, for about ten weeks. Energy turns inward. Pushing forward meets resistance; the work is to redirect drive, finish what was started, and look at how anger moves through you.',
+    'Jupiter': 'About four months every year. Growth goes inward: faith, beliefs and inner wealth get reviewed before outer expansion picks up again.',
+    'Saturn': 'About four and a half months every year. Commitments and structures come up for an inner audit. What was built carelessly shows its cracks; what was built well gets reinforced.',
+    'Uranus': 'About five months every year. The urge for freedom and change works on the inside first: inner breakthroughs before outer ones.',
+    'Neptune': 'About five months every year. The fog thins a little: illusions get easier to see through, and spiritual practice turns inward.',
+    'Pluto': 'About five months every year. Deep, private transformation: power and buried material are worked on beneath the surface.',
+    'Chiron': 'About five months every year. The old wound gets revisited from the inside, which is often where the healing actually happens.',
+    'North Node': 'The nodes almost always move backward through the zodiac. That is their normal motion, not an event.'
+  };
+
+  /* retrograde at birth */
+  var OUTER_NATAL = ' Very common: the outer planets are retrograde for close to half of every year, so much of your generation shares it. It makes the theme personal inner work rather than something that arrives from outside.';
+  var RX_NATAL = {
+    'Mercury': 'Born with Mercury retrograde: the mind works by revisiting. You think privately, often understand on the second pass, and say it best after you have sat with it.',
+    'Venus': 'Born with Venus retrograde: your values are self-made rather than borrowed. Love and worth get worked out from the inside, often after early lessons.',
+    'Mars': 'Born with Mars retrograde: drive is internal and strategic. Action is considered first, and anger tends to be held rather than thrown.',
+    'Jupiter': 'Born with Jupiter retrograde: faith and meaning are found within, a personal philosophy rather than an inherited one.',
+    'Saturn': 'Born with Saturn retrograde: authority is internal. You set your own rules, are your own hardest critic, and earn mastery the long way, often without anyone outside signing off on it.',
+    'Uranus': 'Born with Uranus retrograde: your rebellion and originality run inward, an independent inner life before an unconventional outer one.' + OUTER_NATAL,
+    'Neptune': 'Born with Neptune retrograde: the spiritual life is lived from the inside, with a strong private sensitivity to what is unseen.' + OUTER_NATAL,
+    'Pluto': 'Born with Pluto retrograde: transformation is an inner process, and the relationship with power is worked out within before it shows.' + OUTER_NATAL,
+    'Chiron': 'Born with Chiron retrograde: the wound is tended privately, and the healing gift matures through your own inner work.',
+    'North Node': 'The nodes almost always move backward. That is their normal motion.',
+    'South Node': 'The nodes almost always move backward. That is their normal motion.'
+  };
+
+  var SIGN = [
+    'Fire, cardinal, ruled by Mars. Direct, brave, first, impatient. Things happen fast and on instinct.',
+    'Earth, fixed, ruled by Venus. Steady, sensual, loyal, slow to change. Builds and holds.',
+    'Air, mutable, ruled by Mercury. Curious, quick, talkative, of two minds. Gathers and connects.',
+    'Water, cardinal, ruled by the Moon. Protective, feeling, family-minded. Leads through care.',
+    'Fire, fixed, ruled by the Sun. Warm, proud, expressive, generous. Needs to create and be seen.',
+    'Earth, mutable, ruled by Mercury. Precise, useful, discerning. Devoted to craft and refinement.',
+    'Air, cardinal, ruled by Venus. Relational, fair, aesthetic. Seeks balance and the other side of the story.',
+    'Water, fixed, ruled by Pluto and Mars. Intense, private, loyal, probing. Goes all the way down.',
+    'Fire, mutable, ruled by Jupiter. Free, philosophical, candid. Seeks meaning and the far horizon.',
+    'Earth, cardinal, ruled by Saturn. Ambitious, patient, responsible. Built for the long climb.',
+    'Air, fixed, ruled by Uranus and Saturn. Independent, inventive, collective-minded. Thinks in systems.',
+    'Water, mutable, ruled by Neptune and Jupiter. Intuitive, porous, compassionate. Dissolves boundaries.'
+  ];
+
+  var HOUSE = [
+    ['Self & Body', 'how you arrive, your body, your first ten seconds in a room'],
+    ['Resources & Worth', 'money, possessions, talents, and your sense of your own worth'],
+    ['Voice & Learning', 'speech, writing, teaching, siblings, the neighbourhood, everyday learning'],
+    ['Root & Home', 'home, family, ancestry, the private foundation you stand on'],
+    ['Play & Creation', 'creativity, romance, children, joy, self-expression'],
+    ['Craft & Maintenance', 'daily work, health, routines, service, the tending of things'],
+    ['The Other', 'partnership, marriage, clients, open allies and open opponents'],
+    ['Death & Merging', 'intimacy, shared money, inheritance, crisis, deep transformation'],
+    ['Meaning & Distance', 'philosophy, higher learning, travel, faith, publishing and teaching'],
+    ['Vocation & Visibility', 'career, reputation, public role, the legacy you leave'],
+    ['Collective & Future', 'friends, community, networks, hopes for the future'],
+    ['Dissolution & Source', 'the unconscious, solitude, retreat, spirit, what is hidden or undone']
+  ];
+
+  function degLine(s, deg) {
+    var d = Math.floor(deg), k = Math.min(2, Math.floor(deg / 10));
+    if (deg >= 29) return '<b>' + d + '°</b> is the last degree of ' + SIGNS[s] + ', called anaretic: urgency and completion before the next sign begins.';
+    if (deg < 1) return '<b>0°</b> means it has just arrived in ' + SIGNS[s] + '; the sign\'s qualities are fresh and still forming.';
+    var lo = k * 10, hi = lo + 9;
+    var flavour = k === 0 ? 'the sign at its purest' : 'which adds a note of ' + SIGNS[(s + 4 * k) % 12];
+    return '<b>' + d + '°</b> of 30 sits in the ' + DECAN[k] + ' decan (' + lo + '° to ' + hi + '°), ' + flavour + '.';
+  }
+
+  function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+  /* data: {b, s, d, dm, h, rx, ctx}  ctx is 'sky' or 'natal' */
+  function placement(o) {
+    var s = +o.s, h = o.h ? +o.h : null, rx = o.rx === '1', sky = o.ctx === 'sky';
+    var head = esc(o.b) + (rx ? ' <span class="tip-rx">℞</span>' : '') +
+               '<span class="tip-sub">' + '<span class="tip-g">' + SGLYPH[s] + '︎</span> ' + SIGNS[s] + ' ' + esc(o.dm || '') + (h ? ' · ' + ORD[h - 1] + ' house' : '') +
+               (sky ? ' · in the sky now' : ' · at your birth') + '</span>';
+    var out = '<p class="tip-h">' + head + '</p>';
+    if (BODY[o.b]) out += '<p><b>' + esc(o.b) + '</b> · ' + BODY[o.b] + '</p>';
+    if (rx) {
+      var t = (sky ? RX_SKY : RX_NATAL)[o.b];
+      if (t) out += '<p><b class="tip-rx">Retrograde</b> · ' + t + '</p>';
+    }
+    out += '<p><b>In ' + SIGNS[s] + '</b> · ' + SIGN[s] + '</p>';
+    if (o.d !== undefined && o.d !== '') out += '<p>' + degLine(s, +o.d) + '</p>';
+    if (h) out += '<p><b>' + (sky ? 'Crossing your ' : 'In your ') + ORD[h - 1] + ' house, ' + HOUSE[h - 1][0] + '</b> · ' + HOUSE[h - 1][1] + '.' +
+                  (sky ? ' This is the part of your life it is stirring right now.' : '') + '</p>';
+    return out;
+  }
+  function signTip(s) {
+    return '<p class="tip-h">' + '<span class="tip-g">' + SGLYPH[s] + '︎</span> ' + SIGNS[s] + '</p><p>' + SIGN[s] + '</p>' +
+           '<p class="tip-faint">A sign is the <b>how</b>: the style any planet in it takes on.</p>';
+  }
+  function houseTip(h) {
+    return '<p class="tip-h">Your ' + ORD[h - 1] + ' house <span class="tip-sub">' + HOUSE[h - 1][0] + '</span></p>' +
+           '<p>' + HOUSE[h - 1][1].charAt(0).toUpperCase() + HOUSE[h - 1][1].slice(1) + '.</p>' +
+           '<p class="tip-faint">A house is the <b>where</b>: the area of actual life a planet plays out in.</p>';
+  }
+
+  function compose(el) {
+    var t = el.getAttribute('data-tip'), ds = el.dataset;
+    if (t === 'place') return placement({ b: ds.b, s: ds.s, d: ds.d, dm: ds.dm, h: ds.h, rx: ds.rx, ctx: ds.ctx });
+    if (t === 'sign') return signTip(+ds.s);
+    if (t === 'house') return houseTip(+ds.h);
+    return null;
+  }
+
+  /* ------------------------------------------------- the floating card */
+  var tip = null, current = null;
+  function ensure() {
+    if (tip) return tip;
+    var st = document.createElement('style');
+    st.textContent =
+      '.sky-tip{position:fixed;z-index:999;max-width:370px;padding:14px 16px 6px;background:#2A1130;color:#F4EEE3;' +
+      'border:1px solid rgba(199,154,69,.6);border-top:3px solid #C79A45;border-radius:2px;box-shadow:0 14px 40px rgba(0,0,0,.55);' +
+      'font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-size:15.5px;line-height:1.5;pointer-events:none;' +
+      'opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}' +
+      '.sky-tip.on{opacity:1;transform:none}' +
+      '.sky-tip p{margin:0 0 9px}' +
+      '.sky-tip b{color:#FFF6E6;font-weight:600}' +
+      '.sky-tip .tip-h{font-size:18px;margin-bottom:10px}' +
+      '.sky-tip .tip-sub{display:block;font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",sans-serif;font-size:12.5px;letter-spacing:.06em;color:#D8B56E;margin-top:2px}' +
+      '.sky-tip .tip-rx{color:#F0A38D}' +
+      '.sky-tip .tip-g{font-family:"Segoe UI Symbol","Segoe UI Historic","Apple Symbols",serif;font-variant-emoji:text}' +
+      '.sky-tip .tip-faint{color:#C9BFCD;font-size:14px}' +
+      '[data-tip]{cursor:help}' +
+      '@media print{.sky-tip{display:none}}';
+    document.head.appendChild(st);
+    tip = document.createElement('div');
+    tip.className = 'sky-tip'; tip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tip);
+    return tip;
+  }
+  function place(el) {
+    var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, m = 10;
+    var x = Math.min(Math.max(m, r.left + r.width / 2 - w / 2), window.innerWidth - w - m);
+    var y = r.bottom + m;
+    if (y + h > window.innerHeight - m) y = Math.max(m, r.top - h - m);
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function show(el) {
+    var html = compose(el); if (!html) return;
+    ensure(); current = el;
+    tip.innerHTML = html; tip.classList.add('on'); place(el);
+  }
+  function hide() { if (tip) tip.classList.remove('on'); current = null; }
+
+  document.addEventListener('mouseover', function (e) {
+    var el = e.target.closest && e.target.closest('[data-tip]');
+    if (el && el !== current) show(el); else if (!el && current) hide();
+  });
+  document.addEventListener('focusin', function (e) { var el = e.target.closest && e.target.closest('[data-tip]'); if (el) show(el); });
+  document.addEventListener('focusout', hide);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest && e.target.closest('[data-tip]');
+    if (el) show(el); else hide();
+  });
+  window.addEventListener('scroll', function () { if (current) place(current); }, { passive: true });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
+
+  /* ------------------------------ annotate the natal chart page itself */
+  function parsePos(text) {
+    var m = /(Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces)\s+(\d+)°(\d+)/.exec(text);
+    if (!m) return null;
+    return { s: SIGNS.indexOf(m[1]), d: (+m[2] + m[3] / 60).toFixed(2), dm: m[2] + '°' + m[3] + '′' };
+  }
+  function setPlace(el, o) {
+    el.setAttribute('data-tip', 'place');
+    el.dataset.b = o.b; el.dataset.s = o.s; el.dataset.d = o.d; el.dataset.dm = o.dm;
+    if (o.h) el.dataset.h = o.h;
+    el.dataset.rx = o.rx ? '1' : '0'; el.dataset.ctx = 'natal';
+  }
+  function annotateNatal() {
+    var natal = {};
+    [].forEach.call(document.querySelectorAll('tr.row-body'), function (tr) {
+      var td = tr.querySelectorAll('td'); if (td.length < 4) return;
+      var p = parsePos(td[2].textContent); if (!p) return;
+      var key = tr.dataset.body, name = key === 'NorthNode' ? 'North Node' : key === 'SouthNode' ? 'South Node' : key;
+      var pill = td[3].querySelector('[data-house]');
+      var o = { b: name, s: p.s, d: p.d, dm: p.dm, h: pill ? pill.dataset.house : null, rx: !!td[2].querySelector('.rx') };
+      natal[key] = o; setPlace(tr, o);
+    });
+    [].forEach.call(document.querySelectorAll('svg.wheel g.planet'), function (g) { var o = natal[g.dataset.body]; if (o) setPlace(g, o); });
+    [].forEach.call(document.querySelectorAll('svg.wheel .glyph-sign'), function (t) {
+      var s = SGLYPH.indexOf(t.textContent.replace(/︎|️/g, '').trim());
+      if (s >= 0) { t.setAttribute('data-tip', 'sign'); t.dataset.s = s; t.style.pointerEvents = 'auto'; }
+    });
+    [].forEach.call(document.querySelectorAll('svg.wheel .house-num, .house-card .hnum'), function (t) {
+      var h = t.dataset.house || (t.closest('.house-card') && t.closest('.house-card').dataset.house);
+      if (h) { t.setAttribute('data-tip', 'house'); t.dataset.h = h; }
+    });
+    var ANG = { AC: ['Ascendant', 1], DC: ['Descendant', 7], MC: ['Midheaven', 10], IC: ['Imum Coeli', 4] };
+    var angPos = {};
+    [].forEach.call(document.querySelectorAll('#angles .hnum'), function (n) {
+      var tag = n.parentNode.querySelector('.tag'), p = tag && parsePos(tag.textContent);
+      if (p && ANG[n.textContent.trim()]) angPos[n.textContent.trim()] = p;
+    });
+    [].forEach.call(document.querySelectorAll('svg.wheel .angle-lab, #angles .hnum'), function (t) {
+      var k = t.textContent.trim(), a = ANG[k], p = angPos[k];
+      if (a && p) { setPlace(t, { b: a[0], s: p.s, d: p.d, dm: p.dm, h: null, rx: false }); t.style.pointerEvents = 'auto'; }
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', annotateNatal); else annotateNatal();
 })(typeof window !== 'undefined' ? window : globalThis);

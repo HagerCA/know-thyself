@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="./assets/mark-light.png">
-<title>Natal Chart · Know Thyself · Christopher Hager</title>
+<title>Astrology Natal Chart · Christopher Hager</title>
 <style>
 /* ==============================================================
    BRAND LAYER · Christopher Hager
@@ -183,21 +183,61 @@ footer a:hover{border-bottom-color:var(--ankh-lift)}
   text-transform:uppercase;color:rgba(231,231,231,.40);margin:0;line-height:2;
 }
 .brandfoot a{color:var(--ankh-lift);text-decoration:none;border-bottom:1px solid rgba(165,118,38,.42)}
+
+/* ==============================================================
+   LEGIBILITY · Christopher asked for the words to be more
+   pronounced (2 November 2026): brighter ink, larger small type.
+   ============================================================== */
+:root{--ink:#F6F0E6;--ink-2:#E6DEE8;--dim:#C8BECD}
+body{font-size:18.5px;line-height:1.66}
+h2{font-size:clamp(1.6rem,3.2vw,2.15rem)}
+h3{font-size:1.2rem}
+.lead{font-size:1.24rem;color:var(--ink)}
+.eyebrow{font-size:.78rem}
+.birth{font-size:1.02rem;color:var(--ink-2)}
+.tri span{font-size:.72rem;color:var(--ink-2)}
+.tri strong{font-size:1.45rem}
+nav.toc a{font-size:.76rem;color:var(--ink-2)}
+table{font-size:1rem}
+th{font-size:.76rem;color:var(--ink-2);font-weight:600}
+td.g{font-size:1.3rem}
+.pill{font-size:.82rem}
+td.work{font-size:.92rem}
+.tag{font-size:.74rem;color:var(--ink-2)}
+.cusp{font-size:.84rem}
+.q{font-size:1.15rem}
+.domain{font-size:.98rem}
+.onthecusp{font-size:.95rem}
+.occ{font-size:.96rem}
+.occ p{font-size:.9rem}
+.empty{font-size:.94rem;color:var(--ink-2)}
+.bar-row{font-size:.95rem}
+.bar-lab{font-size:.84rem}
+.bar-val{font-size:.88rem}
+.bar-note{font-size:.86rem}
+.note{font-size:1rem}
+.legend{font-size:.84rem;color:var(--ink-2)}
+footer{font-size:.94rem;color:var(--ink-2)}
+.glyph-planet{font-size:25px}
+.glyph-sign{font-size:23px}
+.glyph-deg{font-size:11.5px;fill:var(--ink-2)}
+.house-num{font-size:14px;fill:var(--ink-2)}
+.angle-lab{font-size:14px}
 </style>
 </head>
 <body>
 
 <div class="brandbar">
-  <a href="./index.html" aria-label="Know Thyself, index">
+  <a href="./index.html" aria-label="Back to the index">
     <img src="./assets/logo-inline-light.png" alt="Christopher Hager" width="184" height="35">
   </a>
-  <span class="tag">Know Thyself · Natal Chart</span>
+  <span class="tag">Astrology · Natal Chart</span>
 </div>
 
 <div class="wrap">
 <header class="top">
   <img class="gmark" src="./assets/sun-light.png" alt="">
-  <p class="eyebrow">Natal Chart · Placidus Houses · Computed Locally</p>
+  <p class="eyebrow">Astrology Natal Chart · Placidus Houses · Computed Locally</p>
   <h1>Christopher Hager</h1>
   <p class="birth">March 31, 1978 at 1:28 AM · Los Angeles, California, USA</p>
   <p class="birth">America/Los_Angeles · 34.0522°N 118.2437°W</p>
@@ -226,7 +266,7 @@ footer a:hover{border-bottom-color:var(--ankh-lift)}
 
 <section id="wheel">
   <h2>The Wheel</h2>
-  <p class="lead">Click any planet to isolate its aspects. Click a house number in the tables to jump to that house.
+  <p class="lead">Hover over (or tap) any planet, sign or house number for a quick read on what it means. Click a planet to isolate its aspects. Click a house number in the tables to jump to that house.
      The outer band is the zodiac, coloured by element. The inner spokes are your Placidus house cusps, which are
      unequal because houses are a projection of a tilted, spinning Earth, not twelve equal slices.</p>
   <div class="wheelgrid">
@@ -255,7 +295,8 @@ footer a:hover{border-bottom-color:var(--ankh-lift)}
 <section id="sky">
   <h2>The Sky Right Now</h2>
   <p class="lead">Where every planet is at this moment, whether it is moving forward or retrograde, and which of your
-     twelve houses it is crossing. Computed on this device each time the page loads, so a refresh is always current.</p>
+     twelve houses it is crossing. Computed on this device each time the page loads, so a refresh is always current.
+     Hover over (or tap) any planet for what it means there.</p>
   <div data-sky-now><p class="muted">Computing the sky&hellip;</p></div>
 </section>
 
@@ -408,7 +449,7 @@ footer a:hover{border-bottom-color:var(--ankh-lift)}
 
 <section id="houses">
   <h2>The Twelve Houses</h2>
-  <p class="lead">The signs say <em>how</em>. The planets say <em>what</em>. The houses say <em>where</em> — which
+  <p class="lead">The signs say <em>how</em>. The planets say <em>what</em>. The houses say <em>where</em>: which
      arena of actual life the thing plays out in. This is the layer most people skip, and it is the layer that makes
      a chart stop being generic.</p>
   <div class="cards">
@@ -1010,7 +1051,7 @@ footer a:hover{border-bottom-color:var(--ankh-lift)}
 </section>
 
 <footer>
-  <p><a href="./index.html">Know Thyself</a> · <a href="./reading.html">The full reading</a> · <a href="./reference.html">Astrology Quick Reference</a> · <a href="https://hagerca.github.io/">The Alchemy Lab</a></p>
+  <p><a href="./index.html">Back to the index</a> · <a href="./reading.html">The full reading</a> · <a href="./reference.html">The Quick Reference</a> · <a href="https://hagerca.github.io/">The Alchemy Lab</a></p>
   <p>Natal chart computed 3 October 2026 · astronomy-engine 2.1.19 (ACE bundled) + ACE src/astro Placidus · house system: Placidus.
      Validated 57/57 against the independent astro.com import on file.</p>
   <p>The Sky Right Now is recomputed in your browser on every load, from the same engine and the same house cusps, checked against ACE's own ephemeris 44/44 on 2 November 2026. No network request is made to do it.</p>
