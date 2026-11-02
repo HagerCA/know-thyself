@@ -1,77 +1,85 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="auto">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Christopher — Natal Chart</title>
+<link rel="icon" href="./assets/mark-light.png">
+<title>Natal Chart · Know Thyself · Christopher Hager</title>
 <style>
+/* ==============================================================
+   BRAND LAYER · Christopher Hager
+   Palette swatch-sampled from the Brand Book (Leigh Maneri, Sept
+   2025) via Domains/practice/brand-kit.md, the same layer the
+   Quick Reference and The Alchemy Lab wear.
+     CROWN  #1B0C20    MIRROR #E7E7E7    ANKH  #A57626
+     TRITON #7C2D50    MYSTIC #3B1A4C    GAIA  #1D3237
+   Every asset is a local file in ./assets/. No CDN, no webfont,
+   no runtime fetch, so this renders identically everywhere.
+   ============================================================== */
 :root{
-  --bg:#faf8f5; --bg-2:#fffdfa; --ink:#1c1a17; --ink-2:#4a453e; --dim:#8a8276;
-  --line:#e2dcd2; --line-2:#cfc7b9; --accent:#8a6d3b; --accent-2:#b89155;
-  --fire:#c0552f; --earth:#6b7a3a; --air:#3f7391; --water:#5a5a96;
-  --asp-hard:#b4472e; --asp-soft:#3f7391; --asp-conj:#8a6d3b; --asp-minor:#a79b88;
-  --shadow:0 1px 2px rgba(28,26,23,.06),0 8px 24px rgba(28,26,23,.06);
-  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
-  --serif:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
-  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-}
-@media (prefers-color-scheme:dark){:root[data-theme="auto"]{
-  --bg:#141311; --bg-2:#1c1a17; --ink:#f0ece5; --ink-2:#c4bcae; --dim:#8a8276;
-  --line:#2e2a25; --line-2:#413b33; --accent:#c9a66b; --accent-2:#e0bf85;
-  --fire:#e07a52; --earth:#9db25c; --air:#6aa8c9; --water:#8d8dd0;
-  --asp-hard:#e07a52; --asp-soft:#6aa8c9; --asp-conj:#c9a66b; --asp-minor:#6e665a;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 28px rgba(0,0,0,.35);
-}}
-:root[data-theme="dark"]{
-  --bg:#141311; --bg-2:#1c1a17; --ink:#f0ece5; --ink-2:#c4bcae; --dim:#8a8276;
-  --line:#2e2a25; --line-2:#413b33; --accent:#c9a66b; --accent-2:#e0bf85;
-  --fire:#e07a52; --earth:#9db25c; --air:#6aa8c9; --water:#8d8dd0;
-  --asp-hard:#e07a52; --asp-soft:#6aa8c9; --asp-conj:#c9a66b; --asp-minor:#6e665a;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 28px rgba(0,0,0,.35);
+  --crown:#1B0C20; --mirror:#E7E7E7; --ankh:#A57626;
+  --triton:#7C2D50; --mystic:#3B1A4C; --gaia:#1D3237;
+  --ankh-lift:#C79A45;
+  --brand-serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --brand-sans:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",Helvetica,Arial,sans-serif;
+
+  --bg:#1B0C20; --bg-2:rgba(42,17,48,.62); --ink:#ECE5D8; --ink-2:#CFC6D3; --dim:#A9A0B0;
+  --line:#3A2440; --line-2:#4D3355; --accent:#C79A45; --accent-2:#D9B26A;
+  --fire:#D9774F; --earth:#ADA66E; --air:#8FA6BC; --water:#72A3A8;
+  --asp-hard:#C9604A; --asp-soft:#7E9BB8; --asp-conj:#C79A45; --asp-minor:#6E5F78;
+  --shadow:none;
+  --mono:var(--brand-sans);
+  --serif:var(--brand-serif);
+  --sans:var(--brand-serif);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
-  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1180px;margin:0 auto;padding:0 24px 120px}
-h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2;letter-spacing:-.01em}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;
+  background-color:var(--crown);
+  background-image:radial-gradient(ellipse 150% 95% at 50% -12%,
+    rgba(124,45,80,.34) 0%, rgba(59,26,76,.19) 42%, rgba(27,12,32,0) 78%);
+  background-repeat:no-repeat;background-attachment:fixed}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 40px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.2;letter-spacing:-.01em}
 h1{font-size:clamp(2.1rem,5vw,3.4rem);margin:0 0 .2em}
 h2{font-size:clamp(1.4rem,3vw,1.9rem);margin:0 0 .5em}
 h3{font-size:1.1rem;margin:0}
 .muted{color:var(--dim)}
 em{font-style:italic;color:var(--ink-2)}
 
-header.top{padding:72px 0 40px;border-bottom:1px solid var(--line)}
-.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
-.birth{font-family:var(--mono);font-size:.84rem;color:var(--ink-2);margin:.2em 0}
-.trinity{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 0}
-.tri{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:14px 20px;box-shadow:var(--shadow)}
-.tri span{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.tri strong{font-family:var(--serif);font-size:1.3rem;font-weight:600}
+header.top{padding:64px 0 48px;border-bottom:1px solid var(--line);text-align:center}
+header.top .gmark{margin:0 auto 14px;width:34px}
+.eyebrow{font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ankh-lift);margin:0 0 14px}
+.birth{font-size:.92rem;color:var(--dim);margin:.2em 0}
+.trinity{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:30px 0 0}
+.tri{background:var(--bg-2);border:1px solid var(--line);border-top:2px solid rgba(165,118,38,.55);border-radius:2px;padding:14px 22px;box-shadow:var(--shadow)}
+.tri span{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.tri strong{font-family:var(--serif);font-size:1.3rem;font-weight:400}
 
-nav.toc{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-bottom:56px}
-nav.toc ul{display:flex;gap:4px;list-style:none;margin:0;padding:10px 0;overflow-x:auto}
-nav.toc a{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--ink-2);
-  text-decoration:none;padding:7px 13px;border-radius:999px;white-space:nowrap}
-nav.toc a:hover{background:var(--bg-2);color:var(--ink)}
-.themebtn{margin-left:auto;flex:none;background:none;border:1px solid var(--line);color:var(--ink-2);
-  border-radius:999px;padding:6px 14px;font-family:var(--mono);font-size:.72rem;cursor:pointer}
-.themebtn:hover{border-color:var(--accent);color:var(--accent)}
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(27,12,32,.9);
+  backdrop-filter:blur(10px);border-bottom:1px solid rgba(165,118,38,.34);margin-bottom:56px}
+nav.toc ul{display:flex;gap:6px;list-style:none;margin:0;padding:10px 0;overflow-x:auto;justify-content:center}
+nav.toc a{font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+  text-decoration:none;padding:8px 13px;border:1px solid transparent;border-radius:2px;white-space:nowrap}
+nav.toc a:hover{border-color:var(--line-2);color:var(--ink)}
+nav.toc a.now{color:var(--ankh-lift);border-color:rgba(165,118,38,.45)}
+.secmark{display:block;width:24px;height:auto;margin:0 0 10px;opacity:.92}
 
 section{margin:0 0 84px;scroll-margin-top:70px}
 .lead{font-family:var(--serif);font-size:1.18rem;color:var(--ink-2);max-width:66ch}
 
 .wheelgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:44px;align-items:start}
 @media(max-width:900px){.wheelgrid{grid-template-columns:1fr}}
-.wheelbox{background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:var(--shadow)}
+.wheelbox{background:var(--bg-2);border:1px solid var(--line);border-radius:2px;padding:12px;box-shadow:var(--shadow)}
 svg.wheel{width:100%;height:auto;display:block}
 .ring{fill:none;stroke:var(--line-2);stroke-width:1}
 .ring-inner{stroke:var(--line)}
 .spoke-sign{stroke:var(--line-2);stroke-width:1}
 .spoke-house{stroke:var(--line);stroke-width:1}
 .spoke-major{stroke:var(--accent);stroke-width:1.6}
+.glyph-sign,.glyph-planet,td.g,.occ .g,.asp-g{font-family:"Segoe UI Symbol","Segoe UI Historic","Apple Symbols",serif;font-variant-emoji:text}
 .glyph-sign{font-size:21px;text-anchor:middle;dominant-baseline:central}
 .glyph-sign[data-el="Fire"]{fill:var(--fire)} .glyph-sign[data-el="Earth"]{fill:var(--earth)}
 .glyph-sign[data-el="Air"]{fill:var(--air)}   .glyph-sign[data-el="Water"]{fill:var(--water)}
@@ -105,7 +113,7 @@ td.work{max-width:30ch;font-size:.82rem;line-height:1.5}
 .asp-g{font-size:1.1rem}
 
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
-.card{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);
+.card{background:var(--bg-2);border:1px solid var(--line);border-radius:2px;padding:22px;box-shadow:var(--shadow);
   transition:border-color .2s,transform .2s}
 .card.flash{border-color:var(--accent);transform:translateY(-2px)}
 .house-card header{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
@@ -131,31 +139,66 @@ td.work{max-width:30ch;font-size:.82rem;line-height:1.5}
 .bar-note{font-size:.76rem}
 
 .note{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);
-  border-radius:0 12px 12px 0;padding:18px 22px;margin:26px 0;font-size:.92rem}
+  border-radius:0 2px 2px 0;padding:18px 22px;margin:26px 0;font-size:.92rem}
 .note strong{color:var(--accent)}
 .prose{max-width:68ch}
 .prose p{margin:0 0 1.1em}
-footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
+footer{border-top:1px solid var(--line);padding:30px 0 0;font-size:.86rem;color:var(--dim)}
+footer p{margin:0 0 7px}
+footer a{color:var(--ankh-lift);text-decoration:none;border-bottom:1px solid rgba(165,118,38,.42)}
+footer a:hover{border-bottom-color:var(--ankh-lift)}
 .legend{display:flex;flex-wrap:wrap;gap:16px;margin:16px 0 0;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
 .legend i{display:inline-block;width:16px;height:2px;margin-right:6px;vertical-align:middle}
+
+/* ==============================================================
+   BRAND LAYER · bands and marks, as on the Quick Reference
+   ============================================================== */
+.brandbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.4rem;flex-wrap:wrap;
+  padding:19px clamp(1.5rem,5vw,3rem);
+  background:rgba(27,12,32,.74);
+  border-bottom:1px solid rgba(165,118,38,.34);
+}
+.brandbar a{display:inline-flex;align-items:center;text-decoration:none}
+.brandbar img{display:block;width:184px;height:auto}
+.brandbar .tag{
+  font-family:var(--brand-sans);font-size:.63rem;font-weight:500;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--ankh-lift);
+}
+.gmark{display:block;width:19px;height:auto;opacity:.92}
+.brandfoot{
+  margin-top:4.5rem;padding:2.9rem clamp(1.5rem,5vw,3rem) 3.4rem;
+  background:rgba(27,12,32,.74);
+  border-top:1px solid rgba(165,118,38,.34);
+  text-align:center;
+}
+.brandfoot img{display:block;margin:0 auto 1.15rem;width:38px;height:auto;opacity:.9}
+.brandfoot .promise{
+  font-family:var(--brand-serif);font-style:italic;font-size:1.03rem;
+  color:var(--mirror);margin:0 0 .55rem;line-height:1.5;
+}
+.brandfoot .meta{
+  font-family:var(--brand-sans);font-size:.66rem;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(231,231,231,.40);margin:0;line-height:2;
+}
+.brandfoot a{color:var(--ankh-lift);text-decoration:none;border-bottom:1px solid rgba(165,118,38,.42)}
 </style>
 </head>
 <body>
-<nav class="toc"><div class="wrap"><ul>
-  <li><a href="#wheel">Wheel</a></li>
-  <li><a href="#angles">Angles</a></li>
-  <li><a href="#placements">Placements</a></li>
-  <li><a href="#houses">The Twelve Houses</a></li>
-  <li><a href="#aspects">Aspects</a></li>
-  <li><a href="#balance">Balance</a></li>
-  <li><a href="#reading">The Reading</a></li>
-  <li><button class="themebtn" id="tb">theme</button></li>
-</ul></div></nav>
+
+<div class="brandbar">
+  <a href="./index.html" aria-label="Know Thyself, index">
+    <img src="./assets/logo-inline-light.png" alt="Christopher Hager" width="184" height="35">
+  </a>
+  <span class="tag">Know Thyself · Natal Chart</span>
+</div>
 
 <div class="wrap">
 <header class="top">
+  <img class="gmark" src="./assets/sun-light.png" alt="">
   <p class="eyebrow">Natal Chart · Placidus Houses · Computed Locally</p>
-  <h1>Christopher</h1>
+  <h1>Christopher Hager</h1>
   <p class="birth">March 31, 1978 at 1:28 AM · Los Angeles, California, USA</p>
   <p class="birth">America/Los_Angeles · 34.0522°N 118.2437°W</p>
   <div class="trinity">
@@ -166,6 +209,20 @@ footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);f
     <div class="tri"><span>Midheaven</span><strong>Scorpio</strong></div>
   </div>
 </header>
+</div>
+
+<nav class="toc"><div class="wrap"><ul>
+  <li><a href="#wheel">Wheel</a></li>
+  <li><a href="#sky" class="now">Sky Now</a></li>
+  <li><a href="#angles">Angles</a></li>
+  <li><a href="#placements">Placements</a></li>
+  <li><a href="#houses">The Twelve Houses</a></li>
+  <li><a href="#aspects">Aspects</a></li>
+  <li><a href="#balance">Balance</a></li>
+  <li><a href="#reading">The Reading</a></li>
+</ul></div></nav>
+
+<div class="wrap">
 
 <section id="wheel">
   <h2>The Wheel</h2>
@@ -193,6 +250,13 @@ footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);f
       </div>
     </div>
   </div>
+</section>
+
+<section id="sky">
+  <h2>The Sky Right Now</h2>
+  <p class="lead">Where every planet is at this moment, whether it is moving forward or retrograde, and which of your
+     twelve houses it is crossing. Computed on this device each time the page loads, so a refresh is always current.</p>
+  <div data-sky-now><p class="muted">Computing the sky&hellip;</p></div>
 </section>
 
 <section id="angles">
@@ -946,20 +1010,24 @@ footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);f
 </section>
 
 <footer>
-  Computed 2026-10-03 · astronomy-engine 2.1.19 (ACE bundled) + ACE src/astro Placidus · house system: Placidus<br>
-  Validated 57/57 against the independent astro.com import on file. Private: this file is in the gitignored local lane.
+  <p><a href="./index.html">Know Thyself</a> · <a href="./reading.html">The full reading</a> · <a href="./reference.html">Astrology Quick Reference</a> · <a href="https://hagerca.github.io/">The Alchemy Lab</a></p>
+  <p>Natal chart computed 3 October 2026 · astronomy-engine 2.1.19 (ACE bundled) + ACE src/astro Placidus · house system: Placidus.
+     Validated 57/57 against the independent astro.com import on file.</p>
+  <p>The Sky Right Now is recomputed in your browser on every load, from the same engine and the same house cusps, checked against ACE's own ephemeris 44/44 on 2 November 2026. No network request is made to do it.</p>
 </footer>
+</div>
+
+<div class="brandfoot">
+  <img src="./assets/mark-light.png" alt="" width="38" height="39">
+  <p class="promise">Tap the Wisdom of your Higher Self</p>
+  <p class="meta">
+    Built by SAGE · <a href="https://cahager.com">cahager.com</a><br>
+    Private reference · Not indexed, not listed, not for circulation
+  </p>
 </div>
 
 <script>
 (function(){
-  var root=document.documentElement, btn=document.getElementById('tb');
-  btn.addEventListener('click',function(){
-    var t=root.getAttribute('data-theme');
-    root.setAttribute('data-theme', t==='dark' ? 'light' : t==='light' ? 'auto' : 'dark');
-    btn.textContent = root.getAttribute('data-theme');
-  });
-
   var svg=document.querySelector('svg.wheel');
   var lines=[].slice.call(svg.querySelectorAll('.asp-line'));
   function clear(){ svg.classList.remove('dim'); lines.forEach(function(l){l.classList.remove('on')});
@@ -1006,5 +1074,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);f
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'){active=null;clear()} });
 })();
 </script>
+<script src="./assets/astronomy.min.js"></script>
+<script src="./assets/sky-now.js"></script>
 </body>
 </html>

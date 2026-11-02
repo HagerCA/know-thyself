@@ -5,7 +5,7 @@
 <link rel="icon" href="./assets/mark-light.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Know Thyself Quick Reference · Christopher Hager</title>
+<title>Astrology Quick Reference · Know Thyself · Christopher Hager</title>
 <style>
   :root {
     --page: #15161A; --ink: #E4DED1; --dim: #9A9487; --faint: #6A6558;
@@ -353,14 +353,14 @@ body{
     <img class="s" src="./assets/logo-inline-light.png" alt="Christopher Hager" width="184" height="35">
     <img class="p" src="./assets/logo-inline-dark.png" alt="Christopher Hager" width="184" height="35">
   </a>
-  <span class="tag">Know Thyself · Quick Reference</span>
+  <span class="tag">Know Thyself · Astrology Quick Reference</span>
 </div>
 <div class="wrap">
 
 <header>
   <img class="gmark lg" src="./assets/ankh-light.png" alt="">
-  <div class="lab">Know Thyself · Quick Reference</div>
-  <h1>The Blueprint on One Page</h1>
+  <div class="lab">Know Thyself</div>
+  <h1>Astrology Quick Reference</h1>
   <p class="sub">Christopher Hager</p>
   <p class="born">Born 31 March 1978, 1:28 AM, Los Angeles, California · Placidus houses · tropical zodiac<br>
   Birth time read off the birth certificate by Chris on 5 October 2026. Documented, not remembered.</p>
@@ -368,6 +368,7 @@ body{
 </header>
 
 <nav>
+  <a href="#sky">Now · The Sky</a>
   <a href="#astro">I · Astrology</a>
   <a href="#hd">II · Human Design</a>
   <a href="#gk">III · Gene Keys</a>
@@ -384,6 +385,17 @@ body{
     <li><b>House placements recomputed</b> from the Placidus cusps. The three house errors found on 5 October 2026 (Sun, Moon, Pluto) are already corrected in the profile and the corrected values are what this page uses.</li>
   </ul>
 </div>
+
+<!-- ============ NOW. THE SKY (live, recomputed on every load) ============ -->
+<section id="sky">
+  <div class="sechead">
+    <img class="gmark" src="./assets/crescent-light.png" alt="">
+    <div class="secnum">Now</div>
+    <div><h2>The Sky Right Now</h2><p class="sub">Which planets are retrograde today, and which of your houses each one is moving through. Recomputed every time this page loads.</p></div>
+  </div>
+  <div data-sky-now><p class="sub">Computing the sky&hellip;</p></div>
+  <p class="sub" style="margin-top:16px">Your natal retrogrades (Saturn, Uranus, Neptune, Pluto and the Nodes, in Section I) were set at birth and never change. The ones above are today's, and the <a href="./chart.html#sky" style="color:var(--ankh-lift)">natal chart</a> shows the same sky from the same engine.</p>
+</section>
 
 <!-- ============ I. ASTROLOGY ============ -->
 <section id="astro">
@@ -1133,5 +1145,7 @@ body{
 </div>
 
 </div>
+<script src="./assets/astronomy.min.js"></script>
+<script src="./assets/sky-now.js"></script>
 </body>
 </html>
