@@ -388,8 +388,10 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
     if (t === 'place') return placement({ b: ds.b, s: ds.s, d: ds.d, dm: ds.dm, h: ds.h, rx: ds.rx, ctx: ds.ctx });
     if (t === 'sign') return signTip(+ds.s);
     if (t === 'house') return houseTip(+ds.h);
+    if (root.KTGuide) return root.KTGuide.compose(el);
     return null;
   }
+  root.SkyGuide = { placement: placement, parsePos: parsePos, SIGNS: SIGNS, SGLYPH: SGLYPH, HOUSE: HOUSE, ORD: ORD };
 
   /* ------------------------------------------------- the floating card */
   var tip = null, current = null;
@@ -409,6 +411,9 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
       '.sky-tip .tip-rx{color:#F0A38D}' +
       '.sky-tip .tip-g{font-family:"Segoe UI Symbol","Segoe UI Historic","Apple Symbols",serif;font-variant-emoji:text}' +
       '.sky-tip .tip-faint{color:#C9BFCD;font-size:14px}' +
+      '.sky-tip.wide{max-width:440px}' +
+      '.sky-tip .tip-sh{color:#F0A38D}.sky-tip .tip-gi{color:#E9C77A}.sky-tip .tip-si{color:#B5D3A9}' +
+      '.sky-tip .tip-ladder{font-family:"Gill Sans MT","Gill Sans",Corbel,"Segoe UI",sans-serif;font-size:13.5px;letter-spacing:.04em}' +
       '[data-tip]{cursor:help}' +
       '@media print{.sky-tip{display:none}}';
     document.head.appendChild(st);
@@ -427,7 +432,8 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
   function show(el) {
     var html = compose(el); if (!html) return;
     ensure(); current = el;
-    tip.innerHTML = html; tip.classList.add('on'); place(el);
+    tip.innerHTML = html; tip.classList.toggle('wide', /^kt-/.test(el.getAttribute('data-tip')));
+    tip.classList.add('on'); place(el);
   }
   function hide() { if (tip) tip.classList.remove('on'); current = null; }
 
@@ -486,5 +492,519 @@ var SKY_CHIRON = {jd0:2461041.0008,lon:[22.236,22.235,22.234,22.234,22.236,22.23
       if (a && p) { setPlace(t, { b: a[0], s: p.s, d: p.d, dm: p.dm, h: null, rx: false }); t.style.pointerEvents = 'auto'; }
     });
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', annotateNatal); else annotateNatal();
+  /* ------------- annotate the Quick Reference's own wheel and tables */
+  var PGLYPH = { '☉':'Sun','☽':'Moon','☿':'Mercury','♀':'Venus','♂':'Mars','♃':'Jupiter','♄':'Saturn','♅':'Uranus','♆':'Neptune','♇':'Pluto','⚷':'Chiron','☊':'North Node','☋':'South Node' };
+  function annotateRef() {
+    var sec = document.getElementById('astro');
+    if (!sec || !sec.querySelector('.hgrid')) return;
+    var natal = {};
+    [].forEach.call(sec.querySelectorAll('tr'), function (tr) {
+      var td = tr.querySelectorAll('td'), b = td[1] && td[1].querySelector('b');
+      if (td.length < 5 || !td[0].classList.contains('g') || !b) return;
+      var p = parsePos(td[2].textContent + ' ' + td[3].textContent); if (!p) return;
+      var h = /^\d+$/.test(td[4].textContent.trim()) ? +td[4].textContent.trim() : null;
+      var o = { b: b.textContent.trim(), s: p.s, d: p.d, dm: p.dm, h: h, rx: !!tr.querySelector('.rx') };
+      natal[o.b] = o;
+      setPlace(td[1], o);
+      td[2].setAttribute('data-tip', 'sign'); td[2].dataset.s = p.s;
+      if (h) { td[4].setAttribute('data-tip', 'house'); td[4].dataset.h = h; }
+    });
+    var wheel = sec.querySelector('svg.wheel');
+    if (wheel) {
+      [].forEach.call(wheel.querySelectorAll('text.pg'), function (t) {
+        var o = natal[PGLYPH[t.textContent.trim()]]; if (!o) return;
+        setPlace(t, o); t.style.pointerEvents = 'auto';
+        var lab = t.nextElementSibling;
+        if (lab && lab.classList.contains('pd')) { setPlace(lab, o); lab.style.pointerEvents = 'auto'; }
+      });
+      [].forEach.call(wheel.querySelectorAll('text.sg'), function (t) {
+        var s = SGLYPH.indexOf(t.textContent.replace(/︎|️/g, '').trim());
+        if (s >= 0) { t.setAttribute('data-tip', 'sign'); t.dataset.s = s; t.style.pointerEvents = 'auto'; }
+      });
+      [].forEach.call(wheel.querySelectorAll('text.hn'), function (t) {
+        t.setAttribute('data-tip', 'house'); t.dataset.h = t.textContent.trim(); t.style.pointerEvents = 'auto';
+      });
+      var ANGN = { ASC: 'Ascendant', DSC: 'Descendant', MC: 'Midheaven', IC: 'Imum Coeli' };
+      [].forEach.call(wheel.querySelectorAll('text.ang'), function (t) {
+        var o = natal[ANGN[t.textContent.trim()]]; if (o) { setPlace(t, o); t.style.pointerEvents = 'auto'; }
+      });
+    }
+    [].forEach.call(sec.querySelectorAll('.hcard'), function (c) {
+      var n = c.querySelector('.hcard-num'), cusp = c.querySelector('.hcard-cusp');
+      if (n) { n.setAttribute('data-tip', 'house'); n.dataset.h = n.textContent.trim(); }
+      var cp = cusp && parsePos(cusp.textContent);
+      if (cp) { cusp.setAttribute('data-tip', 'sign'); cusp.dataset.s = cp.s; }
+      [].forEach.call(c.querySelectorAll('.occ'), function (occ) {
+        var b = occ.querySelector('b'), o = b && natal[b.textContent.trim()]; if (o) setPlace(occ, o);
+      });
+    });
+  }
+  function annotateAll() { annotateNatal(); annotateRef(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', annotateAll); else annotateAll();
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* ==============================================================
+   KNOW THYSELF GUIDE · hover and learn, one layer deeper
+   Christopher's ask, 2 November 2026: the same hover card the
+   natal chart has, carried through the whole Quick Reference.
+   Human Design (type, strategy, authority, every card row, the
+   nine centres, both channels, all 18 gates), Gene Keys (every
+   sphere, every shadow, gift and siddhi, every line), plus the
+   astrology concepts the tables use (aspects, elements, chart
+   ruler). Uses the card from sky-guide; only annotates pages
+   that carry #hd, #gk or #astro.
+   Content is general meaning first, then where it sits in
+   Christopher's own chart, so it can later teach other people.
+   ============================================================== */
+(function (root) {
+  'use strict';
+  if (typeof document === 'undefined') return;
+
+  function esc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function h(title, sub) { return '<p class="tip-h">' + title + (sub ? '<span class="tip-sub">' + sub + '</span>' : '') + '</p>'; }
+  function p(t) { return '<p>' + t + '</p>'; }
+  function faint(t) { return '<p class="tip-faint">' + t + '</p>'; }
+
+  /* ---------------------------------------------- the chart itself */
+  /* planet, design (unconscious), personality (conscious) */
+  var ACT = [
+    ['Sun', '38.3', '21.1'], ['Earth', '39.3', '48.1'], ['Moon', '57.5', '58.4'],
+    ['North Node', '48.1', '18.3'], ['South Node', '21.1', '17.3'], ['Mercury', '26.5', '42.6'],
+    ['Venus', '58.5', '3.1'], ['Mars', '33.1', '56.1'], ['Jupiter', '15.2', '15.1'],
+    ['Saturn', '29.6', '4.6'], ['Uranus', '1.3', '1.3'], ['Neptune', '5.6', '26.2'], ['Pluto', '57.2', '57.1']
+  ];
+  var MINE = {};
+  ACT.forEach(function (r) {
+    [[1, 'Design'], [2, 'Personality']].forEach(function (c) {
+      var g = r[c[0]].split('.')[0];
+      (MINE[g] = MINE[g] || []).push(c[1] + ' ' + r[0] + ' ' + r[c[0]]);
+    });
+  });
+  function activ(g) {
+    var a = MINE[g]; if (!a) return '';
+    return '<b>In your chart</b> · ' + a.join(', ') + '. The number after the point is the line.';
+  }
+
+  /* ------------------------------------------------- the card rows */
+  var CARD = {
+    'Type': h('Generator', 'Type · about a third of people, and with Manifesting Generators about seven in ten') +
+      p('A Generator has a <b>defined Sacral</b>, the motor of life force, and no motor wired through to the Throat. That is exactly your design: Sacral lit, Throat open. The energy is real, renewable and built for work you love, and it switches on in response to something life puts in front of you.') +
+      p('<b>Strategy</b> · Wait to respond. Something arrives (a question, an invitation, a thing seen or heard) and the gut answers before the mind does. That answer is the decision.') +
+      p('<b>Aura</b> · Open and enveloping. It draws life toward you, which is why waiting works: you do not have to chase, you have to notice.') +
+      p('<b>Signature and alarm</b> · Satisfaction when it is right, frustration when it started in the head. Best sleep comes after the Sacral is genuinely used up for the day.') +
+      faint('Hover the other rows for each piece on its own.'),
+    'Strategy': h('Wait to Respond', 'Strategy · the Generator’s way in') +
+      p('Responding is not waiting passively. Life is constantly offering: a message, a person, a sign on the road, a question somebody asks. The Sacral is a responder; it only knows yes or no to something that is already here.') +
+      p('Initiating from the mind spends the energy on doors that were never open, and the bill arrives as frustration.') +
+      p('<b>In practice</b> · Notice what showed up today and check the gut on each thing. Yes or no questions work best, and a person asking you out loud gets a truer answer than you asking yourself “should I?”') +
+      p('For a 1/3 the thing you respond to is often something you found while digging, or something you walked into.'),
+    'Authority': h('Sacral Authority', 'Authority · where a correct decision comes from') +
+      p('Your decision-maker is the Sacral: a gut response in the present moment, often a sound before a word. <i>Uh-huh</i> is yes. <i>Unh-unh</i> is no.') +
+      p('It is honest, immediate, and not interested in reasons. The mind argues afterwards; the Sacral has already answered.') +
+      p('<b>No clear response is “no for now,”</b> not a cue to try harder or think more. Because your Solar Plexus is open there is no emotional wave to wait out: the first clean gut response is the one.') +
+      p('<b>What it is not</b> · Urgency (that is the Root), “I should” (the mind), proving yourself (the open Heart), or the mood of the room (the open Solar Plexus).'),
+    'Profile': h('1/3 · Investigator / Martyr', 'Profile · the costume the life is lived in') +
+      p('Profile is two lines read from the Sun on each side: the conscious one first, then the unconscious one. Yours is <b>Personality Sun 21.1</b> and <b>Design Sun 38.3</b>.') +
+      p('<b>Line 1, the Investigator</b> · Security comes from foundation. You need to know how a thing works underneath before you can stand on it, and once you do, you are very hard to knock over.') +
+      p('<b>Line 3, the Martyr</b> · Learning by trial and error. Things break, bonds are made and broken, and every collision shows what does not work, which is how you find what does. Your “mistakes” are research.') +
+      p('1/3 is a personal-destiny profile: the life is your own process, lived through your own experience.'),
+    'Definition': h('Split Definition', 'Definition · how your defined centres connect') +
+      p('Your four defined centres fall into two islands: <b>Sacral and G</b>, joined by 5–15, and <b>Spleen and Root</b>, joined by 18–58. Nothing in your own wiring links the two.') +
+      p('<b>The bridge</b> · Anyone carrying gate <b>60, 53, 34 or 10</b> closes it for you: 60 meets your 3, 53 meets your 42, and 34 or 10 meets your 57. With them things feel whole and move easily.') +
+      p('Split people often process best out loud, with another person in the room. The not-self version is believing something in you is missing. Nothing is; the gap is a doorway for company.'),
+    'Signature': h('Satisfaction', 'Signature · the felt sign you are on track') +
+      p('Every type has one. For a Generator it is <b>satisfaction</b>: the good, used-up tiredness after a day spent on work you responded to and did fully.') +
+      p('Not excitement, which fades, and not peace, which is the Manifestor’s signature. Projectors get success, Reflectors surprise.') +
+      p('If satisfaction is common in your week, the strategy is working. If it is rare, look for where you started things from the head.'),
+    'Not-Self Theme': h('Frustration', 'Not-Self Theme · the alarm') +
+      p('Frustration is the Generator’s signal that energy went somewhere it was not invited: into something you initiated, or a yes you said without a gut yes.') +
+      p('It is information, not a character flaw. Some frustration is also simply the plateau before mastery, which Generators have to sit through.') +
+      p('<b>When it shows up</b> · Look back and ask what you started from the mind. Then return to waiting for something real to respond to.'),
+    'Incarnation Cross': h('Right Angle Cross of Tension', 'Incarnation Cross · the life theme, four gates') +
+      p('The cross is built from the Sun and Earth on both sides: Personality <b>21</b> and <b>48</b>, Design <b>38</b> and <b>39</b>. “Right Angle” means personal destiny: you live the theme through your own life.') +
+      p('<b>21</b> the Hunter, in charge of one’s own domain. <b>48</b> depth, the well of knowing, and the fear of not being enough. <b>38</b> the Fighter, struggle that gives life purpose. <b>39</b> the Provocateur, poking to see whether spirit is present.') +
+      p('Together: hold the tension, fight only for what is worth it, and provoke depth out of yourself and others. Your four Gene Keys Activation spheres are these same four gates.'),
+    'Manifestation': h('Non-Specific Manifestation', 'From the humandesign.info report') +
+      p('This label is not on the core card most systems print, so hold it lightly. In the report’s sense it means you can know <b>what</b> wants to come into being without being handed the route.') +
+      p('Generators already live that way: the gut says yes to the next step, and the next step shows you the one after it.'),
+    'Emotions': h('Non-Emotional', 'Open Solar Plexus, no gates') +
+      p('You have no emotional wave of your own, so clarity is available <b>in the moment</b>. You do not have to sleep on a decision the way an emotional design does.') +
+      p('<b>The flip side</b> · You take in other people’s feelings and amplify them. If the room is anxious, you will be. The useful question is “whose is this?” Mostly it is not yours, and it passes when you leave.') +
+      p('Gift: you can become very wise about emotion, precisely because you do not have to be run by it.'),
+    'Digestion': h('Indirect Light', 'Digestion · one of the Variables, an experiment rather than a rule') +
+      p('Digestion is read from the Design Sun and names the conditions your body takes in nourishment best under. <b>Indirect Light</b>, classically: eating in soft light (shade, evening, candlelight) rather than in glare.') +
+      p('Many teachers carry it over to information, which is how this page reads it: take things in through a filter, a story, a summary, rather than straight off the firehose.') +
+      faint('Variables are advanced material. Try it for a few weeks and let the body report.'),
+    'Strongest Sense': h('Touch', 'Strongest Sense · cognition, from the Variables') +
+      p('Names the sense your knowing runs through most. With Touch, you understand by handling things: contact, texture, weight, a hand on a shoulder.') +
+      p('Information you can hold, sketch or physically work with lands better than information you only look at.'),
+    'Environment': h('Natural Shores', 'Environment · the kind of place that supports you') +
+      p('<b>Shores</b> are edges: where land meets water, where one thing becomes another. Transitional places and thresholds suit you, places with movement and a horizon.') +
+      p('<b>Natural</b> means the literal ones: a coast, a riverbank, the edge of a forest.')
+  };
+
+  /* -------------------------------------------------- nine centres */
+  var CTR = {
+    'Head': { f: 'Pressure to think: inspiration, questions, doubt, the itch to make sense of things.', gates: [],
+      open: 'Open with no gates at all. You take in other people’s inspiration and questions and amplify them. Wonderful for being inspired, exhausting if you try to answer every question that lands.',
+      q: 'Am I thinking about things that do not matter, or trying to answer other people’s questions?' },
+    'Ajna': { f: 'The mind’s awareness: concepts, opinions, how you process, the need to be certain.', gates: [4, 17],
+      open: 'Open: a flexible mind that can hold many points of view, which is a gift for teaching. Both your gates here are hanging and both are opinion gates (4 the answer, 17 the opinion), so certainty is something you visit, not something you own.',
+      q: 'Am I trying to convince everyone that I am certain?' },
+    'Throat': { f: 'Manifestation and communication: where energy becomes speech and action.', gates: [33, 56],
+      open: 'Open: no fixed voice. You can speak in many registers and you land hardest when invited or responding. Your two gates are both storytellers: 33 retreats then tells what happened (“I remember”), 56 tells what it means (“I believe”).',
+      q: 'Am I trying to attract attention?' },
+    'G / Identity': { f: 'Identity, love and direction: the inner compass and the sense of where you are going.', gates: [1, 15],
+      def: 'Defined by the 5–15 channel. A consistent sense of who you are and where you are headed. You do not need others to give you direction; you need to be in the right places, and the right people find you.' },
+    'Heart / Ego': { f: 'Willpower, ego and worth: promises, deals, money, the material world.', gates: [21, 26],
+      open: 'Open: no consistent willpower. Making promises on willpower and forcing them through is the classic leak, and your worth does not need proving. Gate 21, your Life’s Work, sits here hanging, which is why authority is something you choose fresh each time rather than carry.',
+      q: 'Am I still trying to prove my worth?' },
+    'Sacral': { f: 'Life force and work energy, sexuality and fertility. The motor that makes a Generator.', gates: [3, 5, 29, 42],
+      def: 'Defined, and your loudest centre: four gates and your authority. Renewable energy for what you respond to. <b>3</b> starts new order out of chaos, <b>5</b> keeps the rhythm, <b>29</b> commits once the gut says yes, <b>42</b> sees cycles through to the end.' },
+    'Solar Plexus': { f: 'Emotions, feelings, desire, mood: the emotional wave.', gates: [],
+      open: 'Open with no gates: non-emotional by design. You feel other people’s emotions, amplified, and can mistake them for your own. You can also become wise about feeling, because you are not run by a wave.',
+      q: 'Am I avoiding confrontation and truth to keep the peace?' },
+    'Spleen': { f: 'Survival awareness: instinct, intuition, immunity, timing, the body’s sense of what is healthy right now. It speaks once, quietly, in the moment.', gates: [18, 48, 57],
+      def: 'Defined by the 18–58 channel. A consistent, reliable instinct and generally robust wellbeing. Each splenic gate carries a fear: <b>18</b> fear of authority and of being wrong, <b>48</b> fear of inadequacy, <b>57</b> fear of the future. Fears met in the moment become the gifts.' },
+    'Root': { f: 'Pressure: adrenaline, the fuel to start, push and finish.', gates: [38, 39, 58],
+      def: 'Defined: your own steady relationship with pressure. You can handle stress in your own way and be the steadying force, or the pressure on others. <b>38</b> pressure to fight for what has meaning, <b>39</b> pressure to provoke spirit, <b>58</b> pressure toward joy and improvement.' }
+  };
+  function centreTip(name) {
+    var c = CTR[name]; if (!c) return null;
+    var defined = !!c.def;
+    var out = h(esc(name) + ' Centre', defined ? 'Defined · consistent, yours, the same every day' : 'Open · receptive, takes in and amplifies others');
+    out += p('<b>What it does</b> · ' + c.f);
+    out += p(defined ? c.def : c.open);
+    if (c.q) out += p('<b>The not-self question</b> · <i>' + c.q + '</i>');
+    out += faint(c.gates.length ? 'Your gates here: ' + c.gates.join(', ') + '. Hover any gate number for its own card.' : 'No gates here at all.');
+    return out;
+  }
+
+  /* ------------------------------------------------------- channels */
+  var CHAN = {
+    '5-15': h('5–15 · The Channel of Rhythm', 'Sacral to G · keynote: a design of being in the flow') +
+      p('<b>Gate 5</b> holds fixed rhythms: when, how often, the habits that keep life in order. <b>Gate 15</b> holds love of humanity and the whole range of human rhythm, extremes included.') +
+      p('Together your rhythm becomes a gift to the people around you, a steadiness others can set their clock by. It runs from the Sacral, so it comes on in response, not by decree.') +
+      p('Both your channels sit in the <b>Logic circuit</b>, the collective’s stream of pattern and correction. This one is the pattern; 18–58 is the correction.') +
+      p('<b>Gene Keys</b> · 5 Impatience, Patience, Timelessness. 15 Dullness, Magnetism, Florescence, your Culture and your Pearl.'),
+    '18-58': h('18–58 · The Channel of Judgement', 'Spleen to Root · keynote: a design of insatiability') +
+      p('<b>Gate 58</b> brings joy-pressure from the Root, the love of life that wants things to work better. <b>Gate 18</b> is the Spleen’s instinct for exactly what is broken in a pattern.') +
+      p('Aimed at people uninvited, it lands as criticism. Aimed at patterns, and offered when asked, it lands as a gift. As a Generator, wait to be asked before correcting.') +
+      p('<b>Gene Keys</b> · 18 Judgement, Integrity, Perfection. 58 Dissatisfaction, Vitality, Bliss, your SQ. Same wire, two settings.')
+  };
+
+  /* ---------------------------------------------------------- gates */
+  /* c centre, n traditional HD name, i I Ching, k keynote, ch [partner, channel name, from, to], done = channel complete */
+  var GATE = {
+    1: { c: 'G', n: 'Self-Expression', i: 'The Creative', k: 'Creative self-expression that comes from within, on its own timing. It is not about the audience; it is about the expression being true.', ch: [[8, 'Inspiration', 'G', 'Throat']] },
+    3: { c: 'Sacral', n: 'Ordering', i: 'Difficulty at the Beginning', k: 'Mutation: bringing new order out of chaos. Energy that starts things fresh before anyone knows how they will turn out.', ch: [[60, 'Mutation', 'Sacral', 'Root']] },
+    4: { c: 'Ajna', n: 'Formulization', i: 'Youthful Folly', k: 'The mind’s answers: logical formulas that might explain things. An answer is a possibility to test, not a proof.', ch: [[63, 'Logic', 'Ajna', 'Head']] },
+    5: { c: 'Sacral', n: 'Fixed Rhythms', i: 'Waiting', k: 'Fixed patterns of when and how: routine, habit, the natural timing everything has. Disrupt it and everything wobbles.', ch: [[15, 'Rhythm', 'Sacral', 'G']] },
+    15: { c: 'G', n: 'Extremes', i: 'Modesty', k: 'Love of humanity. Embraces the whole range of human rhythm, extremes included, and accepts other people’s timing.', ch: [[5, 'Rhythm', 'G', 'Sacral']] },
+    17: { c: 'Ajna', n: 'Opinions', i: 'Following', k: 'The logical opinion that organises the future into a pattern and offers it to others. Wait for the question before giving it.', ch: [[62, 'Acceptance', 'Ajna', 'Throat']] },
+    18: { c: 'Spleen', n: 'Correction', i: 'Work on What Has Been Spoilt', k: 'Seeing what is not working in a pattern, and the urge to fix it. Carries the fear of authority and of being wrong.', ch: [[58, 'Judgement', 'Spleen', 'Root']] },
+    21: { c: 'Heart', n: 'The Hunter / Huntress', i: 'Biting Through', k: 'Control of one’s own domain: money, food, territory, the work, the lifestyle. Wants to be in charge of what it is responsible for, and works best when it is.', ch: [[45, 'Money', 'Heart', 'Throat']] },
+    26: { c: 'Heart', n: 'The Egoist', i: 'The Taming Power of the Great', k: 'The trickster and the salesman: memory, timing, and the skill of tailoring a message so it lands.', ch: [[44, 'Surrender', 'Heart', 'Spleen']] },
+    29: { c: 'Sacral', n: 'Saying Yes', i: 'The Abysmal', k: 'Perseverance: committing to an experience once the gut has said yes. Saying yes too easily is the trap.', ch: [[46, 'Discovery', 'Sacral', 'G']] },
+    33: { c: 'Throat', n: 'Privacy', i: 'Retreat', k: 'Withdraw, digest what happened, then tell it. The voice of “I remember,” and the one who turns experience into lessons.', ch: [[13, 'the Prodigal', 'Throat', 'G']] },
+    38: { c: 'Root', n: 'The Fighter', i: 'Opposition', k: 'Pressure to fight for what gives life meaning. Stubbornness in the service of purpose; the question is always whether this fight is worth it.', ch: [[28, 'Struggle', 'Root', 'Spleen']] },
+    39: { c: 'Root', n: 'The Provocateur', i: 'Obstruction', k: 'Provoking others to see whether they have spirit, and pressure to find the feeling that moves you.', ch: [[55, 'Emoting', 'Root', 'Solar Plexus']] },
+    42: { c: 'Sacral', n: 'Growth', i: 'Increase', k: 'Completing cycles: seeing a process through to its end so something can mature. Enter only what the gut said yes to, because you will want to finish it.', ch: [[53, 'Maturation', 'Sacral', 'Root']] },
+    48: { c: 'Spleen', n: 'Depth', i: 'The Well', k: 'The well of knowing and a talent for solutions, carrying the fear of not knowing enough.', ch: [[16, 'the Wavelength', 'Spleen', 'Throat']] },
+    56: { c: 'Throat', n: 'Stimulation', i: 'The Wanderer', k: 'The storyteller. Ideas and experiences offered as stories to stimulate others. The voice of “I believe.”', ch: [[11, 'Curiosity', 'Throat', 'Ajna']] },
+    57: { c: 'Spleen', n: 'Intuitive Clarity', i: 'The Gentle', k: 'The keenest hearing in the body: intuition that catches the truth of the moment, carrying the fear of the future.', ch: [[20, 'the Brainwave', 'Spleen', 'Throat'], [34, 'Power', 'Spleen', 'Sacral'], [10, 'Perfected Form', 'Spleen', 'G']] },
+    58: { c: 'Root', n: 'Vitality', i: 'The Joyous', k: 'The joy of being alive, and the pressure to make things better, more alive.', ch: [[18, 'Judgement', 'Root', 'Spleen']] }
+  };
+  var OPEN_C = { Ajna: 1, Throat: 1, Heart: 1 };
+
+  /* Gene Keys: shadow, gift, siddhi, then one line each */
+  var GK = {
+    1: ['Entropy', 'Freshness', 'Beauty', 'Flatness and inertia: life goes grey and nothing moves, or busyness covers the flatness.', 'Creative energy that rises from inside and renews whatever it touches.', 'Life seen as already beautiful, exactly as it is.'],
+    3: ['Chaos', 'Innovation', 'Innocence', 'Fear of the unknown that clings to order, or adds to the mess.', 'Playing with change; turning disorder into new forms.', 'Meeting every moment as brand new.'],
+    4: ['Intolerance', 'Understanding', 'Forgiveness', 'The mind’s itch for an answer, impatient with not knowing and with other people.', 'Holding answers lightly and seeing the person behind the logic.', 'Understanding so complete there is nothing left to forgive.'],
+    5: ['Impatience', 'Patience', 'Timelessness', 'Pushing time and forcing outcomes, or numb, resigned waiting.', 'Trust in natural rhythm: things ripen on time.', 'Living outside clock time altogether.'],
+    15: ['Dullness', 'Magnetism', 'Florescence', 'Flattening life into routine to feel safe, or lurching to extremes to feel alive.', 'Embracing your own extremes so fully that life and people are drawn to you.', 'Everything around you blooms.'],
+    17: ['Opinion', 'Far-Sightedness', 'Omniscience', 'Defending a view to feel secure; needing to be right.', 'Seeing the long pattern and offering it when it is asked for.', 'Seeing the whole.'],
+    18: ['Judgement', 'Integrity', 'Perfection', 'Criticism of self and others; seeing only what is wrong.', 'Correction offered with love, for the sake of the whole.', 'Seeing everything as already perfect, flaws included.'],
+    21: ['Control', 'Authority', 'Valor', 'The urge to control people, money and outcomes, born of the fear of chaos. Turned inward it gives control away and lets others run things; turned outward it grips.', 'Natural authority that comes from fully owning your own domain. People relax around it because it does not need to grab.', 'The courage to let go of control completely: the bravest heart.'],
+    26: ['Pride', 'Artfulness', 'Invisibility', 'Needing to look important, the ego’s spin, or false modesty.', 'The gift of persuasion and timing used in service, not for self.', 'So free of self-image that the work moves through untouched.'],
+    29: ['Half-Heartedness', 'Commitment', 'Devotion', 'Saying yes to everything or nothing, then not fully showing up.', 'Giving yourself completely to what you said yes to.', 'Total surrender to life.'],
+    33: ['Forgetting', 'Mindfulness', 'Revelation', 'Letting the lessons go by unexamined, and so repeating them.', 'Pausing, retreating and looking back so experience becomes wisdom.', 'The hidden truth revealed.'],
+    38: ['Struggle', 'Perseverance', 'Honour', 'Fighting everything, or giving up the fight.', 'Struggle given a worthy purpose, and staying in it.', 'The fight lived as the heart’s integrity.'],
+    39: ['Provocation', 'Dynamism', 'Liberation', 'Poking people out of your own frustration, or being provoked into reaction.', 'Provocation used to free stuck energy in yourself and others.', 'Total freedom of spirit.'],
+    42: ['Expectation', 'Detachment', 'Celebration', 'Living in hope of how things will end, and suffering when they do not.', 'Letting cycles complete without clinging to the outcome.', 'Every ending celebrated as a beginning.'],
+    48: ['Inadequacy', 'Resourcefulness', 'Wisdom', 'The fear of not knowing enough or being enough, which drives over-preparing or freezing.', 'Trusting that what you need will rise up when you need it.', 'Knowing beyond knowledge.'],
+    56: ['Distraction', 'Enrichment', 'Intoxication', 'Chasing stimulation to avoid pain or depth.', 'Stories and experiences that enrich the people who hear them.', 'Intoxicated by life itself.'],
+    57: ['Unease', 'Intuition', 'Clarity', 'Low hum of fear about the future, anxiety in the body.', 'The quiet, clear hearing of what is true right now.', 'Complete clarity.'],
+    58: ['Dissatisfaction', 'Vitality', 'Bliss', 'Restless dissatisfaction with how things are; criticism that drains joy.', 'The joy of making life better; energy from love of life.', 'Joy for no reason.']
+  };
+
+  /* spheres: planet, what it is, sequence */
+  var SPH = {
+    'Life’s Work': ['Personality Sun', 'Activation', 'Your core creative purpose: what you are here to do and how you shine in the world. The Personality Sun, the brightest point of the conscious self. In its gift you shine without trying.'],
+    'Evolution': ['Personality Earth', 'Activation', 'The challenge that grounds you: what you are here to learn. It sits exactly opposite the Life’s Work, and the two are programming partners: one cannot fully flower without the other.'],
+    'Radiance': ['Design Sun', 'Activation', 'Your health and vitality: what keeps you radiant. Physical and energetic wellbeing depends on living this gift.'],
+    'Purpose': ['Design Earth', 'Activation', 'Your deepest fulfilment and core stability: what you are really here for, and the ground you stand on. Programming partner of Radiance.'],
+    'Attraction': ['Design Moon', 'Venus', 'The doorway into the Venus Sequence: the pattern that draws people and relationships to you, and what it teaches.'],
+    'IQ': ['Personality Venus', 'Venus', 'The mind in relationship: your mental patterns, the mind’s defence, and its genius once the heart opens.'],
+    'EQ': ['Personality Mars', 'Venus', 'The heart in relationship: your emotional patterns and how you feel and react with people you love.'],
+    'SQ': ['Design Venus', 'Venus', 'Spiritual intelligence: how love opens all the way, the most generous version of your heart.'],
+    'Vocation': ['Design Mars', 'Pearl', 'The work itself, your natural genius in action. It shares its planet with the Core wound of the Venus Sequence, so the work grows out of what you have healed. Your Love sentence names the same 33.'],
+    'Culture': ['Design Jupiter', 'Pearl', 'How you work with groups: the culture you thrive in and help to create, and how prosperity is shared.'],
+    'Pearl': ['Personality Jupiter', 'Pearl', 'Where prosperity lands: the simple essence through which abundance flows to you and from you.']
+  };
+  var SEQ = {
+    'Activation': h('The Activation Sequence', 'Gene Keys · the first journey of the Golden Path') +
+      p('The four Prime Gifts: <b>Life’s Work, Evolution, Radiance, Purpose</b>. They are the Sun and Earth on both sides of the chart, so in your case they are the same four gates as your Human Design Incarnation Cross (21/48 | 38/39).') +
+      p('This journey is about finding and living your genius.'),
+    'Venus': h('The Venus Sequence', 'Gene Keys · the second journey') +
+      p('Opening the heart through relationship: <b>Attraction, IQ, EQ, SQ</b>, with the Core wound in the middle. It traces how early patterns live on in how you love, and how they soften.'),
+    'Pearl': h('The Pearl Sequence', 'Gene Keys · the third journey') +
+      p('Prosperity: <b>Vocation, Culture, Pearl</b>, with the Life’s Work acting as your Brand. Its teaching is simplicity: prosperity comes from doing the simple thing you are built for, with others.')
+  };
+  var LINE = {
+    1: 'Foundation. Introspection and study; security comes from knowing the base of a thing. It builds alone first, then stands.',
+    2: 'The natural. Talent that works best when left alone, then called out by other people who see it.',
+    3: 'Experiment. Trial and error, bonds made and broken, learning by walking into things.',
+    4: 'Network. Everything moves through relationships and friendship.',
+    5: 'Projection. Others project hopes onto you and look to you for the practical, universal solution. Reputation is the risk and the reward.',
+    6: 'The role model. Three phases: trial, then the roof, then living as an example.'
+  };
+
+  function ladder(g) {
+    var k = GK[g];
+    return '<p class="tip-ladder"><span class="tip-sh">' + k[0] + '</span> → <span class="tip-gi">' + k[1] + '</span> → <span class="tip-si">' + k[2] + '</span></p>';
+  }
+  function sphereOf(g) {
+    var out = [];
+    Object.keys(SPH).forEach(function (s) { if (SPH_GATE[s] === g) out.push(s); });
+    return out;
+  }
+  var SPH_GATE = {};
+
+  function gateTip(g, line) {
+    var G = GATE[g]; if (!G) return null;
+    var open = OPEN_C[G.c] || G.c === 'Heart';
+    var cName = G.c === 'Heart' ? 'Heart / Ego' : G.c === 'G' ? 'G / Identity' : G.c;
+    var out = h('Gate ' + g + ' · ' + G.n, cName + (open ? ' (open)' : ' (defined)') + ' · I Ching ' + g + ', ' + G.i);
+    out += p(G.k);
+    var chs = G.ch.map(function (c) {
+      var have = !!MINE[c[0]];
+      return '<b>' + Math.min(g, c[0]) + '–' + Math.max(g, c[0]) + ', the Channel of ' + c[1] + '</b> (' + c[2] + ' to ' + c[3] + ')' +
+        (have ? ': complete in your chart.' : ', waiting on gate ' + c[0] + '.');
+    });
+    out += p(chs.join(' '));
+    if (G.ch.every(function (c) { return !MINE[c[0]]; }))
+      out += faint('A hanging gate: felt consistently, but it does not define a centre. It lights up around people who carry the other half.');
+    if (line) out += p('<b>Line ' + line + '</b> · ' + LINE[line]);
+    out += p(activ(String(g)));
+    if (GK[g]) {
+      var sph = sphereOf(String(g));
+      out += ladder(g) + faint('Gene Key ' + g + (sph.length ? ' · your ' + sph.join(' and ') : '') + '. Hover the Shadow, Gift or Siddhi word for more.');
+    }
+    return out;
+  }
+
+  function levelTip(g, lv) {
+    var k = GK[g]; if (!k) return null;
+    var names = ['Shadow', 'Gift', 'Siddhi'], cls = ['tip-sh', 'tip-gi', 'tip-si'];
+    var role = [
+      'The Shadow is the frequency under fear and pressure. It is not a defect: it is the unripe gift, and noticing it is the first step out.',
+      'The Gift is the same energy met rather than avoided. It is the setting you live in on a good day, and it is creative and useful to others.',
+      'The Siddhi is the far end of the same line, the essence. Not a goal to chase; it shows the direction the whole line points.'
+    ][lv];
+    var sph = sphereOf(String(g));
+    var out = h('<span class="' + cls[lv] + '">' + k[lv] + '</span>', 'The ' + names[lv] + ' of Gene Key ' + g + (sph.length ? ' · your ' + sph.join(' and ') : ''));
+    out += p(k[3 + lv]);
+    if (g === 21 && lv === 0) out += p('As your Life’s Work, Control shows up when the ground moves: gripping the plan, the money, the room. Gate 21 sits in your open Heart, so the grip is borrowed pressure, never your true strength.');
+    if (g === 21 && lv === 1) out += p('As your Life’s Work this is the headline. Authority here is not rank; it is taking full responsibility for your own domain and letting everyone else run theirs. Chosen fresh in each room, because your Heart is open.');
+    if (g === 21 && lv === 2) out += p('Valor is the brave heart: so secure it no longer needs to hold anything. The paradox of 21 is that complete surrender turns out to be the deepest kind of control.');
+    out += faint(role);
+    out += ladder(g);
+    return out;
+  }
+
+  function sphereTip(name) {
+    var s = SPH[name], g = SPH_GATE[name], ln = SPH_LINE[name]; if (!s) return null;
+    var out = h(esc(name), s[0] + ' · ' + s[1] + ' Sequence');
+    out += p(s[2]);
+    if (g) {
+      out += p('<b>Yours is Gene Key ' + g + '.' + ln + '</b> · ' + (GATE[g] ? 'In Human Design, Gate ' + g + ', ' + GATE[g].n + ': ' + GATE[g].k : ''));
+      out += ladder(+g);
+      out += p('<b>Line ' + ln + '</b> · ' + LINE[ln]);
+    }
+    if (name === 'Life’s Work') out += faint('21 is hexagram 21 of the I Ching, Biting Through: the decisive bite that clears what is in the way. Your Personality Sun sat in it at birth, at line 1.');
+    return out;
+  }
+
+  function lineTip(text, g) {
+    var m = /Line (\d)\s*·\s*(.*)/.exec(text); if (!m) return null;
+    var n = +m[1];
+    var out = h('Line ' + n + ' · ' + esc(m[2]), 'The line within the gate' + (g ? ', here Gene Key ' + g : ''));
+    out += p('Every gate has six lines, read bottom up like a hexagram. The line is the <b>flavour</b>: same gate, different way of living it.');
+    out += p('<b>Line ' + n + '</b> · ' + LINE[n]);
+    out += p('<b>On this sphere</b> · ' + esc(m[2]) + '.' + (n === 1 && g === '21' ? ' Your Life’s Work is built on a foundation you dig yourself: security first, then the creative act stands on it.' : ''));
+    if (n === 1 || n === 3) out += faint('Your Human Design Profile is 1/3, so lines 1 and 3 are your native languages. Six of your eleven spheres are Line 1.');
+    return out;
+  }
+
+  var PLANET_HD = {
+    'Sun': 'About 70% of your energy: the life force, what you are here to express.',
+    'Earth': 'Grounding and balance: what keeps you stable, the counterweight to the Sun.',
+    'Moon': 'The driving force: what moves you.',
+    'North Node': 'The environment and outlook of the second half of life, from about age 40.',
+    'South Node': 'The environment and outlook of the first half of life.',
+    'Mercury': 'Communication: what you need to say.',
+    'Venus': 'Values: what you hold to be right and good.',
+    'Mars': 'Immaturity and maturing: where you learn by bumping into things.',
+    'Jupiter': 'Law and protection: where following your own law brings reward.',
+    'Saturn': 'The judge and discipline: where you are tested.',
+    'Uranus': 'Unusualness: where you are different.',
+    'Neptune': 'The veil: what is hidden from you, illusion and spirit.',
+    'Pluto': 'Truth: deep transformation, what you bring up from the depths.'
+  };
+  function planetHdTip(b) {
+    var r = ACT.filter(function (x) { return x[0] === b; })[0]; if (!r) return null;
+    return h(esc(b), 'in Human Design') + p(PLANET_HD[b]) +
+      p('<b><span class="tip-sh">Design</span> ' + r[1] + '</b>, unconscious, the body · <b>Personality ' + r[2] + '</b>, conscious, the self you know.') +
+      faint('Hover either gate for its own card.');
+  }
+  var COLS = {
+    'design': h('<span class="tip-sh">Design</span>, the unconscious', 'Calculated about 88 days before birth') +
+      p('Where the planets were when the Sun stood 88° earlier, roughly three months before you were born. It is the body’s genetics and the part of you that other people see more clearly than you do.') +
+      p('Design gates often feel like things that “just happen” through you.'),
+    'personality': h('Personality, the conscious', 'Calculated at the moment of birth') +
+      p('Where the planets were when you were born: the same sky as your astrology chart. This is the self you identify with and can feel and describe.') +
+      p('Every Personality gate here was recomputed from the astrology degrees, and all thirteen match.')
+  };
+  var TRIAD = {
+    'Shadow': h('<span class="tip-sh">Shadow</span>', 'Gene Keys · the challenge') + p('The frequency of the gate under fear and pressure. Every shadow has two faces: turned inward (repressed, giving up) and turned outward (reactive, pushing).') + p('It is not a flaw to fix. It is the gift, unripe, and the place the work begins.'),
+    'Gift': h('<span class="tip-gi">Gift</span>', 'Gene Keys · the creativity') + p('The same energy, met rather than avoided. The gift is what you are like on a good day, and it is always useful to other people.'),
+    'Siddhi': h('<span class="tip-si">Siddhi</span>', 'Gene Keys · the essence') + p('Sanskrit for perfection or attainment. The far end of the same line: not a destination to strive for, but the direction the whole line points.')
+  };
+
+  /* ------------------------------------------- astrology concepts */
+  var ASP = {
+    'Conjunction': ['0°', 'Fusion. The two blend and act as one, for better and worse. Hard to tell them apart from the inside.'],
+    'Opposition': ['180°', 'Polarity. Two ends of a seesaw, often lived through other people. The work is balance, not choosing a side.'],
+    'Square': ['90°', 'Friction. Two drives at right angles that will not leave each other alone. The engine of effort and growth: uncomfortable, productive.'],
+    'Trine': ['120°', 'Flow. Talents that work together easily, so easily they can go unused.'],
+    'Sextile': ['60°', 'Opportunity. A cooperative link that pays off when you act on it.'],
+    'Quincunx': ['150°', 'Adjustment. Two things that do not speak the same language; constant small recalibration.'],
+    'Semisextile': ['30°', 'A minor, neighbouring link: mild friction, slow growth between adjacent signs.']
+  };
+  var ELM = {
+    'Fire': 'Spirit, will, enthusiasm. Acts first, inspires, burns hot and fast. Signs: Aries, Leo, Sagittarius.',
+    'Earth': 'Body, matter, the practical. Builds, holds, makes it real. Signs: Taurus, Virgo, Capricorn.',
+    'Air': 'Mind, ideas, connection. Thinks, talks, links people and things. Signs: Gemini, Libra, Aquarius.',
+    'Water': 'Feeling, intuition, bonding. Senses, absorbs, protects. Signs: Cancer, Scorpio, Pisces.',
+    'Cardinal': 'The starters. Signs that open each season (Aries, Cancer, Libra, Capricorn). Initiating energy.',
+    'Fixed': 'The holders. Mid-season signs (Taurus, Leo, Scorpio, Aquarius). Persistence and depth, and resistance to change.',
+    'Mutable': 'The adapters. Season-ending signs (Gemini, Virgo, Sagittarius, Pisces). Flexible, transitional, many-sided.'
+  };
+  var SHAPE = {
+    'Sun · Moon · Rising': 'The big three. <b>Sun</b> the core self, <b>Moon</b> the emotional body and needs, <b>Rising</b> the doorway: how you arrive and are first met.',
+    'Chart ruler': 'The planet that rules the rising sign. It acts like the captain of the whole chart: where it sits, and how it is doing, colours everything.',
+    'Stellium': 'Three or more planets in one sign or house. A concentration of life force: that area of life gets far more attention than the rest.',
+    'Empty houses': 'A house with no planets in it is not missing from your life. It runs on autopilot through its ruling planet, and it is less of a lifelong lesson.',
+    'Loudest aspect': 'The tightest major aspect. The smaller the orb (distance from exact), the louder the conversation between the two planets.',
+    'Second loudest': 'The next tightest. An opposition to the Midheaven sits on the axis of home and public life.',
+    'Retrogrades': 'A planet appearing to move backward from Earth at birth. Its theme turns inward: worked out privately before it is shown.'
+  };
+
+  /* ------------------------------------------------------ composer */
+  var SPH_LINE = {};
+  function compose(el) {
+    var t = el.getAttribute('data-tip'), d = el.dataset;
+    switch (t) {
+      case 'kt-card': return CARD[d.k] || null;
+      case 'kt-centre': return centreTip(d.k);
+      case 'kt-chan': return CHAN[d.k] || null;
+      case 'kt-gate': return gateTip(+d.g, d.l ? +d.l : null);
+      case 'kt-level': return levelTip(+d.g, +d.lv);
+      case 'kt-sphere': return sphereTip(d.k);
+      case 'kt-seq': return SEQ[d.k] || null;
+      case 'kt-line': return lineTip(d.k, d.g);
+      case 'kt-planet': return planetHdTip(d.k);
+      case 'kt-col': return COLS[d.k] || null;
+      case 'kt-triad': return TRIAD[d.k] || null;
+      case 'kt-asp': var a = ASP[d.k]; return a ? h(esc(d.k) + ' · ' + a[0], 'Aspect · an angle between two points') + p(a[1]) + faint('Orb is the distance from exact. Under 1° is loud; your Venus square Mars at 0.20° is about as loud as it gets.') : null;
+      case 'kt-elm': return ELM[d.k] ? h(esc(d.k), /Cardinal|Fixed|Mutable/.test(d.k) ? 'Modality · how a sign moves' : 'Element · what a sign is made of') + p(ELM[d.k]) : null;
+      case 'kt-shape': return SHAPE[d.k] ? h(esc(d.k), 'What the term means') + p(SHAPE[d.k]) : null;
+    }
+    return null;
+  }
+  root.KTGuide = { compose: compose };
+
+  /* ------------------------------------------------------ annotate */
+  function tag(el, type, data) {
+    if (!el) return;
+    el.setAttribute('data-tip', type);
+    for (var k in data) if (data[k] !== undefined && data[k] !== null) el.dataset[k] = data[k];
+  }
+  function gateOf(text) { var m = /(\d+)(?:\.(\d))?/.exec(text); return m ? { g: m[1], l: m[2] } : null; }
+  function txt(el) { return (el.textContent || '').trim(); }
+
+  function annotate() {
+    var hd = document.getElementById('hd'), gk = document.getElementById('gk'), astro = document.getElementById('astro');
+
+    if (hd) {
+      [].forEach.call(hd.querySelectorAll('tr'), function (tr) {
+        var k = tr.querySelector('td.k'); if (!k) return;
+        var key = txt(k);
+        if (CARD[key]) tag(tr, 'kt-card', { k: key });
+        else if (CTR[key]) tag(k, 'kt-centre', { k: key });
+      });
+      [].forEach.call(hd.querySelectorAll('.ccard'), function (c) {
+        var n = c.querySelector('.ccard-name'); if (n) tag(c, 'kt-centre', { k: txt(n) });
+        [].forEach.call(c.querySelectorAll('.gate'), function (g) { tag(g, 'kt-gate', { g: txt(g) }); });
+      });
+      [].forEach.call(hd.querySelectorAll('.chcard'), function (c) {
+        var t = c.querySelector('.cht'), m = t && /(\d+)\D+(\d+)/.exec(txt(t));
+        if (m) tag(c, 'kt-chan', { k: m[1] + '-' + m[2] });
+      });
+      [].forEach.call(hd.querySelectorAll('td.des, td.per'), function (td) {
+        var o = gateOf(td.firstChild ? td.firstChild.textContent : ''); if (o) tag(td, 'kt-gate', { g: o.g, l: o.l });
+      });
+      [].forEach.call(hd.querySelectorAll('tbody tr'), function (tr) {
+        var first = tr.querySelector('td.v'); if (!first || !tr.querySelector('td.des')) return;
+        var name = txt(first).replace(/^\S+\s+/, '');
+        tag(first, 'kt-planet', { k: name });
+      });
+      [].forEach.call(hd.querySelectorAll('th'), function (th) {
+        if (/^Design/.test(txt(th))) tag(th, 'kt-col', { k: 'design' });
+        if (/^Personality/.test(txt(th))) tag(th, 'kt-col', { k: 'personality' });
+      });
+    }
+
+    if (gk) {
+      [].forEach.call(gk.querySelectorAll('.triad-key b'), function (b) { tag(b, 'kt-triad', { k: txt(b) }); });
+      [].forEach.call(gk.querySelectorAll('th'), function (th) { if (TRIAD[txt(th)]) tag(th, 'kt-triad', { k: txt(th) }); });
+      [].forEach.call(gk.querySelectorAll('tbody tr'), function (tr) {
+        var num = tr.querySelector('td.num'); if (!num) return;
+        var o = gateOf(txt(num)); if (!o) return;
+        var sp = tr.querySelector('td.sp b');
+        if (sp) { SPH_GATE[txt(sp)] = o.g; SPH_LINE[txt(sp)] = o.l; tag(tr.querySelector('td.sp'), 'kt-sphere', { k: txt(sp) }); }
+        tag(num, 'kt-gate', { g: o.g, l: o.l });
+        tag(tr.querySelector('td.sh'), 'kt-level', { g: o.g, lv: 0 });
+        tag(tr.querySelector('td.gi'), 'kt-level', { g: o.g, lv: 1 });
+        tag(tr.querySelector('td.si'), 'kt-level', { g: o.g, lv: 2 });
+        var sq = tr.querySelector('td.sq'); if (sq && SEQ[txt(sq)]) tag(sq, 'kt-seq', { k: txt(sq) });
+        var ln = tr.querySelector('td.ln'); if (ln) tag(ln, 'kt-line', { k: txt(ln), g: o.g });
+        var ctr = tr.querySelector('td.ctr');
+        if (ctr) { var cn = txt(ctr).replace(/\s*\(open\)/, ''); cn = cn === 'G' ? 'G / Identity' : cn === 'Heart' ? 'Heart / Ego' : cn; if (CTR[cn]) tag(ctr, 'kt-centre', { k: cn }); }
+        [].forEach.call(tr.querySelectorAll('.role-ch'), function (r) { var m = /(\d+)\D+(\d+)/.exec(txt(r)); if (m) tag(r, 'kt-chan', { k: m[1] + '-' + m[2] }); });
+      });
+    }
+
+    if (astro) {
+      [].forEach.call(astro.querySelectorAll('tr'), function (tr) {
+        var td = tr.querySelectorAll('td');
+        for (var i = 0; i < td.length; i++) if (ASP[txt(td[i])]) tag(td[i], 'kt-asp', { k: txt(td[i]) });
+        var k = tr.querySelector('td.k'); if (k && SHAPE[txt(k)]) tag(k, 'kt-shape', { k: txt(k) });
+      });
+      [].forEach.call(astro.querySelectorAll('.bar-name'), function (b) { if (ELM[txt(b)]) tag(b, 'kt-elm', { k: txt(b) }); });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', annotate); else annotate();
 })(typeof window !== 'undefined' ? window : globalThis);
